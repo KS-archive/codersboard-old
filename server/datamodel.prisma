@@ -7,6 +7,7 @@ enum Permission {
 
 enum MainPermission {
   OWNER
+  ADMIN
   MEMBER
   TRAINEE
   HR
@@ -14,17 +15,39 @@ enum MainPermission {
   DATA
 }
 
+enum Access {
+  DECLARATION
+  FONT_AWESOME
+  FREEPIK
+  GITHUB
+}
+
+enum Institution {
+  NONE
+  UE_ORGANIZATION
+  PWR_ORGANIZATION
+  ASSOCIATION
+}
+
 type User {
   id: ID! @id
   fullName: String!
-  photoURL: String!
+  image: String!
   email: String! @unique
+  companyEmail: String
+  phone: String
   password: String!
   areas: [UserArea!]!
   skills: [UserSkill!]!
   projects: [UserProject!]!
   permissions: [MainPermission!]! @scalarList(strategy: RELATION)
   university: [University!]!
+  universityDepartment: String
+  indexNumber: String
+  fieldOfStudy: String
+  institution: [Institution!]! @scalarList(strategy: RELATION)
+  slackId: String
+  accesses: [Access!]! @scalarList(strategy: RELATION)
   year: Int
   ownerOf: [ID!]! @scalarList(strategy: RELATION)
   adminOf: [ID!]! @scalarList(strategy: RELATION)
@@ -37,7 +60,7 @@ type User {
 type University {
   id: ID! @id
   name: String!
-  photoURL: String
+  image: String
   users: [User!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
@@ -136,4 +159,39 @@ type UserArea {
   role: String
   responsibilities: String
   permissions: Permission!
+}
+
+enum EventType {
+  OPEN
+  PRIVATE
+  PROJECT_MEETING
+  AREA_MEETING
+}
+
+type Event {
+  id: ID! @id
+  name: String!
+  description: String
+  date: DateTime!
+  image: String
+  participants: [User!]!
+  type: [EventType!]! @scalarList(strategy: RELATION)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type PostTag {
+  id: ID! @id
+  name: String!
+}
+
+type Post {
+  id: ID! @id
+  title: String!
+  content: String!
+  tags: [PostTag!]!
+  date: DateTime! @createdAt
+  area: Area
+  project: Project
+  user: User!
 }

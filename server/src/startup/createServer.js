@@ -1,7 +1,7 @@
-import { GraphQLServer } from 'graphql-yoga';
-import Mutation from './resolvers/Mutation';
-import Query from './resolvers/Query';
-import prisma from './prisma';
+const { GraphQLServer } = require('graphql-yoga');
+const Mutation = require('../resolvers/Mutation');
+const Query = require('../resolvers/Query');
+const prisma = require('../services/prisma');
 
 const createServer = () => {
   return new GraphQLServer({
@@ -17,4 +17,4 @@ const createServer = () => {
   });
 };
 
-export default createServer;
+module.exports = createServer;

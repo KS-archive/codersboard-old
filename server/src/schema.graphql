@@ -5,7 +5,7 @@ type Message {
 }
 
 type Mutation {
-  signup(email: String!, password: String, photoURL: String!, fullName: String!): User!
+  signup(email: String!, password: String, image: String!, fullName: String!): User!
   signin(email: String!, password: String!): User!
   signout: Message
 }
