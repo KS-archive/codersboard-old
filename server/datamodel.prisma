@@ -1,0 +1,139 @@
+enum Permission {
+  OWNER
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+enum MainPermission {
+  OWNER
+  MEMBER
+  TRAINEE
+  HR
+  FINANCE
+  DATA
+}
+
+type User {
+  id: ID! @id
+  fullName: String!
+  photoURL: String!
+  email: String! @unique
+  password: String!
+  areas: [UserArea!]!
+  skills: [UserSkill!]!
+  projects: [UserProject!]!
+  permissions: [MainPermission!]! @scalarList(strategy: RELATION)
+  university: [University!]!
+  year: Int
+  ownerOf: [ID!]! @scalarList(strategy: RELATION)
+  adminOf: [ID!]! @scalarList(strategy: RELATION)
+  memberOf: [ID!]! @scalarList(strategy: RELATION)
+  guestOf: [ID!]! @scalarList(strategy: RELATION)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type University {
+  id: ID! @id
+  name: String!
+  photoURL: String
+  users: [User!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Skill {
+  id: ID! @id
+  name: String!
+  users: [User!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type UserSkill {
+  id: ID! @id
+  skill: Skill!
+  user: User!
+  level: Int
+}
+
+enum SuccessType {
+  EPIC
+  SMALL
+  NEWS
+}
+
+type Success {
+  id: ID! @id
+  name: String!
+  description: String!
+  date: DateTime!
+  type: SuccessType!
+  users: [User!]!
+  project: Project
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum ProjectType {
+  SOFTWARE
+  WEBSITE
+  EVENT
+  OTHER
+}
+
+enum ProjectStatus {
+  DRAFT
+  STARTING
+  IN_PROGRESS
+  CANCELLED
+  DONE
+  SUSPENDED
+}
+
+type Project {
+  id: ID! @id
+  name: String!
+  description: String!
+  image: String!
+  gallery: [String!]! @scalarList(strategy: RELATION)
+  startDate: DateTime
+  finishDate: DateTime
+  type: ProjectType!
+  status: ProjectStatus!
+  mainSlackChannel: String
+  slackChannels: [String!]! @scalarList(strategy: RELATION)
+  users: [User!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type UserProject {
+  id: ID! @id
+  user: User!
+  project: Project!
+  role: String
+  responsibilities: String
+  permissions: Permission!
+}
+
+type Area {
+  id: ID! @id
+  name: String!
+  description: String!
+  mainSlackChannel: String
+  slackChannels: [String!]! @scalarList(strategy: RELATION)
+  users: [User!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type UserArea {
+  id: ID! @id
+  user: User!
+  area: Area!
+  role: String
+  responsibilities: String
+  permissions: Permission!
+}
