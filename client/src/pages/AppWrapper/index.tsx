@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
-import Breadcrumbs from './Breadcrumbs';
 import * as styles from './styles';
 
-const { Container, RightColumn, Content, ContentCard } = styles;
+const { Container, RightColumn, Content } = styles;
 
 const AppWrapper = (props: Props) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -15,12 +14,7 @@ const AppWrapper = (props: Props) => {
       <Sidebar collapsed={collapsed} />
       <RightColumn>
         <Header isSidebarCollapsed={collapsed} toggleCollapsed={toggleCollapsed} />
-        <Content>
-          <Breadcrumbs />
-          <ContentCard>
-            {props.children}
-          </ContentCard>
-        </Content>
+        <Content>{props.children}</Content>
       </RightColumn>
     </Container>
   );

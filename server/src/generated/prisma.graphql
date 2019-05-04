@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Fri May 03 2019 13:05:57 GMT+0200 (Central European Summer Time)
+# timestamp: Sat May 04 2019 03:15:38 GMT+0200 (Central European Summer Time)
 
 enum Access {
   DECLARATION
@@ -3272,18 +3272,20 @@ input UniversityWhereUniqueInput {
 type User implements Node {
   id: ID!
   fullName: String!
+  profileURL: String!
   image: String!
   email: String!
   companyEmail: String
   phone: String
   password: String!
+  role: String!
   areas(where: UserAreaWhereInput, orderBy: UserAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserArea!]
   skills(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserSkill!]
   projects(where: UserProjectWhereInput, orderBy: UserProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserProject!]
   permissions: [MainPermission!]!
   university(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University!]
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   institution: [Institution!]!
   slackId: String
@@ -3770,13 +3772,15 @@ input UserCreateguestOfInput {
 input UserCreateInput {
   id: ID
   fullName: String!
+  profileURL: String!
   image: String!
   email: String!
   companyEmail: String
   phone: String
   password: String!
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -3842,13 +3846,15 @@ input UserCreatepermissionsInput {
 input UserCreateWithoutAreasInput {
   id: ID
   fullName: String!
+  profileURL: String!
   image: String!
   email: String!
   companyEmail: String
   phone: String
   password: String!
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -3867,13 +3873,15 @@ input UserCreateWithoutAreasInput {
 input UserCreateWithoutProjectsInput {
   id: ID
   fullName: String!
+  profileURL: String!
   image: String!
   email: String!
   companyEmail: String
   phone: String
   password: String!
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -3892,13 +3900,15 @@ input UserCreateWithoutProjectsInput {
 input UserCreateWithoutSkillsInput {
   id: ID
   fullName: String!
+  profileURL: String!
   image: String!
   email: String!
   companyEmail: String
   phone: String
   password: String!
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -3917,13 +3927,15 @@ input UserCreateWithoutSkillsInput {
 input UserCreateWithoutUniversityInput {
   id: ID
   fullName: String!
+  profileURL: String!
   image: String!
   email: String!
   companyEmail: String
   phone: String
   password: String!
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -3953,6 +3965,8 @@ enum UserOrderByInput {
   id_DESC
   fullName_ASC
   fullName_DESC
+  profileURL_ASC
+  profileURL_DESC
   image_ASC
   image_DESC
   email_ASC
@@ -3963,6 +3977,8 @@ enum UserOrderByInput {
   phone_DESC
   password_ASC
   password_DESC
+  role_ASC
+  role_DESC
   universityDepartment_ASC
   universityDepartment_DESC
   indexNumber_ASC
@@ -3982,14 +3998,16 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   fullName: String!
+  profileURL: String!
   image: String!
   email: String!
   companyEmail: String
   phone: String
   password: String!
+  role: String!
   permissions: [MainPermission!]!
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   institution: [Institution!]!
   slackId: String
@@ -4540,6 +4558,46 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   fullName_not_ends_with: String
+  profileURL: String
+
+  """All values that are not equal to given value."""
+  profileURL_not: String
+
+  """All values that are contained in given list."""
+  profileURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  profileURL_not_in: [String!]
+
+  """All values less than the given value."""
+  profileURL_lt: String
+
+  """All values less than or equal the given value."""
+  profileURL_lte: String
+
+  """All values greater than the given value."""
+  profileURL_gt: String
+
+  """All values greater than or equal the given value."""
+  profileURL_gte: String
+
+  """All values containing the given string."""
+  profileURL_contains: String
+
+  """All values not containing the given string."""
+  profileURL_not_contains: String
+
+  """All values starting with the given string."""
+  profileURL_starts_with: String
+
+  """All values not starting with the given string."""
+  profileURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  profileURL_ends_with: String
+
+  """All values not ending with the given string."""
+  profileURL_not_ends_with: String
   image: String
 
   """All values that are not equal to given value."""
@@ -4740,6 +4798,46 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  role: String
+
+  """All values that are not equal to given value."""
+  role_not: String
+
+  """All values that are contained in given list."""
+  role_in: [String!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [String!]
+
+  """All values less than the given value."""
+  role_lt: String
+
+  """All values less than or equal the given value."""
+  role_lte: String
+
+  """All values greater than the given value."""
+  role_gt: String
+
+  """All values greater than or equal the given value."""
+  role_gte: String
+
+  """All values containing the given string."""
+  role_contains: String
+
+  """All values not containing the given string."""
+  role_not_contains: String
+
+  """All values starting with the given string."""
+  role_starts_with: String
+
+  """All values not starting with the given string."""
+  role_not_starts_with: String
+
+  """All values ending with the given string."""
+  role_ends_with: String
+
+  """All values not ending with the given string."""
+  role_not_ends_with: String
   universityDepartment: String
 
   """All values that are not equal to given value."""
@@ -4780,46 +4878,28 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   universityDepartment_not_ends_with: String
-  indexNumber: String
+  indexNumber: Int
 
   """All values that are not equal to given value."""
-  indexNumber_not: String
+  indexNumber_not: Int
 
   """All values that are contained in given list."""
-  indexNumber_in: [String!]
+  indexNumber_in: [Int!]
 
   """All values that are not contained in given list."""
-  indexNumber_not_in: [String!]
+  indexNumber_not_in: [Int!]
 
   """All values less than the given value."""
-  indexNumber_lt: String
+  indexNumber_lt: Int
 
   """All values less than or equal the given value."""
-  indexNumber_lte: String
+  indexNumber_lte: Int
 
   """All values greater than the given value."""
-  indexNumber_gt: String
+  indexNumber_gt: Int
 
   """All values greater than or equal the given value."""
-  indexNumber_gte: String
-
-  """All values containing the given string."""
-  indexNumber_contains: String
-
-  """All values not containing the given string."""
-  indexNumber_not_contains: String
-
-  """All values starting with the given string."""
-  indexNumber_starts_with: String
-
-  """All values not starting with the given string."""
-  indexNumber_not_starts_with: String
-
-  """All values ending with the given string."""
-  indexNumber_ends_with: String
-
-  """All values not ending with the given string."""
-  indexNumber_not_ends_with: String
+  indexNumber_gte: Int
   fieldOfStudy: String
 
   """All values that are not equal to given value."""
@@ -5307,13 +5387,15 @@ input UserUpdateadminOfInput {
 
 input UserUpdateDataInput {
   fullName: String
+  profileURL: String
   image: String
   email: String
   companyEmail: String
   phone: String
   password: String
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -5336,13 +5418,15 @@ input UserUpdateguestOfInput {
 
 input UserUpdateInput {
   fullName: String
+  profileURL: String
   image: String
   email: String
   companyEmail: String
   phone: String
   password: String
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -5365,13 +5449,15 @@ input UserUpdateinstitutionInput {
 
 input UserUpdateManyDataInput {
   fullName: String
+  profileURL: String
   image: String
   email: String
   companyEmail: String
   phone: String
   password: String
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -5398,13 +5484,15 @@ input UserUpdateManyInput {
 
 input UserUpdateManyMutationInput {
   fullName: String
+  profileURL: String
   image: String
   email: String
   companyEmail: String
   phone: String
   password: String
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -5476,13 +5564,15 @@ input UserUpdatepermissionsInput {
 
 input UserUpdateWithoutAreasDataInput {
   fullName: String
+  profileURL: String
   image: String
   email: String
   companyEmail: String
   phone: String
   password: String
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -5500,13 +5590,15 @@ input UserUpdateWithoutAreasDataInput {
 
 input UserUpdateWithoutProjectsDataInput {
   fullName: String
+  profileURL: String
   image: String
   email: String
   companyEmail: String
   phone: String
   password: String
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -5524,13 +5616,15 @@ input UserUpdateWithoutProjectsDataInput {
 
 input UserUpdateWithoutSkillsDataInput {
   fullName: String
+  profileURL: String
   image: String
   email: String
   companyEmail: String
   phone: String
   password: String
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -5548,13 +5642,15 @@ input UserUpdateWithoutSkillsDataInput {
 
 input UserUpdateWithoutUniversityDataInput {
   fullName: String
+  profileURL: String
   image: String
   email: String
   companyEmail: String
   phone: String
   password: String
+  role: String
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Int
   fieldOfStudy: String
   slackId: String
   year: Int
@@ -5701,6 +5797,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   fullName_not_ends_with: String
+  profileURL: String
+
+  """All values that are not equal to given value."""
+  profileURL_not: String
+
+  """All values that are contained in given list."""
+  profileURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  profileURL_not_in: [String!]
+
+  """All values less than the given value."""
+  profileURL_lt: String
+
+  """All values less than or equal the given value."""
+  profileURL_lte: String
+
+  """All values greater than the given value."""
+  profileURL_gt: String
+
+  """All values greater than or equal the given value."""
+  profileURL_gte: String
+
+  """All values containing the given string."""
+  profileURL_contains: String
+
+  """All values not containing the given string."""
+  profileURL_not_contains: String
+
+  """All values starting with the given string."""
+  profileURL_starts_with: String
+
+  """All values not starting with the given string."""
+  profileURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  profileURL_ends_with: String
+
+  """All values not ending with the given string."""
+  profileURL_not_ends_with: String
   image: String
 
   """All values that are not equal to given value."""
@@ -5901,6 +6037,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  role: String
+
+  """All values that are not equal to given value."""
+  role_not: String
+
+  """All values that are contained in given list."""
+  role_in: [String!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [String!]
+
+  """All values less than the given value."""
+  role_lt: String
+
+  """All values less than or equal the given value."""
+  role_lte: String
+
+  """All values greater than the given value."""
+  role_gt: String
+
+  """All values greater than or equal the given value."""
+  role_gte: String
+
+  """All values containing the given string."""
+  role_contains: String
+
+  """All values not containing the given string."""
+  role_not_contains: String
+
+  """All values starting with the given string."""
+  role_starts_with: String
+
+  """All values not starting with the given string."""
+  role_not_starts_with: String
+
+  """All values ending with the given string."""
+  role_ends_with: String
+
+  """All values not ending with the given string."""
+  role_not_ends_with: String
   universityDepartment: String
 
   """All values that are not equal to given value."""
@@ -5941,46 +6117,28 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   universityDepartment_not_ends_with: String
-  indexNumber: String
+  indexNumber: Int
 
   """All values that are not equal to given value."""
-  indexNumber_not: String
+  indexNumber_not: Int
 
   """All values that are contained in given list."""
-  indexNumber_in: [String!]
+  indexNumber_in: [Int!]
 
   """All values that are not contained in given list."""
-  indexNumber_not_in: [String!]
+  indexNumber_not_in: [Int!]
 
   """All values less than the given value."""
-  indexNumber_lt: String
+  indexNumber_lt: Int
 
   """All values less than or equal the given value."""
-  indexNumber_lte: String
+  indexNumber_lte: Int
 
   """All values greater than the given value."""
-  indexNumber_gt: String
+  indexNumber_gt: Int
 
   """All values greater than or equal the given value."""
-  indexNumber_gte: String
-
-  """All values containing the given string."""
-  indexNumber_contains: String
-
-  """All values not containing the given string."""
-  indexNumber_not_contains: String
-
-  """All values starting with the given string."""
-  indexNumber_starts_with: String
-
-  """All values not starting with the given string."""
-  indexNumber_not_starts_with: String
-
-  """All values ending with the given string."""
-  indexNumber_ends_with: String
-
-  """All values not ending with the given string."""
-  indexNumber_not_ends_with: String
+  indexNumber_gte: Int
   fieldOfStudy: String
 
   """All values that are not equal to given value."""

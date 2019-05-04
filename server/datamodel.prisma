@@ -32,18 +32,20 @@ enum Institution {
 type User {
   id: ID! @id
   fullName: String!
+  profileURL: String!
   image: String!
   email: String! @unique
   companyEmail: String
   phone: String
   password: String!
+  role: String! @default(value: "Członek CodersCrew")
   areas: [UserArea!]!
   skills: [UserSkill!]!
   projects: [UserProject!]!
   permissions: [MainPermission!]! @scalarList(strategy: RELATION)
   university: [University!]!
   universityDepartment: String
-  indexNumber: Number
+  indexNumber: Int
   fieldOfStudy: String
   institution: [Institution!]! @scalarList(strategy: RELATION)
   slackId: String

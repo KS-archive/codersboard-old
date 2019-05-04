@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const signUp = async (parent, args, ctx, info) => {
   args.email = args.email.toLowerCase();
   args.password = await bcrypt.hash(args.password, 10);
+  args.profileURL = args.fullName.toLowerCase().split(' ').join('-');
 
   const user = await ctx.prisma.mutation.createUser(
     {

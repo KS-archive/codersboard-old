@@ -15,11 +15,5 @@ export const RightColumn = styled(Layout)`
 `;
 
 export const Content = styled(Layout.Content)`
-  margin: 0 ${get('space', 'md')};
-`;
-
-export const ContentCard = styled.div`
-  padding: ${get('space', 'lg')};
-  background-color: ${get('color', 'white')};
-  border-radius: ${get('radius')};
+  margin: ${get('space', 'xl')};
 `;

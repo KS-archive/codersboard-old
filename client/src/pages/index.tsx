@@ -2,12 +2,13 @@ import React from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
+import { Spin } from 'antd';
 
 import client from 'store/client';
 import MeQuery from 'store/user/queries/Me';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
-import { Spin } from 'antd';
+import Members from 'pages/Members';
 
 import GlobalStyle from 'styles/GlobalStyle';
 import lightTheme from 'styles/lightTheme';
@@ -33,7 +34,7 @@ const App = (props: Props) => {
                   <Route path="/sign-in" component={SignIn} />
                   <AppWrapper>
                     <Switch>
-                      <Route exact path="/members" component={() => <div>Członkowie</div>} />
+                      <Route exact path="/members" component={Members} />
                       <Route exact path="/areas" component={() => <div>Obszary</div>} />
                       <Route exact path="/projects" component={() => <div>Projekty</div>} />
                       <Route exact path="/successes" component={() => <div>Sukcesy</div>} />

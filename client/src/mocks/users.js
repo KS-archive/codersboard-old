@@ -2,6 +2,7 @@ export default [
   {
     id: 'asdfcxvuy348ufdsfasd',
     fullName: 'Ella Carlson',
+    profileURL: 'ella-carlson',
     image: 'https://randomuser.me/api/portraits/women/22.jpg',
     email: 'ella.carlson25@example.com',
     companyEmail: 'ella.carlson25@company.com',
@@ -10,6 +11,7 @@ export default [
     skills: ['3', '5', '8'],
     projects: ['3', '4'],
     permissions: ['MEMBER'],
+    role: 'Członek zarządu',
     university: {
       id: '8yrhsd89fhsad',
       name: 'Uniwersytet Ekonomiczny we Wrocławiu',
@@ -23,6 +25,7 @@ export default [
   {
     id: 'shg98sdiobfv89dsbvs',
     fullName: 'Donald Soto',
+    profileURL: 'donald-soto',
     image: 'https://randomuser.me/api/portraits/men/77.jpg',
     email: 'donald.soto14@example.com',
     companyEmail: 'donald.soto14@company.com',
@@ -31,6 +34,7 @@ export default [
     skills: ['3', '5', '8'],
     projects: ['3', '4'],
     permissions: ['MEMBER'],
+    role: 'Członek CodersCrew',
     university: {
       id: 'sdfh9hdsf90',
       name: 'Politechnika Wrocławska',
@@ -44,6 +48,7 @@ export default [
   {
     id: 'has8d9fbasud-9f0hasdfa',
     fullName: 'Byron Lopez',
+    profileURL: 'byron-lopez',
     image: 'https://randomuser.me/api/portraits/men/35.jpg',
     email: 'byron.lopez99@example.com',
     companyEmail: 'byron.lopez99@company.com',
@@ -52,6 +57,7 @@ export default [
     skills: ['3', '5', '8'],
     projects: ['3', '4'],
     permissions: ['MEMBER'],
+    role: 'Frontend Developer',
     university: {
       id: '8yrhsd89fhsad',
       name: 'Uniwersytet Ekonomiczny we Wrocławiu',
@@ -65,6 +71,7 @@ export default [
   {
     id: 'rterwdsfsd',
     fullName: 'Darlene Reynolds',
+    profileURL: 'darlene-reynolds',
     image: 'https://randomuser.me/api/portraits/women/4.jpg',
     email: 'darlene.reynolds45@example.com',
     companyEmail: 'darlene.reynolds45@company.com',
@@ -73,6 +80,7 @@ export default [
     skills: ['3', '5', '8'],
     projects: ['3', '4'],
     permissions: ['MEMBER'],
+    role: 'Specjalista ds. social media',
     university: {
       id: '8yrhsd89fhsad',
       name: 'Uniwersytet Ekonomiczny we Wrocławiu',
