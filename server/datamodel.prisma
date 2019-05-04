@@ -43,7 +43,7 @@ type User {
   permissions: [MainPermission!]! @scalarList(strategy: RELATION)
   university: [University!]!
   universityDepartment: String
-  indexNumber: String
+  indexNumber: Number
   fieldOfStudy: String
   institution: [Institution!]! @scalarList(strategy: RELATION)
   slackId: String

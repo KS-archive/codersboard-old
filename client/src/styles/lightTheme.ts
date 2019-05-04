@@ -15,7 +15,7 @@ export default {
 
     background: '#F2F6FC',
 
-    black: '#262626',
+    black: '#212121',
     darkGrey: '#595959',
     grey: '#8c8c8c',
     lightGrey: '#e8e8e8',

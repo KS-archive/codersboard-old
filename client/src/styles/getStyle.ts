@@ -8,7 +8,7 @@ const getShadow = (type: Shadow = 'small') => (props: any) => props.theme.shadow
 
 type Value = Color | FontSize | Space | Radius | Shadow;
 
-export default (property: string) => (value?: Value) => {
+export default (property: string, value?: Value) => {
   switch (property) {
     case 'color':
       return getColor(value as Color);

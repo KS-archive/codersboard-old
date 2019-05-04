@@ -1,34 +1,57 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost';
 import { ThemeProvider } from 'styled-components';
 
-import Dashboard from 'pages/Dashboard';
+import client from 'store/client';
+import MeQuery from 'store/user/queries/Me';
+import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
+import { Spin } from 'antd';
 
 import GlobalStyle from 'styles/GlobalStyle';
 import lightTheme from 'styles/lightTheme';
 
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_SERVER_ROOT_URL,
-  credentials: 'include',
-});
+const App = (props: Props) => {
+  const {
+    location: { pathname },
+    history: { push },
+  } = props;
 
-const App = () => (
-  <>
-  <GlobalStyle theme={lightTheme} />
-  <ApolloProvider client={client}>
-    <ThemeProvider theme={lightTheme}>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/sign-in" component={SignIn} />
-          <Route path="/" component={Dashboard} />
-        </Switch>
-      </BrowserRouter>
-    </ThemeProvider>
-  </ApolloProvider>
-  </>
-);
+  return (
+    <>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={lightTheme}>
+          <MeQuery>
+            {({ data: { me }, loading }) => {
+              if (loading) return <Spin size="large" tip="Trwa ładowanie..." />;
+              if (!me && pathname !== '/sign-in') push('/sign-in');
+              if (me && pathname === '/sign-in') push('/');
 
-export default App;
+              return (
+                <Switch>
+                  <Route path="/sign-in" component={SignIn} />
+                  <AppWrapper>
+                    <Switch>
+                      <Route exact path="/members" component={() => <div>Członkowie</div>} />
+                      <Route exact path="/areas" component={() => <div>Obszary</div>} />
+                      <Route exact path="/projects" component={() => <div>Projekty</div>} />
+                      <Route exact path="/successes" component={() => <div>Sukcesy</div>} />
+                      <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
+                      <Route exact path="/stats" component={() => <div>Statystyki</div>} />
+                    </Switch>
+                  </AppWrapper>
+                </Switch>
+              );
+            }}
+          </MeQuery>
+        </ThemeProvider>
+      </ApolloProvider>
+      <GlobalStyle theme={lightTheme} />
+    </>
+  );
+};
+
+type Props = RouteComponentProps;
+
+export default withRouter(App);

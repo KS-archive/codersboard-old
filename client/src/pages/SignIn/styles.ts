@@ -8,7 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${get('color')('background')};
+  background-color: ${get('color', 'background')};
 `;
 
 export const Content = styled.div`
@@ -19,11 +19,11 @@ export const Content = styled.div`
   flex-direction: column;
   width: 320px;
   min-height: 300px;
-  padding: ${get('space')('lg')};
+  padding: ${get('space', 'lg')};
   padding-top: 48px;
-  border-radius: ${get('radius')()};
-  box-shadow: ${get('shadow')()};
-  background-color: ${get('color')('white')};
+  border-radius: ${get('radius', )};
+  box-shadow: ${get('shadow', )};
+  background-color: ${get('color', 'white')};
 `;
 
 export const LogoWrapper = styled.div`
@@ -34,9 +34,9 @@ export const LogoWrapper = styled.div`
   justify-content: center;
   width: 240px;
   height: 80px;
-  padding: ${get('space')('md')};
-  border-radius: ${get('radius')()};
-  background-color: ${get('color')('black')};
+  padding: ${get('space', 'md')};
+  border-radius: ${get('radius', )};
+  background-color: ${get('color', 'black')};
 
   svg {
     width: 100%;

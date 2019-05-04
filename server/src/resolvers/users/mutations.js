@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const signup = async (parent, args, ctx, info) => {
+const signUp = async (parent, args, ctx, info) => {
   args.email = args.email.toLowerCase();
   args.password = await bcrypt.hash(args.password, 10);
 
@@ -21,7 +21,7 @@ const signup = async (parent, args, ctx, info) => {
   return user;
 };
 
-const signin = async (parent, { email, password }, ctx, info) => {
+const signIn = async (parent, { email, password }, ctx, info) => {
   const user = await ctx.prisma.query.user({ where: { email } });
   if (!user) {
     throw new Error(`No such user found for email ${email}`);
@@ -42,13 +42,13 @@ const signin = async (parent, { email, password }, ctx, info) => {
   return user;
 };
 
-const signout = (parent, args, ctx, info) => {
+const signOut = (parent, args, ctx, info) => {
   ctx.response.clearCookie('token');
   return { message: 'Logged out' };
 };
 
 module.exports = {
-  signup,
-  signin,
-  signout,
+  signUp,
+  signIn,
+  signOut,
 }

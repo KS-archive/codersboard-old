@@ -2,9 +2,9 @@ import React from 'react';
 import { Formik, Field, FormikActions } from 'formik';
 import * as Yup from 'yup';
 import { ReactComponent as Logo } from 'static/logo.svg';
-import { Button } from 'components/antd';
+import { signIn } from 'store/user/mutations/SignIn';
+import { Button } from 'antd';
 import { Input } from 'components/formik';
-import fakeRequest from 'utils/fakeRequest';
 import * as styles from './styles';
 
 const { Container, Content, LogoWrapper, Form } = styles;
@@ -12,7 +12,7 @@ const { Container, Content, LogoWrapper, Form } = styles;
 const initialValues = {
   email: 'mymail@mail.com',
   password: 'sdf234df',
-}
+};
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,10 +24,9 @@ const SigninSchema = Yup.object().shape({
 });
 
 const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
-  await fakeRequest();
-  console.log(values);
   actions.resetForm();
-}
+  await signIn(values);
+};
 
 const SignIn = () => {
   return (
@@ -40,8 +39,17 @@ const SignIn = () => {
           {({ isSubmitting }) => (
             <Form>
               <Field name="email" component={Input} label="Adres e-mail" size="large" autoComplete="email" />
-              <Field name="password" component={Input} label="Hasło" type="password" size="large" autoComplete="current-password" />
-              <Button htmlType="submit" size="large" type="primary" block loading={isSubmitting}>Zaloguj się</Button>
+              <Field
+                name="password"
+                component={Input}
+                label="Hasło"
+                type="password"
+                size="large"
+                autoComplete="current-password"
+              />
+              <Button htmlType="submit" size="large" type="primary" block loading={isSubmitting}>
+                Zaloguj się
+              </Button>
             </Form>
           )}
         </Formik>

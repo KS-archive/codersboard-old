@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input } from 'components/antd';
+import { Form, Input } from 'antd';
 import { FieldProps } from 'formik/dist/Field';
 import { FormItemProps } from 'antd/es/form';
 import { InputProps } from 'antd/es/input';

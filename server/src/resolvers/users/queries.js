@@ -1,7 +1,9 @@
 const validate = require('../../utils/validate');
 
 const me = async (parent, args, ctx, info) => {
-  await validate(ctx).userExist();
+  if (!ctx.request.userId) {
+    return null;
+  }
 
   return ctx.prisma.query.user(
     {

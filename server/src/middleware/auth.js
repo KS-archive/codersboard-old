@@ -3,9 +3,13 @@ const jwt = require('jsonwebtoken');
 module.exports = async (req, res, next) => {
   const { token } = req.cookies;
   if (token) {
-    const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+    try {
+      const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+      req.userId = userId || null;
+    } catch (ex) {
+      req.userId = null;
+    }
 
-    req.userId = userId || null;
   }
   next();
 }

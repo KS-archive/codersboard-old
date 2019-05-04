@@ -5,9 +5,9 @@ type Message {
 }
 
 type Mutation {
-  signup(email: String!, password: String, image: String!, fullName: String!): User!
-  signin(email: String!, password: String!): User!
-  signout: Message
+  signUp(email: String!, password: String, image: String!, fullName: String!): User!
+  signIn(email: String!, password: String!): User!
+  signOut: Message
 }
 
 type Query {
