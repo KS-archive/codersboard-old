@@ -1,0 +1,32 @@
+mutation createSkill {
+  createSkill(data: { name: "HTML5" }) {
+    id
+    name
+  }
+}
+
+mutation updateSkill {
+  updateSkill(
+    data: { name: "CSS3" }
+    where: { id: "cjva8k8plyeqv0b22xbzeafn3" }
+  ) {
+    id
+    name
+  }
+}
+
+mutation deleteSkill {
+  deleteSkill(where: { id: "cjva8k8plyeqv0b22xbzeafn3" }) {
+    id
+    name
+  }
+}
+
+query skills {
+  skills {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}

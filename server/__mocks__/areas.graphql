@@ -1,0 +1,42 @@
+mutation createArea {
+  createArea(
+    data: { name: "Data Science", description: "Data Science area description" }
+  ) {
+    id
+    name
+    description
+  }
+}
+
+mutation updateArea {
+  updateArea(
+    data: { name: "Web Development" }
+    where: { id: "cjva9ad49s8540b9580d6uzp9" }
+  ) {
+    id
+    name
+    description
+  }
+}
+
+mutation deleteArea {
+  deleteArea(where: { id: "cjva9ad49s8540b9580d6uzp9" }) {
+    id
+    name
+    description
+  }
+}
+
+query areas {
+  areas {
+    id
+    name
+    description
+    mainSlackChannel
+    slackChannels
+    users {
+      id
+      fullName
+    }
+  }
+}

@@ -7,15 +7,49 @@ type Message {
 type Mutation {
   signIn(email: String!, password: String!): User!
   signOut: Message
+
   createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteUser(where: UserWhereUniqueInput!): User
+
   createUniversity(data: UniversityCreateInput!): University!
   updateUniversity(data: UniversityUpdateInput!, where: UniversityWhereUniqueInput!): University
   deleteUniversity(where: UniversityWhereUniqueInput!): University
   addUserToUniversity(userId: ID!, universityId: ID!): University!
+
+  createSuccess(data: SuccessCreateInput!): Success!
+  updateSuccess(data: SuccessUpdateInput!, where: SuccessWhereUniqueInput!): Success
+  deleteSuccess(where: SuccessWhereUniqueInput!): Success
+
+  createSkill(data: SkillCreateInput!): Skill!
+  updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
+  deleteSkill(where: SkillWhereUniqueInput!): Skill
+
+  createProject(data: ProjectCreateInput!): Project!
+  updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
+  deleteProject(where: ProjectWhereUniqueInput!): Project
+
+  createArea(data: AreaCreateInput!): Area!
+  updateArea(data: AreaUpdateInput!, where: AreaWhereUniqueInput!): Area
+  deleteArea(where: AreaWhereUniqueInput!): Area
+
+  createEvent(data: EventCreateInput!): Event!
+  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
+  deleteEvent(where: EventWhereUniqueInput!): Event
+
+  createPost(data: PostCreateInput!): Post!
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  deletePost(where: PostWhereUniqueInput!): Post
 }
 
 type Query {
   me: User
-  users: [User!]
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   universities(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University]!
+  successes(where: SuccessWhereInput, orderBy: SuccessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Success]!
+  skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
+  areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
 }

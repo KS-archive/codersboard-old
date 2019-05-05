@@ -1,0 +1,50 @@
+mutation createProject {
+  createProject(
+    data: {
+      name: "inStudy"
+      description: "Some project description"
+      image: "https://www.ittoolkit.com/assets/img/articles/600x300/project-definition.jpg"
+      type: SOFTWARE
+      status: DONE
+    }
+  ) {
+    id
+    name
+  }
+}
+
+mutation updateProject {
+  updateProject(
+    data: { name: "Schroniak" }
+    where: { id: "cjva8x3qdyhop0b22foqxdu78" }
+  ) {
+    id
+    name
+  }
+}
+
+mutation deleteProject {
+  deleteProject(where: { id: "cjva8x3qdyhop0b22foqxdu78" }) {
+    id
+    name
+  }
+}
+
+query projects {
+  projects {
+    id
+    name
+    description
+    image
+    startDate
+    finishDate
+    type
+    status
+    mainSlackChannel
+    gallery
+    slackChannels
+    users {
+      id
+    }
+  }
+}

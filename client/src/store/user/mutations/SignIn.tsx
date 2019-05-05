@@ -8,8 +8,6 @@ export const SIGN_IN = gql`
   mutation signIn($email: String!, $password: String!) {
     signIn(email: $email, password: $password) {
       id
-      fullName
-      email
     }
   }
 `;
@@ -36,8 +34,6 @@ interface Props {
 interface Data {
   signIn: {
     id: string;
-    fullName: string;
-    email: string;
   };
 }
 

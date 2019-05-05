@@ -169,6 +169,7 @@ enum EventType {
   PRIVATE
   PROJECT_MEETING
   AREA_MEETING
+  OTHER
 }
 
 type Event {
@@ -178,7 +179,7 @@ type Event {
   date: DateTime!
   image: String
   participants: [User!]!
-  type: [EventType!]! @scalarList(strategy: RELATION)
+  type: EventType!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

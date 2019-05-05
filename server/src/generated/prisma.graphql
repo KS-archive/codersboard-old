@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Sun May 05 2019 01:43:16 GMT+0200 (Central European Summer Time)
+# timestamp: Sun May 05 2019 03:36:37 GMT+0200 (Central European Summer Time)
 
 enum Access {
   DECLARATION
@@ -450,7 +450,7 @@ type Event implements Node {
   date: DateTime!
   image: String
   participants(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  type: [EventType!]!
+  type: EventType!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -471,12 +471,8 @@ input EventCreateInput {
   description: String
   date: DateTime!
   image: String
-  type: EventCreatetypeInput
+  type: EventType!
   participants: UserCreateManyInput
-}
-
-input EventCreatetypeInput {
-  set: [EventType!]
 }
 
 """An edge in a connection."""
@@ -499,6 +495,8 @@ enum EventOrderByInput {
   date_DESC
   image_ASC
   image_DESC
+  type_ASC
+  type_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -511,7 +509,7 @@ type EventPreviousValues {
   description: String
   date: DateTime!
   image: String
-  type: [EventType!]!
+  type: EventType!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -558,6 +556,7 @@ enum EventType {
   PRIVATE
   PROJECT_MEETING
   AREA_MEETING
+  OTHER
 }
 
 input EventUpdateInput {
@@ -565,7 +564,7 @@ input EventUpdateInput {
   description: String
   date: DateTime
   image: String
-  type: EventUpdatetypeInput
+  type: EventType
   participants: UserUpdateManyInput
 }
 
@@ -574,11 +573,7 @@ input EventUpdateManyMutationInput {
   description: String
   date: DateTime
   image: String
-  type: EventUpdatetypeInput
-}
-
-input EventUpdatetypeInput {
-  set: [EventType!]
+  type: EventType
 }
 
 input EventWhereInput {
@@ -772,6 +767,16 @@ input EventWhereInput {
 
   """All values not ending with the given string."""
   image_not_ends_with: String
+  type: EventType
+
+  """All values that are not equal to given value."""
+  type_not: EventType
+
+  """All values that are contained in given list."""
+  type_in: [EventType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [EventType!]
   createdAt: DateTime
 
   """All values that are not equal to given value."""

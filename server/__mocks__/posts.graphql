@@ -1,0 +1,64 @@
+mutation createPost {
+  createPost(
+    data: {
+      title: "My new post"
+      content: "Post content"
+      user: { connect: { id: "cjva5lza8r4hl0b95u9v4ieh6" } }
+    }
+  ) {
+    id
+    title
+    content
+    user {
+      id
+      fullName
+    }
+  }
+}
+
+mutation updatePost {
+  updatePost(
+    data: { title: "My another new post" }
+    where: { id: "cjvaa5od5yuip0b22cz7xztbg" }
+  ) {
+    id
+    title
+    content
+    user {
+      id
+      fullName
+    }
+  }
+}
+
+mutation deletePost {
+  deletePost(where: { id: "cjvaa5od5yuip0b22cz7xztbg" }) {
+    id
+    title
+    content
+  }
+}
+
+query posts {
+  posts {
+    id
+    title
+    content
+    tags {
+      id
+      name
+    }
+    area {
+      id
+      name
+    }
+    project {
+      id
+      name
+    }
+    user {
+      id
+      fullName
+    }
+  }
+}

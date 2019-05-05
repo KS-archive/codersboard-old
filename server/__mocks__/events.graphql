@@ -1,0 +1,51 @@
+mutation createEvent {
+  createEvent(
+    data: {
+      name: "Dev Meetings"
+      description: "React workshops"
+      date: "2019-05-12T11:00:00.843Z"
+      type: OPEN
+    }
+  ) {
+    id
+    name
+    description
+    date
+  }
+}
+
+mutation updateEvent {
+  updateEvent(
+    data: { name: "React Meetings" }
+    where: { id: "cjva9nuhkscev0b95ml8drymq" }
+  ) {
+    id
+    name
+    description
+    date
+  }
+}
+
+mutation deleteEvent {
+  deleteEvent(where: { id: "cjva9nuhkscev0b95ml8drymq" }) {
+    id
+    name
+    description
+    date
+  }
+}
+
+query events {
+  events {
+    id
+    name
+    description
+    date
+    image
+    type
+    participants {
+      id
+      fullName
+    }
+  }
+}

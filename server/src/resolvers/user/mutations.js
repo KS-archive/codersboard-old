@@ -3,9 +3,19 @@ const jwt = require('jsonwebtoken');
 const validate = require('../../utils/validate');
 
 const createUser = async (parent, args, ctx, info) => {
-  await validate(ctx).userHasPermission(['OWNER', 'ADMIN']);
-  args.data.password = await bcrypt.hash(args.password, 10);
+  await validate(ctx).userHasPermission(['OWNER', 'HR']);
+  args.data.password = await bcrypt.hash(args.data.password, 10);
   return ctx.prisma.mutation.createUser(args, info);
+};
+
+const updateUser = async (parent, args, ctx, info) => {
+  await validate(ctx).userHasPermission(['OWNER', 'HR']);
+  return ctx.prisma.mutation.updateUser(args, info);
+};
+
+const deleteUser = async (parent, args, ctx, info) => {
+  await validate(ctx).userHasPermission(['OWNER', 'HR']);
+  return ctx.prisma.mutation.deleteUser(args, info);
 };
 
 const signIn = async (parent, { email, password }, ctx, info) => {
@@ -45,6 +55,8 @@ const signOut = (parent, args, ctx, info) => {
 
 module.exports = {
   createUser,
+  updateUser,
+  deleteUser,
   signIn,
   signOut,
 }

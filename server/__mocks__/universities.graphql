@@ -1,0 +1,75 @@
+mutation createUniversity {
+  createUniversity(
+    data: {
+      name: "Uniwersytat Ekonomiczny we Wrocławiu"
+      image: "http://www.ue.wroc.pl/p/logotyp2/poziom_pl.png"
+      users: {
+        connect: [
+          { id: "cjvaae7d3slp20b95m54iv552" }
+          { id: "cjva7pregy6e80b22oq4n5lab" }
+        ]
+      }
+    }
+  ) {
+    id
+    name
+    image
+    users {
+      id
+    }
+  }
+}
+
+mutation updateUniversity {
+  updateUniversity(
+    data: {
+      name: "Politechnika Wrocławska"
+      image: "https://www.eurocircuits.com/wp-content/uploads/PWr-logo.png"
+    }
+    where: { id: "cjva1p3r9wfms0b223gbgo0as" }
+  ) {
+    id
+    name
+    image
+    users {
+      id
+    }
+  }
+}
+
+mutation deleteUniversity {
+  deleteUniversity(where: { id: "cjvaac3z5sl0i0b95r06uhxvr" }) {
+    id
+    name
+    image
+    users {
+      id
+    }
+  }
+}
+mutation addUserToUniversity {
+  addUserToUniversity(
+    userId: "cjvaaii6byyyk0b22gynewjho"
+    universityId: "cjvaag9voyyaf0b227omxzjup"
+  ) {
+    id
+    name
+    image
+    users {
+      id
+      fullName
+    }
+  }
+}
+
+query universities {
+  universities {
+    id
+    name
+    image
+    users {
+      id
+      fullName
+    }
+  }
+}
