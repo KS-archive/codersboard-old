@@ -5,12 +5,17 @@ type Message {
 }
 
 type Mutation {
-  signUp(email: String!, password: String, image: String!, fullName: String!): User!
   signIn(email: String!, password: String!): User!
   signOut: Message
+  createUser(data: UserCreateInput!): User!
+  createUniversity(data: UniversityCreateInput!): University!
+  updateUniversity(data: UniversityUpdateInput!, where: UniversityWhereUniqueInput!): University
+  deleteUniversity(where: UniversityWhereUniqueInput!): University
+  addUserToUniversity(userId: ID!, universityId: ID!): University!
 }
 
 type Query {
   me: User
   users: [User!]
+  universities(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University]!
 }

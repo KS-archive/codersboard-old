@@ -1,7 +1,9 @@
-const usersQueries = require('./users/queries');
+const userQueries = require('./user/queries');
+const universityQueries = require('./university/queries');
 
 const Query = {
-  ...usersQueries,
+  ...userQueries,
+  ...universityQueries,
 };
 
 module.exports = Query;

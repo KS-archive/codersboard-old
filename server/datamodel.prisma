@@ -43,7 +43,7 @@ type User {
   skills: [UserSkill!]!
   projects: [UserProject!]!
   permissions: [MainPermission!]! @scalarList(strategy: RELATION)
-  university: [University!]!
+  university: University
   universityDepartment: String
   indexNumber: Int
   fieldOfStudy: String
@@ -57,12 +57,13 @@ type User {
   guestOf: [ID!]! @scalarList(strategy: RELATION)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  special: [String!]! @scalarList(strategy: RELATION)
 }
 
 type University {
   id: ID! @id
   name: String!
-  image: String
+  image: String!
   users: [User!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

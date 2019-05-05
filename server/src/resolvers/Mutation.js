@@ -1,7 +1,9 @@
-const usersMutations = require('./users/mutations');
+const userMutations = require('./user/mutations');
+const universityMutations = require('./university/mutations');
 
 const Mutation = {
-  ...usersMutations,
+  ...userMutations,
+  ...universityMutations,
 };
 
 module.exports = Mutation;

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Sat May 04 2019 03:15:38 GMT+0200 (Central European Summer Time)
+# timestamp: Sun May 05 2019 01:43:16 GMT+0200 (Central European Summer Time)
 
 enum Access {
   DECLARATION
@@ -2762,7 +2762,7 @@ input SuccessWhereUniqueInput {
 type University implements Node {
   id: ID!
   name: String!
-  image: String
+  image: String!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -2781,19 +2781,19 @@ type UniversityConnection {
 input UniversityCreateInput {
   id: ID
   name: String!
-  image: String
+  image: String!
   users: UserCreateManyWithoutUniversityInput
 }
 
-input UniversityCreateManyWithoutUsersInput {
-  create: [UniversityCreateWithoutUsersInput!]
-  connect: [UniversityWhereUniqueInput!]
+input UniversityCreateOneWithoutUsersInput {
+  create: UniversityCreateWithoutUsersInput
+  connect: UniversityWhereUniqueInput
 }
 
 input UniversityCreateWithoutUsersInput {
   id: ID
   name: String!
-  image: String
+  image: String!
 }
 
 """An edge in a connection."""
@@ -2821,184 +2821,9 @@ enum UniversityOrderByInput {
 type UniversityPreviousValues {
   id: ID!
   name: String!
-  image: String
+  image: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-}
-
-input UniversityScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UniversityScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UniversityScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UniversityScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  image: String
-
-  """All values that are not equal to given value."""
-  image_not: String
-
-  """All values that are contained in given list."""
-  image_in: [String!]
-
-  """All values that are not contained in given list."""
-  image_not_in: [String!]
-
-  """All values less than the given value."""
-  image_lt: String
-
-  """All values less than or equal the given value."""
-  image_lte: String
-
-  """All values greater than the given value."""
-  image_gt: String
-
-  """All values greater than or equal the given value."""
-  image_gte: String
-
-  """All values containing the given string."""
-  image_contains: String
-
-  """All values not containing the given string."""
-  image_not_contains: String
-
-  """All values starting with the given string."""
-  image_starts_with: String
-
-  """All values not starting with the given string."""
-  image_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_ends_with: String
-
-  """All values not ending with the given string."""
-  image_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
 }
 
 type UniversitySubscriptionPayload {
@@ -3044,31 +2869,18 @@ input UniversityUpdateInput {
   users: UserUpdateManyWithoutUniversityInput
 }
 
-input UniversityUpdateManyDataInput {
-  name: String
-  image: String
-}
-
 input UniversityUpdateManyMutationInput {
   name: String
   image: String
 }
 
-input UniversityUpdateManyWithoutUsersInput {
-  create: [UniversityCreateWithoutUsersInput!]
-  connect: [UniversityWhereUniqueInput!]
-  set: [UniversityWhereUniqueInput!]
-  disconnect: [UniversityWhereUniqueInput!]
-  delete: [UniversityWhereUniqueInput!]
-  update: [UniversityUpdateWithWhereUniqueWithoutUsersInput!]
-  updateMany: [UniversityUpdateManyWithWhereNestedInput!]
-  deleteMany: [UniversityScalarWhereInput!]
-  upsert: [UniversityUpsertWithWhereUniqueWithoutUsersInput!]
-}
-
-input UniversityUpdateManyWithWhereNestedInput {
-  where: UniversityScalarWhereInput!
-  data: UniversityUpdateManyDataInput!
+input UniversityUpdateOneWithoutUsersInput {
+  create: UniversityCreateWithoutUsersInput
+  connect: UniversityWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UniversityUpdateWithoutUsersDataInput
+  upsert: UniversityUpsertWithoutUsersInput
 }
 
 input UniversityUpdateWithoutUsersDataInput {
@@ -3076,13 +2888,7 @@ input UniversityUpdateWithoutUsersDataInput {
   image: String
 }
 
-input UniversityUpdateWithWhereUniqueWithoutUsersInput {
-  where: UniversityWhereUniqueInput!
-  data: UniversityUpdateWithoutUsersDataInput!
-}
-
-input UniversityUpsertWithWhereUniqueWithoutUsersInput {
-  where: UniversityWhereUniqueInput!
+input UniversityUpsertWithoutUsersInput {
   update: UniversityUpdateWithoutUsersDataInput!
   create: UniversityCreateWithoutUsersInput!
 }
@@ -3283,7 +3089,7 @@ type User implements Node {
   skills(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserSkill!]
   projects(where: UserProjectWhereInput, orderBy: UserProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserProject!]
   permissions: [MainPermission!]!
-  university(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University!]
+  university: University
   universityDepartment: String
   indexNumber: Int
   fieldOfStudy: String
@@ -3297,6 +3103,7 @@ type User implements Node {
   guestOf: [ID!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  special: [String!]!
 }
 
 type UserArea implements Node {
@@ -3791,10 +3598,11 @@ input UserCreateInput {
   adminOf: UserCreateadminOfInput
   memberOf: UserCreatememberOfInput
   guestOf: UserCreateguestOfInput
+  special: UserCreatespecialInput
   areas: UserAreaCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
   projects: UserProjectCreateManyWithoutUserInput
-  university: UniversityCreateManyWithoutUsersInput
+  university: UniversityCreateOneWithoutUsersInput
 }
 
 input UserCreateinstitutionInput {
@@ -3843,6 +3651,10 @@ input UserCreatepermissionsInput {
   set: [MainPermission!]
 }
 
+input UserCreatespecialInput {
+  set: [String!]
+}
+
 input UserCreateWithoutAreasInput {
   id: ID
   fullName: String!
@@ -3865,9 +3677,10 @@ input UserCreateWithoutAreasInput {
   adminOf: UserCreateadminOfInput
   memberOf: UserCreatememberOfInput
   guestOf: UserCreateguestOfInput
+  special: UserCreatespecialInput
   skills: UserSkillCreateManyWithoutUserInput
   projects: UserProjectCreateManyWithoutUserInput
-  university: UniversityCreateManyWithoutUsersInput
+  university: UniversityCreateOneWithoutUsersInput
 }
 
 input UserCreateWithoutProjectsInput {
@@ -3892,9 +3705,10 @@ input UserCreateWithoutProjectsInput {
   adminOf: UserCreateadminOfInput
   memberOf: UserCreatememberOfInput
   guestOf: UserCreateguestOfInput
+  special: UserCreatespecialInput
   areas: UserAreaCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
-  university: UniversityCreateManyWithoutUsersInput
+  university: UniversityCreateOneWithoutUsersInput
 }
 
 input UserCreateWithoutSkillsInput {
@@ -3919,9 +3733,10 @@ input UserCreateWithoutSkillsInput {
   adminOf: UserCreateadminOfInput
   memberOf: UserCreatememberOfInput
   guestOf: UserCreateguestOfInput
+  special: UserCreatespecialInput
   areas: UserAreaCreateManyWithoutUserInput
   projects: UserProjectCreateManyWithoutUserInput
-  university: UniversityCreateManyWithoutUsersInput
+  university: UniversityCreateOneWithoutUsersInput
 }
 
 input UserCreateWithoutUniversityInput {
@@ -3946,6 +3761,7 @@ input UserCreateWithoutUniversityInput {
   adminOf: UserCreateadminOfInput
   memberOf: UserCreatememberOfInput
   guestOf: UserCreateguestOfInput
+  special: UserCreatespecialInput
   areas: UserAreaCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
   projects: UserProjectCreateManyWithoutUserInput
@@ -4019,6 +3835,7 @@ type UserPreviousValues {
   guestOf: [ID!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  special: [String!]!
 }
 
 type UserProject implements Node {
@@ -5406,10 +5223,11 @@ input UserUpdateDataInput {
   adminOf: UserUpdateadminOfInput
   memberOf: UserUpdatememberOfInput
   guestOf: UserUpdateguestOfInput
+  special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
   projects: UserProjectUpdateManyWithoutUserInput
-  university: UniversityUpdateManyWithoutUsersInput
+  university: UniversityUpdateOneWithoutUsersInput
 }
 
 input UserUpdateguestOfInput {
@@ -5437,10 +5255,11 @@ input UserUpdateInput {
   adminOf: UserUpdateadminOfInput
   memberOf: UserUpdatememberOfInput
   guestOf: UserUpdateguestOfInput
+  special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
   projects: UserProjectUpdateManyWithoutUserInput
-  university: UniversityUpdateManyWithoutUsersInput
+  university: UniversityUpdateOneWithoutUsersInput
 }
 
 input UserUpdateinstitutionInput {
@@ -5468,6 +5287,7 @@ input UserUpdateManyDataInput {
   adminOf: UserUpdateadminOfInput
   memberOf: UserUpdatememberOfInput
   guestOf: UserUpdateguestOfInput
+  special: UserUpdatespecialInput
 }
 
 input UserUpdateManyInput {
@@ -5503,6 +5323,7 @@ input UserUpdateManyMutationInput {
   adminOf: UserUpdateadminOfInput
   memberOf: UserUpdatememberOfInput
   guestOf: UserUpdateguestOfInput
+  special: UserUpdatespecialInput
 }
 
 input UserUpdateManyWithoutUniversityInput {
@@ -5562,6 +5383,10 @@ input UserUpdatepermissionsInput {
   set: [MainPermission!]
 }
 
+input UserUpdatespecialInput {
+  set: [String!]
+}
+
 input UserUpdateWithoutAreasDataInput {
   fullName: String
   profileURL: String
@@ -5583,9 +5408,10 @@ input UserUpdateWithoutAreasDataInput {
   adminOf: UserUpdateadminOfInput
   memberOf: UserUpdatememberOfInput
   guestOf: UserUpdateguestOfInput
+  special: UserUpdatespecialInput
   skills: UserSkillUpdateManyWithoutUserInput
   projects: UserProjectUpdateManyWithoutUserInput
-  university: UniversityUpdateManyWithoutUsersInput
+  university: UniversityUpdateOneWithoutUsersInput
 }
 
 input UserUpdateWithoutProjectsDataInput {
@@ -5609,9 +5435,10 @@ input UserUpdateWithoutProjectsDataInput {
   adminOf: UserUpdateadminOfInput
   memberOf: UserUpdatememberOfInput
   guestOf: UserUpdateguestOfInput
+  special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
-  university: UniversityUpdateManyWithoutUsersInput
+  university: UniversityUpdateOneWithoutUsersInput
 }
 
 input UserUpdateWithoutSkillsDataInput {
@@ -5635,9 +5462,10 @@ input UserUpdateWithoutSkillsDataInput {
   adminOf: UserUpdateadminOfInput
   memberOf: UserUpdatememberOfInput
   guestOf: UserUpdateguestOfInput
+  special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   projects: UserProjectUpdateManyWithoutUserInput
-  university: UniversityUpdateManyWithoutUsersInput
+  university: UniversityUpdateOneWithoutUsersInput
 }
 
 input UserUpdateWithoutUniversityDataInput {
@@ -5661,6 +5489,7 @@ input UserUpdateWithoutUniversityDataInput {
   adminOf: UserUpdateadminOfInput
   memberOf: UserUpdatememberOfInput
   guestOf: UserUpdateguestOfInput
+  special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
   projects: UserProjectUpdateManyWithoutUserInput
@@ -6294,9 +6123,7 @@ input UserWhereInput {
   projects_every: UserProjectWhereInput
   projects_some: UserProjectWhereInput
   projects_none: UserProjectWhereInput
-  university_every: UniversityWhereInput
-  university_some: UniversityWhereInput
-  university_none: UniversityWhereInput
+  university: UniversityWhereInput
 }
 
 input UserWhereUniqueInput {

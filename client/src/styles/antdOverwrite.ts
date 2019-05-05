@@ -8,4 +8,8 @@ export default css`
   .ant-form-item-label {
     line-height: 1.5;
   }
+
+  .ant-table-scroll table .ant-table-fixed-columns-in-body {
+    visibility: visible;
+  }
 `;

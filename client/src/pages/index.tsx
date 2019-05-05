@@ -9,6 +9,9 @@ import MeQuery from 'store/user/queries/Me';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
+import AdminWrapper from 'pages/AdminWrapper';
+
+import AdminUniversities from 'pages/admin/Universities';
 
 import GlobalStyle from 'styles/GlobalStyle';
 import lightTheme from 'styles/lightTheme';
@@ -32,16 +35,31 @@ const App = (props: Props) => {
               return (
                 <Switch>
                   <Route path="/sign-in" component={SignIn} />
-                  <AppWrapper>
-                    <Switch>
-                      <Route exact path="/members" component={Members} />
-                      <Route exact path="/areas" component={() => <div>Obszary</div>} />
-                      <Route exact path="/projects" component={() => <div>Projekty</div>} />
-                      <Route exact path="/successes" component={() => <div>Sukcesy</div>} />
-                      <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
-                      <Route exact path="/stats" component={() => <div>Statystyki</div>} />
-                    </Switch>
-                  </AppWrapper>
+                  <Route path="/">
+                    <AppWrapper>
+                      <Switch>
+                        <Route exact path="/members" component={Members} />
+                        <Route exact path="/areas" component={() => <div>Obszary</div>} />
+                        <Route exact path="/projects" component={() => <div>Projekty</div>} />
+                        <Route exact path="/successes" component={() => <div>Sukcesy</div>} />
+                        <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
+                        <Route exact path="/stats" component={() => <div>Statystyki</div>} />
+                        <Route path="/admin">
+                          <AdminWrapper pathname={pathname} historyPush={push}>
+                            <Switch>
+                              <Route exact path="/admin/members" component={() => <div>Zarządzaj członkami</div>} />
+                              <Route exact path="/admin/universities" component={AdminUniversities} />
+                              <Route
+                                exact
+                                path="/admin/skills"
+                                component={() => <div>Zarządzaj umiejętnościami</div>}
+                              />
+                            </Switch>
+                          </AdminWrapper>
+                        </Route>
+                      </Switch>
+                    </AppWrapper>
+                  </Route>
                 </Switch>
               );
             }}

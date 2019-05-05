@@ -14,7 +14,7 @@ const me = async (parent, args, ctx, info) => {
 };
 
 const users = async (parent, args, ctx, info) => {
-  await validate(ctx).userExist().userHasPermission(['OWNER', 'HR']);
+  await validate(ctx).userHasPermission(['OWNER', 'HR']);
 
   return ctx.prisma.query.users();
 };

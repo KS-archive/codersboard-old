@@ -28,9 +28,11 @@ export interface User {
   areas: UserArea[];
   skills: UserSkill[];
   projects: UserProject[];
-  permissions: 'OWNER' | 'MEMBER' | 'TRAINEE' | 'HR' | 'FINANCE' | 'DATA';
-  university: 'ASPWR' | 'DSWWR' | 'PWR' | 'UWR' | 'UEWR' | 'SWPSWR' | 'WSHWR' | 'WSBWR' | 'PRE' | 'POST' | 'NONE';
+  permissions: MainPermission[];
+  university: any;
   year?: 1 | 2 | 3 | 4 | 5 | 6;
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type MainPermission =  'OWNER' | 'ADMIN' | 'MEMBER' | 'TRAINEE' | 'HR' | 'FINANCE' | 'DATA';

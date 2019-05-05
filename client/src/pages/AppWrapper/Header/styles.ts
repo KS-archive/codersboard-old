@@ -23,6 +23,18 @@ export const Right = styled.div`
     align-items: center;
     cursor: pointer;
   }
+
+  .ant-btn {
+    margin-right: ${get('space', 'lg')};
+
+    a {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
 `;
 
 export const Name = styled.p`

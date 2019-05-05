@@ -15,7 +15,7 @@ import * as styles from './styles';
 
 const { SidebarContainer, LogoWrapper, Menu, MenuItem } = styles;
 
-const pathKeys = ['members', 'areas', 'projects', 'successes', 'events', 'stats'];
+const pathKeys = ['members', 'areas', 'projects', 'successes', 'events', 'stats', 'admin'];
 
 const AppWrapper = ({ collapsed, location, history }: Props) => {
   const currentItem = location.pathname.split('/')[1];

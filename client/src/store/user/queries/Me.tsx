@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
+import { MainPermission } from 'types/User';
 
 export const ME = gql`
   {
@@ -9,6 +10,7 @@ export const ME = gql`
       fullName
       image
       email
+      permissions
     }
   }
 `;
@@ -28,6 +30,7 @@ export interface MeProps {
   fullName: string;
   image: string;
   email: string;
+  permissions: MainPermission[];
 }
 
 export interface Data {
