@@ -18,6 +18,7 @@ export default css`
   .ant-table-scroll table .ant-table-fixed-columns-in-body {
     visibility: visible;
   }
+
   .ant-card {
     border-radius: ${get('radius')};
   }

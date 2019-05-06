@@ -11,6 +11,7 @@ import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
 import AdminWrapper from 'pages/AdminWrapper';
 
+import AdminMembers from 'pages/admin/Members';
 import AdminUniversities from 'pages/admin/Universities';
 import AdminSkills from 'pages/admin/Skills';
 
@@ -48,7 +49,7 @@ const App = (props: Props) => {
                         <Route path="/admin">
                           <AdminWrapper pathname={pathname} historyPush={push}>
                             <Switch>
-                              <Route exact path="/admin/members" component={() => <div>Zarządzaj członkami</div>} />
+                              <Route exact path="/admin/members" component={AdminMembers} />
                               <Route exact path="/admin/universities" component={AdminUniversities} />
                               <Route exact path="/admin/skills" component={AdminSkills} />
                             </Switch>

@@ -1,8 +1,7 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Mon May 06 2019 17:38:37 GMT+0200 (Central European Summer Time)
+# timestamp: Mon May 06 2019 23:50:02 GMT+0200 (Central European Summer Time)
 
 enum Access {
-  DECLARATION
   FONT_AWESOME
   FREEPIK
   GITHUB
@@ -58,7 +57,9 @@ type AggregateUserSkill {
 
 type Area implements Node {
   id: ID!
+  areaURL: String!
   name: String!
+  icon: String!
   description: String!
   mainSlackChannel: String
   slackChannels: [String!]!
@@ -79,7 +80,9 @@ type AreaConnection {
 
 input AreaCreateInput {
   id: ID
+  areaURL: String!
   name: String!
+  icon: String!
   description: String!
   mainSlackChannel: String
   slackChannels: AreaCreateslackChannelsInput
@@ -107,8 +110,12 @@ type AreaEdge {
 enum AreaOrderByInput {
   id_ASC
   id_DESC
+  areaURL_ASC
+  areaURL_DESC
   name_ASC
   name_DESC
+  icon_ASC
+  icon_DESC
   description_ASC
   description_DESC
   mainSlackChannel_ASC
@@ -121,7 +128,9 @@ enum AreaOrderByInput {
 
 type AreaPreviousValues {
   id: ID!
+  areaURL: String!
   name: String!
+  icon: String!
   description: String!
   mainSlackChannel: String
   slackChannels: [String!]!
@@ -167,7 +176,9 @@ input AreaSubscriptionWhereInput {
 }
 
 input AreaUpdateDataInput {
+  areaURL: String
   name: String
+  icon: String
   description: String
   mainSlackChannel: String
   slackChannels: AreaUpdateslackChannelsInput
@@ -175,7 +186,9 @@ input AreaUpdateDataInput {
 }
 
 input AreaUpdateInput {
+  areaURL: String
   name: String
+  icon: String
   description: String
   mainSlackChannel: String
   slackChannels: AreaUpdateslackChannelsInput
@@ -183,7 +196,9 @@ input AreaUpdateInput {
 }
 
 input AreaUpdateManyMutationInput {
+  areaURL: String
   name: String
+  icon: String
   description: String
   mainSlackChannel: String
   slackChannels: AreaUpdateslackChannelsInput
@@ -263,6 +278,46 @@ input AreaWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  areaURL: String
+
+  """All values that are not equal to given value."""
+  areaURL_not: String
+
+  """All values that are contained in given list."""
+  areaURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  areaURL_not_in: [String!]
+
+  """All values less than the given value."""
+  areaURL_lt: String
+
+  """All values less than or equal the given value."""
+  areaURL_lte: String
+
+  """All values greater than the given value."""
+  areaURL_gt: String
+
+  """All values greater than or equal the given value."""
+  areaURL_gte: String
+
+  """All values containing the given string."""
+  areaURL_contains: String
+
+  """All values not containing the given string."""
+  areaURL_not_contains: String
+
+  """All values starting with the given string."""
+  areaURL_starts_with: String
+
+  """All values not starting with the given string."""
+  areaURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  areaURL_ends_with: String
+
+  """All values not ending with the given string."""
+  areaURL_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -303,6 +358,46 @@ input AreaWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  icon: String
+
+  """All values that are not equal to given value."""
+  icon_not: String
+
+  """All values that are contained in given list."""
+  icon_in: [String!]
+
+  """All values that are not contained in given list."""
+  icon_not_in: [String!]
+
+  """All values less than the given value."""
+  icon_lt: String
+
+  """All values less than or equal the given value."""
+  icon_lte: String
+
+  """All values greater than the given value."""
+  icon_gt: String
+
+  """All values greater than or equal the given value."""
+  icon_gte: String
+
+  """All values containing the given string."""
+  icon_contains: String
+
+  """All values not containing the given string."""
+  icon_not_contains: String
+
+  """All values starting with the given string."""
+  icon_starts_with: String
+
+  """All values not starting with the given string."""
+  icon_not_starts_with: String
+
+  """All values ending with the given string."""
+  icon_ends_with: String
+
+  """All values not ending with the given string."""
+  icon_not_ends_with: String
   description: String
 
   """All values that are not equal to given value."""
@@ -434,6 +529,8 @@ input AreaWhereInput {
 
 input AreaWhereUniqueInput {
   id: ID
+  areaURL: String
+  name: String
 }
 
 type BatchPayload {
@@ -1549,6 +1646,7 @@ input PostWhereUniqueInput {
 
 type Project implements Node {
   id: ID!
+  projectURL: String!
   name: String!
   description: String!
   image: String!
@@ -1580,6 +1678,7 @@ input ProjectCreategalleryInput {
 
 input ProjectCreateInput {
   id: ID
+  projectURL: String!
   name: String!
   description: String!
   image: String!
@@ -1614,6 +1713,8 @@ type ProjectEdge {
 enum ProjectOrderByInput {
   id_ASC
   id_DESC
+  projectURL_ASC
+  projectURL_DESC
   name_ASC
   name_DESC
   description_ASC
@@ -1638,6 +1739,7 @@ enum ProjectOrderByInput {
 
 type ProjectPreviousValues {
   id: ID!
+  projectURL: String!
   name: String!
   description: String!
   image: String!
@@ -1706,6 +1808,7 @@ enum ProjectType {
 }
 
 input ProjectUpdateDataInput {
+  projectURL: String
   name: String
   description: String
   image: String
@@ -1724,6 +1827,7 @@ input ProjectUpdategalleryInput {
 }
 
 input ProjectUpdateInput {
+  projectURL: String
   name: String
   description: String
   image: String
@@ -1738,6 +1842,7 @@ input ProjectUpdateInput {
 }
 
 input ProjectUpdateManyMutationInput {
+  projectURL: String
   name: String
   description: String
   image: String
@@ -1824,6 +1929,46 @@ input ProjectWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  projectURL: String
+
+  """All values that are not equal to given value."""
+  projectURL_not: String
+
+  """All values that are contained in given list."""
+  projectURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  projectURL_not_in: [String!]
+
+  """All values less than the given value."""
+  projectURL_lt: String
+
+  """All values less than or equal the given value."""
+  projectURL_lte: String
+
+  """All values greater than the given value."""
+  projectURL_gt: String
+
+  """All values greater than or equal the given value."""
+  projectURL_gte: String
+
+  """All values containing the given string."""
+  projectURL_contains: String
+
+  """All values not containing the given string."""
+  projectURL_not_contains: String
+
+  """All values starting with the given string."""
+  projectURL_starts_with: String
+
+  """All values not starting with the given string."""
+  projectURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  projectURL_ends_with: String
+
+  """All values not ending with the given string."""
+  projectURL_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -2099,6 +2244,8 @@ input ProjectWhereInput {
 
 input ProjectWhereUniqueInput {
   id: ID
+  projectURL: String
+  name: String
 }
 
 type Query {
@@ -2453,6 +2600,7 @@ input SkillWhereInput {
 
 input SkillWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type Subscription {
@@ -3126,6 +3274,7 @@ input UniversityWhereInput {
 
 input UniversityWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type User implements Node {
@@ -3144,19 +3293,15 @@ type User implements Node {
   permissions: [MainPermission!]!
   university: University
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
+  year: Int
+  indexNumber: Int
   institution: [Institution!]!
   slackId: String
   accesses: [Access!]!
-  year: Int
-  ownerOf: [ID!]!
-  adminOf: [ID!]!
-  memberOf: [ID!]!
-  guestOf: [ID!]!
+  special: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
-  special: [String!]!
 }
 
 type UserArea implements Node {
@@ -3621,14 +3766,6 @@ input UserCreateaccessesInput {
   set: [Access!]
 }
 
-input UserCreateadminOfInput {
-  set: [ID!]
-}
-
-input UserCreateguestOfInput {
-  set: [ID!]
-}
-
 input UserCreateInput {
   id: ID
   fullName: String!
@@ -3640,17 +3777,13 @@ input UserCreateInput {
   password: String!
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   accesses: UserCreateaccessesInput
-  ownerOf: UserCreateownerOfInput
-  adminOf: UserCreateadminOfInput
-  memberOf: UserCreatememberOfInput
-  guestOf: UserCreateguestOfInput
   special: UserCreatespecialInput
   areas: UserAreaCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
@@ -3670,10 +3803,6 @@ input UserCreateManyInput {
 input UserCreateManyWithoutUniversityInput {
   create: [UserCreateWithoutUniversityInput!]
   connect: [UserWhereUniqueInput!]
-}
-
-input UserCreatememberOfInput {
-  set: [ID!]
 }
 
 input UserCreateOneInput {
@@ -3696,10 +3825,6 @@ input UserCreateOneWithoutSkillsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateownerOfInput {
-  set: [ID!]
-}
-
 input UserCreatepermissionsInput {
   set: [MainPermission!]
 }
@@ -3719,17 +3844,13 @@ input UserCreateWithoutAreasInput {
   password: String!
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   accesses: UserCreateaccessesInput
-  ownerOf: UserCreateownerOfInput
-  adminOf: UserCreateadminOfInput
-  memberOf: UserCreatememberOfInput
-  guestOf: UserCreateguestOfInput
   special: UserCreatespecialInput
   skills: UserSkillCreateManyWithoutUserInput
   projects: UserProjectCreateManyWithoutUserInput
@@ -3747,17 +3868,13 @@ input UserCreateWithoutProjectsInput {
   password: String!
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   accesses: UserCreateaccessesInput
-  ownerOf: UserCreateownerOfInput
-  adminOf: UserCreateadminOfInput
-  memberOf: UserCreatememberOfInput
-  guestOf: UserCreateguestOfInput
   special: UserCreatespecialInput
   areas: UserAreaCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
@@ -3775,17 +3892,13 @@ input UserCreateWithoutSkillsInput {
   password: String!
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   accesses: UserCreateaccessesInput
-  ownerOf: UserCreateownerOfInput
-  adminOf: UserCreateadminOfInput
-  memberOf: UserCreatememberOfInput
-  guestOf: UserCreateguestOfInput
   special: UserCreatespecialInput
   areas: UserAreaCreateManyWithoutUserInput
   projects: UserProjectCreateManyWithoutUserInput
@@ -3803,17 +3916,13 @@ input UserCreateWithoutUniversityInput {
   password: String!
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   accesses: UserCreateaccessesInput
-  ownerOf: UserCreateownerOfInput
-  adminOf: UserCreateadminOfInput
-  memberOf: UserCreatememberOfInput
-  guestOf: UserCreateguestOfInput
   special: UserCreatespecialInput
   areas: UserAreaCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
@@ -3850,14 +3959,14 @@ enum UserOrderByInput {
   role_DESC
   universityDepartment_ASC
   universityDepartment_DESC
-  indexNumber_ASC
-  indexNumber_DESC
   fieldOfStudy_ASC
   fieldOfStudy_DESC
-  slackId_ASC
-  slackId_DESC
   year_ASC
   year_DESC
+  indexNumber_ASC
+  indexNumber_DESC
+  slackId_ASC
+  slackId_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -3876,19 +3985,15 @@ type UserPreviousValues {
   role: String!
   permissions: [MainPermission!]!
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
+  year: Int
+  indexNumber: Int
   institution: [Institution!]!
   slackId: String
   accesses: [Access!]!
-  year: Int
-  ownerOf: [ID!]!
-  adminOf: [ID!]!
-  memberOf: [ID!]!
-  guestOf: [ID!]!
+  special: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
-  special: [String!]!
 }
 
 type UserProject implements Node {
@@ -4748,28 +4853,6 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   universityDepartment_not_ends_with: String
-  indexNumber: Int
-
-  """All values that are not equal to given value."""
-  indexNumber_not: Int
-
-  """All values that are contained in given list."""
-  indexNumber_in: [Int!]
-
-  """All values that are not contained in given list."""
-  indexNumber_not_in: [Int!]
-
-  """All values less than the given value."""
-  indexNumber_lt: Int
-
-  """All values less than or equal the given value."""
-  indexNumber_lte: Int
-
-  """All values greater than the given value."""
-  indexNumber_gt: Int
-
-  """All values greater than or equal the given value."""
-  indexNumber_gte: Int
   fieldOfStudy: String
 
   """All values that are not equal to given value."""
@@ -4810,6 +4893,50 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   fieldOfStudy_not_ends_with: String
+  year: Int
+
+  """All values that are not equal to given value."""
+  year_not: Int
+
+  """All values that are contained in given list."""
+  year_in: [Int!]
+
+  """All values that are not contained in given list."""
+  year_not_in: [Int!]
+
+  """All values less than the given value."""
+  year_lt: Int
+
+  """All values less than or equal the given value."""
+  year_lte: Int
+
+  """All values greater than the given value."""
+  year_gt: Int
+
+  """All values greater than or equal the given value."""
+  year_gte: Int
+  indexNumber: Int
+
+  """All values that are not equal to given value."""
+  indexNumber_not: Int
+
+  """All values that are contained in given list."""
+  indexNumber_in: [Int!]
+
+  """All values that are not contained in given list."""
+  indexNumber_not_in: [Int!]
+
+  """All values less than the given value."""
+  indexNumber_lt: Int
+
+  """All values less than or equal the given value."""
+  indexNumber_lte: Int
+
+  """All values greater than the given value."""
+  indexNumber_gt: Int
+
+  """All values greater than or equal the given value."""
+  indexNumber_gte: Int
   slackId: String
 
   """All values that are not equal to given value."""
@@ -4850,28 +4977,6 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   slackId_not_ends_with: String
-  year: Int
-
-  """All values that are not equal to given value."""
-  year_not: Int
-
-  """All values that are contained in given list."""
-  year_in: [Int!]
-
-  """All values that are not contained in given list."""
-  year_not_in: [Int!]
-
-  """All values less than the given value."""
-  year_lt: Int
-
-  """All values less than or equal the given value."""
-  year_lte: Int
-
-  """All values greater than the given value."""
-  year_gt: Int
-
-  """All values greater than or equal the given value."""
-  year_gte: Int
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -5251,10 +5356,6 @@ input UserUpdateaccessesInput {
   set: [Access!]
 }
 
-input UserUpdateadminOfInput {
-  set: [ID!]
-}
-
 input UserUpdateDataInput {
   fullName: String
   profileURL: String
@@ -5265,26 +5366,18 @@ input UserUpdateDataInput {
   password: String
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   accesses: UserUpdateaccessesInput
-  ownerOf: UserUpdateownerOfInput
-  adminOf: UserUpdateadminOfInput
-  memberOf: UserUpdatememberOfInput
-  guestOf: UserUpdateguestOfInput
   special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
   projects: UserProjectUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
-}
-
-input UserUpdateguestOfInput {
-  set: [ID!]
 }
 
 input UserUpdateInput {
@@ -5297,17 +5390,13 @@ input UserUpdateInput {
   password: String
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   accesses: UserUpdateaccessesInput
-  ownerOf: UserUpdateownerOfInput
-  adminOf: UserUpdateadminOfInput
-  memberOf: UserUpdatememberOfInput
-  guestOf: UserUpdateguestOfInput
   special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
@@ -5329,17 +5418,13 @@ input UserUpdateManyDataInput {
   password: String
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   accesses: UserUpdateaccessesInput
-  ownerOf: UserUpdateownerOfInput
-  adminOf: UserUpdateadminOfInput
-  memberOf: UserUpdatememberOfInput
-  guestOf: UserUpdateguestOfInput
   special: UserUpdatespecialInput
 }
 
@@ -5365,17 +5450,13 @@ input UserUpdateManyMutationInput {
   password: String
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   accesses: UserUpdateaccessesInput
-  ownerOf: UserUpdateownerOfInput
-  adminOf: UserUpdateadminOfInput
-  memberOf: UserUpdatememberOfInput
-  guestOf: UserUpdateguestOfInput
   special: UserUpdatespecialInput
 }
 
@@ -5394,10 +5475,6 @@ input UserUpdateManyWithoutUniversityInput {
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
-}
-
-input UserUpdatememberOfInput {
-  set: [ID!]
 }
 
 input UserUpdateOneRequiredInput {
@@ -5428,10 +5505,6 @@ input UserUpdateOneRequiredWithoutSkillsInput {
   upsert: UserUpsertWithoutSkillsInput
 }
 
-input UserUpdateownerOfInput {
-  set: [ID!]
-}
-
 input UserUpdatepermissionsInput {
   set: [MainPermission!]
 }
@@ -5450,17 +5523,13 @@ input UserUpdateWithoutAreasDataInput {
   password: String
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   accesses: UserUpdateaccessesInput
-  ownerOf: UserUpdateownerOfInput
-  adminOf: UserUpdateadminOfInput
-  memberOf: UserUpdatememberOfInput
-  guestOf: UserUpdateguestOfInput
   special: UserUpdatespecialInput
   skills: UserSkillUpdateManyWithoutUserInput
   projects: UserProjectUpdateManyWithoutUserInput
@@ -5477,17 +5546,13 @@ input UserUpdateWithoutProjectsDataInput {
   password: String
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   accesses: UserUpdateaccessesInput
-  ownerOf: UserUpdateownerOfInput
-  adminOf: UserUpdateadminOfInput
-  memberOf: UserUpdatememberOfInput
-  guestOf: UserUpdateguestOfInput
   special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
@@ -5504,17 +5569,13 @@ input UserUpdateWithoutSkillsDataInput {
   password: String
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   accesses: UserUpdateaccessesInput
-  ownerOf: UserUpdateownerOfInput
-  adminOf: UserUpdateadminOfInput
-  memberOf: UserUpdatememberOfInput
-  guestOf: UserUpdateguestOfInput
   special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   projects: UserProjectUpdateManyWithoutUserInput
@@ -5531,17 +5592,13 @@ input UserUpdateWithoutUniversityDataInput {
   password: String
   role: String
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  slackId: String
   year: Int
+  indexNumber: Int
+  slackId: String
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   accesses: UserUpdateaccessesInput
-  ownerOf: UserUpdateownerOfInput
-  adminOf: UserUpdateadminOfInput
-  memberOf: UserUpdatememberOfInput
-  guestOf: UserUpdateguestOfInput
   special: UserUpdatespecialInput
   areas: UserAreaUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
@@ -5999,28 +6056,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   universityDepartment_not_ends_with: String
-  indexNumber: Int
-
-  """All values that are not equal to given value."""
-  indexNumber_not: Int
-
-  """All values that are contained in given list."""
-  indexNumber_in: [Int!]
-
-  """All values that are not contained in given list."""
-  indexNumber_not_in: [Int!]
-
-  """All values less than the given value."""
-  indexNumber_lt: Int
-
-  """All values less than or equal the given value."""
-  indexNumber_lte: Int
-
-  """All values greater than the given value."""
-  indexNumber_gt: Int
-
-  """All values greater than or equal the given value."""
-  indexNumber_gte: Int
   fieldOfStudy: String
 
   """All values that are not equal to given value."""
@@ -6061,6 +6096,50 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   fieldOfStudy_not_ends_with: String
+  year: Int
+
+  """All values that are not equal to given value."""
+  year_not: Int
+
+  """All values that are contained in given list."""
+  year_in: [Int!]
+
+  """All values that are not contained in given list."""
+  year_not_in: [Int!]
+
+  """All values less than the given value."""
+  year_lt: Int
+
+  """All values less than or equal the given value."""
+  year_lte: Int
+
+  """All values greater than the given value."""
+  year_gt: Int
+
+  """All values greater than or equal the given value."""
+  year_gte: Int
+  indexNumber: Int
+
+  """All values that are not equal to given value."""
+  indexNumber_not: Int
+
+  """All values that are contained in given list."""
+  indexNumber_in: [Int!]
+
+  """All values that are not contained in given list."""
+  indexNumber_not_in: [Int!]
+
+  """All values less than the given value."""
+  indexNumber_lt: Int
+
+  """All values less than or equal the given value."""
+  indexNumber_lte: Int
+
+  """All values greater than the given value."""
+  indexNumber_gt: Int
+
+  """All values greater than or equal the given value."""
+  indexNumber_gte: Int
   slackId: String
 
   """All values that are not equal to given value."""
@@ -6101,28 +6180,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   slackId_not_ends_with: String
-  year: Int
-
-  """All values that are not equal to given value."""
-  year_not: Int
-
-  """All values that are contained in given list."""
-  year_in: [Int!]
-
-  """All values that are not contained in given list."""
-  year_not_in: [Int!]
-
-  """All values less than the given value."""
-  year_lt: Int
-
-  """All values less than or equal the given value."""
-  year_lte: Int
-
-  """All values greater than the given value."""
-  year_gt: Int
-
-  """All values greater than or equal the given value."""
-  year_gte: Int
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -6181,5 +6238,8 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  profileURL: String
   email: String
+  indexNumber: Int
+  slackId: String
 }

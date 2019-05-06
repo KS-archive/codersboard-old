@@ -16,7 +16,6 @@ enum MainPermission {
 }
 
 enum Access {
-  DECLARATION
   FONT_AWESOME
   FREEPIK
   GITHUB
@@ -32,7 +31,7 @@ enum Institution {
 type User {
   id: ID! @id
   fullName: String!
-  profileURL: String!
+  profileURL: String! @unique
   image: String!
   email: String! @unique
   companyEmail: String
@@ -45,24 +44,20 @@ type User {
   permissions: [MainPermission!]! @scalarList(strategy: RELATION)
   university: University
   universityDepartment: String
-  indexNumber: Int
   fieldOfStudy: String
-  institution: [Institution!]! @scalarList(strategy: RELATION)
-  slackId: String
-  accesses: [Access!]! @scalarList(strategy: RELATION)
   year: Int
-  ownerOf: [ID!]! @scalarList(strategy: RELATION)
-  adminOf: [ID!]! @scalarList(strategy: RELATION)
-  memberOf: [ID!]! @scalarList(strategy: RELATION)
-  guestOf: [ID!]! @scalarList(strategy: RELATION)
+  indexNumber: Int @unique
+  institution: [Institution!]! @scalarList(strategy: RELATION)
+  slackId: String @unique
+  accesses: [Access!]! @scalarList(strategy: RELATION)
+  special: [String!]! @scalarList(strategy: RELATION)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  special: [String!]! @scalarList(strategy: RELATION)
 }
 
 type University {
   id: ID! @id
-  name: String!
+  name: String! @unique
   image: String!
   users: [User!]!
   createdAt: DateTime! @createdAt
@@ -71,7 +66,7 @@ type University {
 
 type Skill {
   id: ID! @id
-  name: String!
+  name: String! @unique
   icon: String
   users: [User!]!
   createdAt: DateTime! @createdAt
@@ -121,7 +116,8 @@ enum ProjectStatus {
 
 type Project {
   id: ID! @id
-  name: String!
+  projectURL: String! @unique
+  name: String! @unique
   description: String!
   image: String!
   gallery: [String!]! @scalarList(strategy: RELATION)
@@ -147,7 +143,9 @@ type UserProject {
 
 type Area {
   id: ID! @id
-  name: String!
+  areaURL: String! @unique
+  name: String! @unique
+  icon: String!
   description: String!
   mainSlackChannel: String
   slackChannels: [String!]! @scalarList(strategy: RELATION)
