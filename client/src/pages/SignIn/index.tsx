@@ -10,8 +10,8 @@ import * as styles from './styles';
 const { Container, Content, LogoWrapper, Form } = styles;
 
 const initialValues = {
-  email: 'mymail@mail.com',
-  password: 'sdf234df',
+  email: '',
+  password: '',
 };
 
 const SigninSchema = Yup.object().shape({
