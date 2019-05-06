@@ -1,7 +1,13 @@
 import { css } from 'styled-components';
+import get from 'styles/getStyle';
 
 export default css`
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin: 0;
   }
 
@@ -11,5 +17,16 @@ export default css`
 
   .ant-table-scroll table .ant-table-fixed-columns-in-body {
     visibility: visible;
+  }
+  .ant-card {
+    border-radius: ${get('radius')};
+  }
+
+  .ant-card-cover {
+    border-radius: ${get('radius')} ${get('radius')} 0 0;
+  }
+
+  .ant-card-actions {
+    border-radius: 0 0 ${get('radius')} ${get('radius')};
   }
 `;

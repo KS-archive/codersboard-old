@@ -72,6 +72,7 @@ type University {
 type Skill {
   id: ID! @id
   name: String!
+  icon: String
   users: [User!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

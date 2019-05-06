@@ -12,6 +12,7 @@ import Members from 'pages/Members';
 import AdminWrapper from 'pages/AdminWrapper';
 
 import AdminUniversities from 'pages/admin/Universities';
+import AdminSkills from 'pages/admin/Skills';
 
 import GlobalStyle from 'styles/GlobalStyle';
 import lightTheme from 'styles/lightTheme';
@@ -49,11 +50,7 @@ const App = (props: Props) => {
                             <Switch>
                               <Route exact path="/admin/members" component={() => <div>Zarządzaj członkami</div>} />
                               <Route exact path="/admin/universities" component={AdminUniversities} />
-                              <Route
-                                exact
-                                path="/admin/skills"
-                                component={() => <div>Zarządzaj umiejętnościami</div>}
-                              />
+                              <Route exact path="/admin/skills" component={AdminSkills} />
                             </Switch>
                           </AdminWrapper>
                         </Route>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button, Card } from 'antd';
 import get from 'styles/getStyle';
 
-export const UniversitiesContainer = styled.div`
+export const SkillsContainer = styled.div`
   border-style: none;
 `;
 
@@ -15,7 +15,7 @@ export const AddButton = styled(Button)`
   margin-left: auto;
 `;
 
-export const UniversityCard = styled(Card)`
+export const SkillCard = styled(Card)`
   width: 100%;
   margin-top: ${get('space', 'lg')};
 

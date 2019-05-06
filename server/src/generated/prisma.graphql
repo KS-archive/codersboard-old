@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Sun May 05 2019 03:36:37 GMT+0200 (Central European Summer Time)
+# timestamp: Mon May 06 2019 17:38:37 GMT+0200 (Central European Summer Time)
 
 enum Access {
   DECLARATION
@@ -2149,6 +2149,7 @@ type Query {
 type Skill implements Node {
   id: ID!
   name: String!
+  icon: String
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -2167,6 +2168,7 @@ type SkillConnection {
 input SkillCreateInput {
   id: ID
   name: String!
+  icon: String
   users: UserCreateManyInput
 }
 
@@ -2189,6 +2191,8 @@ enum SkillOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  icon_ASC
+  icon_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -2198,6 +2202,7 @@ enum SkillOrderByInput {
 type SkillPreviousValues {
   id: ID!
   name: String!
+  icon: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2241,16 +2246,19 @@ input SkillSubscriptionWhereInput {
 
 input SkillUpdateDataInput {
   name: String
+  icon: String
   users: UserUpdateManyInput
 }
 
 input SkillUpdateInput {
   name: String
+  icon: String
   users: UserUpdateManyInput
 }
 
 input SkillUpdateManyMutationInput {
   name: String
+  icon: String
 }
 
 input SkillUpdateOneRequiredInput {
@@ -2354,6 +2362,46 @@ input SkillWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  icon: String
+
+  """All values that are not equal to given value."""
+  icon_not: String
+
+  """All values that are contained in given list."""
+  icon_in: [String!]
+
+  """All values that are not contained in given list."""
+  icon_not_in: [String!]
+
+  """All values less than the given value."""
+  icon_lt: String
+
+  """All values less than or equal the given value."""
+  icon_lte: String
+
+  """All values greater than the given value."""
+  icon_gt: String
+
+  """All values greater than or equal the given value."""
+  icon_gte: String
+
+  """All values containing the given string."""
+  icon_contains: String
+
+  """All values not containing the given string."""
+  icon_not_contains: String
+
+  """All values starting with the given string."""
+  icon_starts_with: String
+
+  """All values not starting with the given string."""
+  icon_not_starts_with: String
+
+  """All values ending with the given string."""
+  icon_ends_with: String
+
+  """All values not ending with the given string."""
+  icon_not_ends_with: String
   createdAt: DateTime
 
   """All values that are not equal to given value."""
