@@ -1,28 +1,33 @@
 import React from 'react';
-import { Typography, Card, Row, Col, Tag } from 'antd';
-import { Icon } from 'components';
+import { Typography, Card, Tag } from 'antd';
 import MaterialsQuery, { MaterialProps } from 'store/material/queries/Materials';
-import { ReactComponent as TrashAlt } from 'static/fa/regular/trash-alt.svg';
-import { ReactComponent as Edit } from 'static/fa/regular/edit.svg';
+import { withMyCredentials, CredentialsProps } from 'store/user/queries/MyCredentials';
 import * as styles from './styles';
 
-const { MaterialsContainer, Header, AddButton, MaterialCard, Description } = styles;
+const { MaterialsContainer, Header, AddButton, MaterialCard, CoverImage, Description, Grid } = styles;
 const { Title } = Typography;
 const { Meta } = Card;
 
+const shorten = (str: string, maxLen: number) => str.length > maxLen ? `${str.substring(0, maxLen - 3)}...` : str;
+
 const renderDescription = (props: MaterialProps) => {
-  console.log(typeof props.tags[0].name);
   return (
     <Description>
-      <p>{props.description}</p>
+      <p>{shorten(props.description, 120)}</p>
       <div>
-        {props.tags.map(tag => <Tag key={tag.name} color={tag.color}>{tag.name}</Tag>)}
+        {props.tags.map(tag => (
+          <Tag key={tag.name} color={tag.color}>
+            {tag.name}
+          </Tag>
+        ))}
       </div>
     </Description>
   );
-}
+};
 
-const Materials = () => {
+const Materials = (props: Props) => {
+  const credentialsIds = props.myCredentials.map(c => c.id);
+
   return (
     <MaterialsContainer>
       <Header>
@@ -30,28 +35,33 @@ const Materials = () => {
         <AddButton type="primary">Dodaj materiał</AddButton>
       </Header>
       <MaterialsQuery>
-        {({ data, loading }) => (
-          <Row gutter={24}>
-            {data.materials &&
-              data.materials.map(material => (
-                <Col key={material.id} xs={24} md={12} xl={8} xxl={6}>
-                  <MaterialCard
-                    actions={[<Icon icon={Edit} />, <Icon icon={TrashAlt} />]}
-                    cover={<img alt={material.title} src={material.image} />}
-                  >
-                    <Meta title={material.title} description={renderDescription(material)} />
-                  </MaterialCard>
-                </Col>
-              ))}
-          </Row>
-        )}
+        {({ data, loading }) => {
+          return (
+            <Grid>
+              {data.materials &&
+                data.materials.map(material => (
+                  <a href={material.url} target="__blank">
+                    <MaterialCard
+                      key={material.id}
+                      hoverable
+                      cover={
+                        <CoverImage locked={!credentialsIds.includes(material.credential.id)} src={material.image} />
+                      }
+                    >
+                      <Meta title={material.title} description={renderDescription(material)} />
+                    </MaterialCard>
+                  </a>
+                ))}
+            </Grid>
+          );
+        }}
       </MaterialsQuery>
     </MaterialsContainer>
   );
 };
 
-interface DescriptionProps {
-
+interface Props {
+  myCredentials: CredentialsProps[];
 }
 
-export default Materials;
+export default withMyCredentials(Materials);

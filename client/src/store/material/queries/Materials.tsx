@@ -15,7 +15,10 @@ export const MATERIALS = gql`
         name
         color
       }
-      access
+      credential {
+        id
+        name
+      }
     }
   }
 `;
@@ -42,7 +45,10 @@ export interface MaterialProps {
   image: string;
   url: string;
   tags: Tag[];
-  access: Access;
+  credential: {
+    id: string;
+    name: string;
+  };
 }
 
 export interface Data {
