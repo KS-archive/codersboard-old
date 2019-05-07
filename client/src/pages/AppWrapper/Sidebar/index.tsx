@@ -5,6 +5,7 @@ import { Icon } from 'components';
 import { ReactComponent as NormalLogo } from 'static/logo.svg';
 import { ReactComponent as SmallLogo } from 'static/signet.svg';
 import { ReactComponent as Users } from 'static/fa/regular/users.svg';
+import { ReactComponent as UsersClass } from 'static/fa/regular/users-class.svg';
 import { ReactComponent as Books } from 'static/fa/regular/books.svg';
 import { ReactComponent as Tasks } from 'static/fa/regular/tasks.svg';
 import { ReactComponent as Stars } from 'static/fa/regular/stars.svg';
@@ -15,7 +16,7 @@ import * as styles from './styles';
 
 const { SidebarContainer, LogoWrapper, Menu, MenuItem } = styles;
 
-const pathKeys = ['members', 'areas', 'projects', 'successes', 'events', 'stats', 'admin'];
+const pathKeys = ['members', 'areas', 'projects', 'successes', 'events', 'materials', 'stats', 'admin'];
 
 const AppWrapper = ({ collapsed, location, history }: Props) => {
   const currentItem = location.pathname.split('/')[1];
@@ -36,7 +37,7 @@ const AppWrapper = ({ collapsed, location, history }: Props) => {
         </MenuItem>
         <MenuItem key="areas">
           <Link to="/areas">
-            <Icon icon={Books} color="white" />
+            <Icon icon={UsersClass} color="white" />
             <span>Obszary</span>
           </Link>
         </MenuItem>
@@ -56,6 +57,12 @@ const AppWrapper = ({ collapsed, location, history }: Props) => {
           <Link to="/events">
             <Icon icon={CalendarAlt} color="white" />
             <span>Wydarzenia</span>
+          </Link>
+        </MenuItem>
+        <MenuItem key="materials">
+          <Link to="/materials">
+            <Icon icon={Books} color="white" />
+            <span>Materiały</span>
           </Link>
         </MenuItem>
         <MenuItem key="stats">

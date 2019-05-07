@@ -40,6 +40,17 @@ type Mutation {
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   deletePost(where: PostWhereUniqueInput!): Post
+
+  createMaterial(data: MaterialCreateInput!): Material!
+  updateMaterial(data: MaterialUpdateInput!, where: MaterialWhereUniqueInput!): Material
+  deleteMaterial(where: MaterialWhereUniqueInput!): Material
+  createMaterialTag(data: MaterialTagCreateInput!): MaterialTag!
+  updateMaterialTag(data: MaterialTagUpdateInput!, where: MaterialTagWhereUniqueInput!): MaterialTag
+  deleteMaterialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
+
+  createCredential(data: CredentialCreateInput!): Credential!
+  updateCredential(data: CredentialUpdateInput!, where: CredentialWhereUniqueInput!): Credential
+  deleteCredential(where: CredentialWhereUniqueInput!): Credential
 }
 
 type Query {
@@ -52,4 +63,7 @@ type Query {
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  materials(where: MaterialWhereInput, orderBy: MaterialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Material]!
+  materialTags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag]!
+  credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential]!
 }

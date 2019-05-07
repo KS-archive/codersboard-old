@@ -6,6 +6,8 @@ const projectQueries = require('./project/queries');
 const areaQueries = require('./area/queries');
 const eventQueries = require('./event/queries');
 const postQueries = require('./post/queries');
+const materialQueries = require('./material/queries');
+const credentialQueries = require('./credential/queries');
 
 const Query = {
   ...userQueries,
@@ -16,6 +18,8 @@ const Query = {
   ...areaQueries,
   ...eventQueries,
   ...postQueries,
+  ...materialQueries,
+  ...credentialQueries,
 };
 
 module.exports = Query;

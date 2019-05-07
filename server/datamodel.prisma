@@ -15,12 +15,6 @@ enum MainPermission {
   DATA
 }
 
-enum Access {
-  FONT_AWESOME
-  FREEPIK
-  GITHUB
-}
-
 enum Institution {
   NONE
   UE_ORGANIZATION
@@ -49,10 +43,19 @@ type User {
   indexNumber: Int @unique
   institution: [Institution!]! @scalarList(strategy: RELATION)
   slackId: String @unique
-  accesses: [Access!]! @scalarList(strategy: RELATION)
+  slackChannels: [SlackChannel!]!
+  credentials: [Credential!]!
   special: [String!]! @scalarList(strategy: RELATION)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+}
+
+type Credential {
+  id: ID! @id
+  name: String!
+  login: String!
+  password: String!
+  users: [User!]!
 }
 
 type University {
@@ -78,6 +81,12 @@ type UserSkill {
   skill: Skill!
   user: User!
   level: Int
+}
+
+type SlackChannel {
+  id: ID! @id
+  name: String
+  users: [User!]!
 }
 
 enum SuccessType {
@@ -120,6 +129,7 @@ type Project {
   name: String! @unique
   description: String!
   image: String!
+  color: String
   gallery: [String!]! @scalarList(strategy: RELATION)
   startDate: DateTime
   finishDate: DateTime
@@ -147,6 +157,7 @@ type Area {
   name: String! @unique
   icon: String!
   description: String!
+  color: String
   mainSlackChannel: String
   slackChannels: [String!]! @scalarList(strategy: RELATION)
   users: [User!]!
@@ -173,14 +184,29 @@ enum EventType {
 
 type Event {
   id: ID! @id
-  name: String!
+  summary: String!
   description: String
-  date: DateTime!
+  start: TimeZoneDate @relation(name: "TimezoneRelationStart")
+  end: TimeZoneDate @relation(name: "TimezoneRelationEnd")
   image: String
-  participants: [User!]!
-  type: EventType!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  attendees: [Attendee!]! @scalarList(strategy: RELATION)
+  location: String
+  htmlLink: String
+  calendarEventId: String
+}
+
+type TimeZoneDate {
+  id: ID! @id
+  dateTime: DateTime!
+  timeZone: String
+}
+
+type Attendee {
+  id: ID! @id
+  email: String
+  responseStatus: String
 }
 
 type PostTag {
@@ -197,4 +223,23 @@ type Post {
   area: Area
   project: Project
   user: User!
+}
+
+type MaterialTag {
+  id: ID! @id
+  name: String! @unique
+  color: String
+}
+
+type Material {
+  id: ID! @id
+  title: String! @unique
+  description: String
+  image: String
+  url: String
+  tags: [MaterialTag!]!
+  credential: Credential
+  user: User
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

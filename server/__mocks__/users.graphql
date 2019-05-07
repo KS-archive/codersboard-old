@@ -1,64 +1,106 @@
-mutation createPost {
-  createPost(
+mutation createUser {
+  createUser(
     data: {
-      title: "My new post"
-      content: "Post content"
-      user: { connect: { id: "cjva5lza8r4hl0b95u9v4ieh6" } }
+      fullName: "John Doe"
+      profileURL: "john-doe"
+      image: "https://i.redd.it/ooz0ycmouti21.png"
+      email: "john.doe@gmail.com"
+      companyEmail: "john@coderscrew.pl"
+      phone: "334125423"
+      password: "john-doe"
+      role: "Członek CodersCrew"
+      permissions: { set: MEMBER }
+      university: { connect: { id: "cjvat7awpy7d40b95x1xb420k" } }
+      universityDepartment: "Nauk Ekonomicznych"
+      fieldOfStudy: "Zarządzanie"
+      year: 3
+      indexNumber: 541275
+      institution: { set:  UE_ORGANIZATION }
     }
   ) {
     id
-    title
-    content
-    user {
-      id
-      fullName
-    }
+    fullName
+    email
   }
 }
 
-mutation updatePost {
-  updatePost(
-    data: { title: "My another new post" }
-    where: { id: "cjvaa5od5yuip0b22cz7xztbg" }
+mutation updateUser {
+  updateUser(
+    data: {
+      image: "https://i.redd.it/ooz0ycmouti21.png"
+    }
+    where: { id: "cjvaae7d3slp20b95m54iv552" }
   ) {
     id
-    title
-    content
-    user {
+    fullName
+    email
+  }
+}
+mutation deleteUser {
+  deleteUser(where: { id: "cjvaqg4t2xc400b95wgv5b6fm" }) {
+    id
+    fullName
+    email
+  }
+}
+
+mutation signIn {
+  signIn(email: "konrad@coderscrew.pl", password: "1q2w3e4r") {
+    id
+  }
+}
+
+mutation signOut {
+  signOut {
+    message
+  }
+}
+
+query me {
+  me {
+    id
+    email
+    fullName
+    password
+    permissions
+    createdAt
+    updatedAt
+    special
+    university {
       id
-      fullName
+      name
     }
   }
 }
 
-mutation deletePost {
-  deletePost(where: { id: "cjvaa5od5yuip0b22cz7xztbg" }) {
+query users {
+  users {
     id
-    title
-    content
-  }
-}
-
-query posts {
-  posts {
-    id
-    title
-    content
-    tags {
-      id
+    fullName
+    profileURL
+    image
+    email
+    companyEmail
+    phone
+    role
+    areas {
+      area {
+        name
+      }
+    }
+    projects {
+      project {
+        name
+      }
+    }
+    university {
       name
+      image
     }
-    area {
-      id
-      name
-    }
-    project {
-      id
-      name
-    }
-    user {
-      id
-      fullName
-    }
+    universityDepartment
+    fieldOfStudy
+    year
+    indexNumber
+    institution
   }
 }

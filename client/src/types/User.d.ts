@@ -1,7 +1,7 @@
 export type Permission = 'OWNER' | 'ADMIN' | 'MEMBER' | 'GUEST';
 export type MainPermission =  'OWNER' | 'ADMIN' | 'MEMBER' | 'TRAINEE' | 'HR' | 'FINANCE' | 'DATA';
 export type Institution = 'NONE' | 'UE_ORGANIZATION' | 'PWR_ORGANIZATION' | 'ASSOCIATION';
-export type Access = 'FONT_AWESOME' | 'FREEPIK' | 'GITHUB';
+export type Access = 'FONT_AWESOME' | 'FREEPIK' | 'UDEMY_WEB_DEV' | 'UDEMY_MARKETING' | 'UDEMY_DATA_SCIENCE' | 'UDEMY_UX';
 
 export interface UserSkill {
   id?: string;

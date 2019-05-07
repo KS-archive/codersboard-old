@@ -6,6 +6,8 @@ const projectMutations = require('./project/mutations');
 const areaMutations = require('./area/mutations');
 const eventMutations = require('./event/mutations');
 const postMutations = require('./post/mutations');
+const materialMutations = require('./material/mutations');
+const credentialMutations = require('./credential/mutations');
 
 const Mutation = {
   ...userMutations,
@@ -16,6 +18,8 @@ const Mutation = {
   ...areaMutations,
   ...eventMutations,
   ...postMutations,
+  ...materialMutations,
+  ...credentialMutations,
 };
 
 module.exports = Mutation;

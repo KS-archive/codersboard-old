@@ -1,0 +1,70 @@
+mutation createMaterial {
+  createMaterial(data: { title: "Material title", tags: { connect: [{ id: "" }] } }) {
+    id
+    title
+    tags {
+      name
+    }
+  }
+}
+
+mutation updateMaterial {
+  updateMaterial(data: { title: "New Material title" }, where: { id: "" }) {
+    id
+    title
+  }
+}
+
+mutation deleteMaterial {
+  deleteMaterial(where: { id: "" }) {
+    id
+    title
+  }
+}
+
+query materials {
+  materials {
+    id
+    title
+    description
+    image
+    tags {
+      name
+      color
+    }
+    access
+    user {
+      fullName
+      image
+    }
+  }
+}
+
+mutation createMaterialTag {
+  createMaterialTag(data: { name: "MaterialTag name" }) {
+    id
+    name
+  }
+}
+
+mutation updateMaterialTag {
+  updateMaterialTag(data: { name: "New MaterialTag name" }, where: { id: "" }) {
+    id
+    name
+  }
+}
+
+mutation deleteMaterialTag {
+  deleteMaterialTag(where: { id: "" }) {
+    id
+    name
+  }
+}
+
+query materialTags {
+  materialTags {
+    id
+    name
+    color
+  }
+}

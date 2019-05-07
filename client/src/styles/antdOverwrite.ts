@@ -23,7 +23,8 @@ export default css`
     border-radius: ${get('radius')};
   }
 
-  .ant-card-cover {
+  .ant-card-cover,
+  .ant-card-cover > img {
     border-radius: ${get('radius')} ${get('radius')} 0 0;
   }
 

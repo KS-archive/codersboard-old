@@ -22,7 +22,7 @@ const Universities = () => {
           <Row gutter={24}>
             {data.universities &&
               data.universities.map(u => (
-                <Col xs={24} md={12} xl={8} xxl={6}>
+                <Col key={u.id} xs={24} md={12} xl={8} xxl={6}>
                   <UniversityCard
                     actions={[<Icon icon={Edit} />, <Icon icon={TrashAlt} />]}
                     cover={<img alt="example" src={u.image} />}
