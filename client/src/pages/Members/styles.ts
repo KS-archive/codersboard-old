@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Input } from 'antd';
+import { Button } from 'antd';
+import get from 'styles/getStyle';
 
 export const MembersContainer = styled.div`
   border-style: none;
@@ -8,9 +9,10 @@ export const MembersContainer = styled.div`
 export const Header = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: ${get('space', 'lg')};
 `;
 
-export const Search = styled(Input.Search)`
-  width: 200px;
+export const AddButton = styled(Button)`
   margin-left: auto;
 `;
+

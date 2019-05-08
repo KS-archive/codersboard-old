@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from 'antd';
+import { User } from 'store/user/queries/Users'
 import * as styles from './styles';
 
 const { TableContainer, TableColumn } = styles;
@@ -29,7 +30,7 @@ const Table = ({ data }: Props) => {
 };
 
 interface Props {
-  data: any[];
+  data?: User[];
 }
 
 export default Table;

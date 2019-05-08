@@ -1,10 +1,10 @@
 import React from 'react';
 import { Typography } from 'antd';
 import MembersTable from './MembersTable';
-import users from 'mocks/users';
+import UsersQuery from 'store/user/queries/Users';
 import * as styles from './styles';
 
-const { MembersContainer, Header, Search } = styles;
+const { MembersContainer, Header, AddButton } = styles;
 const { Title } = Typography;
 
 const Members = () => {
@@ -12,9 +12,11 @@ const Members = () => {
     <MembersContainer>
       <Header>
         <Title level={2}>Członkowie</Title>
-        <Search placeholder="Wyszukaj członków" onSearch={value => console.log(value)} />
+        <AddButton type="primary">Dodaj członków</AddButton>
       </Header>
-      <MembersTable data={users} />
+      <UsersQuery>
+        {({ data }) => <MembersTable data={data.users} />}
+      </UsersQuery>
     </MembersContainer>
   );
 };

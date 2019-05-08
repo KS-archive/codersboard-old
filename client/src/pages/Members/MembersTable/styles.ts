@@ -14,7 +14,8 @@ export const TableContainer = styled(Table)`
   }
 
   .fullName {
-    min-width: 160px;
+    min-width: 184px;
+    max-width: 184px;
     font-weight: 700;
 
     a {
