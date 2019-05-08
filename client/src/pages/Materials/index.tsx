@@ -40,9 +40,8 @@ const Materials = (props: Props) => {
             <Grid>
               {data.materials &&
                 data.materials.map(material => (
-                  <a href={material.url} target="__blank">
+                  <a key={material.id} href={material.url} target="__blank">
                     <MaterialCard
-                      key={material.id}
                       hoverable
                       cover={
                         <CoverImage locked={!credentialsIds.includes(material.credential.id)} src={material.image} />

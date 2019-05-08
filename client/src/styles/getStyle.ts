@@ -1,7 +1,7 @@
 import { Color, FontSize, Space, Radius, Shadow } from 'types/styled';
 
 const getColor = (colorName: Color) => (props: any) => props.theme.color[colorName];
-const getFontSize = (size: FontSize) => (props: any) => props.theme.fontSize[size] + 'px';
+const getFontSize = (size: FontSize) => (props: any) => props.theme.size[size] + 'px';
 const getSpace = (space: Space) => (props: any) => props.theme.space[space] + 'px';
 const getRadius = (type: Radius = 'normal') => (props: any) => props.theme.radius[type] + 'px';
 const getShadow = (type: Shadow = 'small') => (props: any) => props.theme.shadow[type];

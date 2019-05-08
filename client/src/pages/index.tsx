@@ -9,6 +9,7 @@ import MeQuery from 'store/user/queries/Me';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
+import Projects from 'pages/Projects';
 import Materials from 'pages/Materials';
 import AdminWrapper from 'pages/AdminWrapper';
 
@@ -43,7 +44,7 @@ const App = (props: Props) => {
                       <Switch>
                         <Route exact path="/members" component={Members} />
                         <Route exact path="/areas" component={() => <div>Obszary</div>} />
-                        <Route exact path="/projects" component={() => <div>Projekty</div>} />
+                        <Route exact path="/projects" component={Projects} />
                         <Route exact path="/successes" component={() => <div>Sukcesy</div>} />
                         <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
                         <Route exact path="/materials" component={Materials} />
