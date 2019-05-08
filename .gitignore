@@ -26,4 +26,5 @@ yarn-error.log*
 errors.log
 
 package-lock.json
+/server/export.zip
 

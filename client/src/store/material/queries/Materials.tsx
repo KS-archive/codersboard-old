@@ -1,7 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
-import { Access } from 'types/User';
 
 export const MATERIALS = gql`
   {
