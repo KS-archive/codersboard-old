@@ -155,7 +155,7 @@ type Area {
   id: ID! @id
   areaURL: String! @unique
   name: String! @unique
-  icon: String!
+  image: String
   description: String!
   color: String
   mainSlackChannel: String

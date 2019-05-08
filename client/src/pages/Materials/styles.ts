@@ -17,10 +17,11 @@ export const AddButton = styled(Button)`
 `;
 
 export const Grid = styled.div`
-  width: 100%;
   display: grid;
   grid-gap: ${get('space', 'md')};
   grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  padding: ${get('space', 'lg')} 0;
 
   > a {
     align-self: stretch;

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Tue May 07 2019 18:31:50 GMT+0200 (Central European Summer Time)
+# timestamp: Wed May 08 2019 02:12:07 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -77,7 +77,7 @@ type Area implements Node {
   id: ID!
   areaURL: String!
   name: String!
-  icon: String!
+  image: String
   description: String!
   color: String
   mainSlackChannel: String
@@ -101,7 +101,7 @@ input AreaCreateInput {
   id: ID
   areaURL: String!
   name: String!
-  icon: String!
+  image: String
   description: String!
   color: String
   mainSlackChannel: String
@@ -134,8 +134,8 @@ enum AreaOrderByInput {
   areaURL_DESC
   name_ASC
   name_DESC
-  icon_ASC
-  icon_DESC
+  image_ASC
+  image_DESC
   description_ASC
   description_DESC
   color_ASC
@@ -152,7 +152,7 @@ type AreaPreviousValues {
   id: ID!
   areaURL: String!
   name: String!
-  icon: String!
+  image: String
   description: String!
   color: String
   mainSlackChannel: String
@@ -201,7 +201,7 @@ input AreaSubscriptionWhereInput {
 input AreaUpdateDataInput {
   areaURL: String
   name: String
-  icon: String
+  image: String
   description: String
   color: String
   mainSlackChannel: String
@@ -212,7 +212,7 @@ input AreaUpdateDataInput {
 input AreaUpdateInput {
   areaURL: String
   name: String
-  icon: String
+  image: String
   description: String
   color: String
   mainSlackChannel: String
@@ -223,7 +223,7 @@ input AreaUpdateInput {
 input AreaUpdateManyMutationInput {
   areaURL: String
   name: String
-  icon: String
+  image: String
   description: String
   color: String
   mainSlackChannel: String
@@ -384,46 +384,46 @@ input AreaWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  icon: String
+  image: String
 
   """All values that are not equal to given value."""
-  icon_not: String
+  image_not: String
 
   """All values that are contained in given list."""
-  icon_in: [String!]
+  image_in: [String!]
 
   """All values that are not contained in given list."""
-  icon_not_in: [String!]
+  image_not_in: [String!]
 
   """All values less than the given value."""
-  icon_lt: String
+  image_lt: String
 
   """All values less than or equal the given value."""
-  icon_lte: String
+  image_lte: String
 
   """All values greater than the given value."""
-  icon_gt: String
+  image_gt: String
 
   """All values greater than or equal the given value."""
-  icon_gte: String
+  image_gte: String
 
   """All values containing the given string."""
-  icon_contains: String
+  image_contains: String
 
   """All values not containing the given string."""
-  icon_not_contains: String
+  image_not_contains: String
 
   """All values starting with the given string."""
-  icon_starts_with: String
+  image_starts_with: String
 
   """All values not starting with the given string."""
-  icon_not_starts_with: String
+  image_not_starts_with: String
 
   """All values ending with the given string."""
-  icon_ends_with: String
+  image_ends_with: String
 
   """All values not ending with the given string."""
-  icon_not_ends_with: String
+  image_not_ends_with: String
   description: String
 
   """All values that are not equal to given value."""
