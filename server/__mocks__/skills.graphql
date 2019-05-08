@@ -1,5 +1,10 @@
 mutation createSkill {
-  createSkill(data: { name: "HTML5" }) {
+  createSkill(
+    data: {
+      name: "Zeplin"
+      icon: "https://res.cloudinary.com/codersboard/image/upload/v1557160129/coders-board-dev/skills/zeplin.svg"
+    }
+  ) {
     id
     name
   }
@@ -7,8 +12,10 @@ mutation createSkill {
 
 mutation updateSkill {
   updateSkill(
-    data: { name: "CSS3" }
-    where: { id: "cjva8k8plyeqv0b22xbzeafn3" }
+    data: {
+      icon: "https://res.cloudinary.com/codersboard/image/upload/v1557169635/coders-board-dev/skills/adobe-illustrator-cc.svg"
+    }
+    where: { id: "" }
   ) {
     id
     name
@@ -16,7 +23,7 @@ mutation updateSkill {
 }
 
 mutation deleteSkill {
-  deleteSkill(where: { id: "cjva8k8plyeqv0b22xbzeafn3" }) {
+  deleteSkill(where: { id: "" }) {
     id
     name
   }
@@ -26,6 +33,7 @@ query skills {
   skills {
     id
     name
+    icon
     createdAt
     updatedAt
   }

@@ -1,15 +1,41 @@
 mutation createMaterial {
-  createMaterial(data: { title: "Material title", tags: { connect: [{ id: "" }] } }) {
+  createMaterial(
+    data: {
+      title: "Facebook Marketing -  Build Facebook Messenger Chatbots"
+      description: "Facebook marketing & Facebook ads: Design, develop & optimize MobileMonkey Facebook Chatbots without writing any code!"
+      image: "https://i.udemycdn.com/course/750x422/1915496_85f4_2.jpg"
+      url: "https://www.udemy.com/facebook-messenger-chatbot-marketing-training"
+      tags: {
+        connect: [
+          { id: "" }
+          { id: "" }
+        ]
+      }
+      user: { connect: { id: "" } }
+      credential: { connect: { id: "" } }
+    }
+  ) {
     id
     title
+    description
+    image
+    url
     tags {
       name
+      color
+    }
+    user {
+      id
+      fullName
     }
   }
 }
 
 mutation updateMaterial {
-  updateMaterial(data: { title: "New Material title" }, where: { id: "" }) {
+  updateMaterial(
+    data: { title: "Another title" }
+    where: { id: "" }
+  ) {
     id
     title
   }
@@ -28,11 +54,14 @@ query materials {
     title
     description
     image
+    url
+    credential {
+      name
+    }
     tags {
       name
       color
     }
-    access
     user {
       fullName
       image
@@ -41,14 +70,18 @@ query materials {
 }
 
 mutation createMaterialTag {
-  createMaterialTag(data: { name: "MaterialTag name" }) {
+  createMaterialTag(data: { name: "Kurs", color: "green" }) {
     id
     name
+    color
   }
 }
 
 mutation updateMaterialTag {
-  updateMaterialTag(data: { name: "New MaterialTag name" }, where: { id: "" }) {
+  updateMaterialTag(
+    data: { color: "cyan" }
+    where: { id: "" }
+  ) {
     id
     name
   }

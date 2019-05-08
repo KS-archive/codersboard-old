@@ -1,14 +1,8 @@
 mutation createUniversity {
   createUniversity(
     data: {
-      name: "Uniwersytat Ekonomiczny we Wrocławiu"
-      image: "http://www.ue.wroc.pl/p/logotyp2/poziom_pl.png"
-      users: {
-        connect: [
-          { id: "cjvaae7d3slp20b95m54iv552" }
-          { id: "cjva7pregy6e80b22oq4n5lab" }
-        ]
-      }
+      name: "Uniwersytet SWPS we Wrocławiu"
+      image: "https://res.cloudinary.com/codersboard/image/upload/v1557148657/coders-board-dev/universities/swps.png"
     }
   ) {
     id
@@ -23,10 +17,9 @@ mutation createUniversity {
 mutation updateUniversity {
   updateUniversity(
     data: {
-      name: "Politechnika Wrocławska"
-      image: "https://www.eurocircuits.com/wp-content/uploads/PWr-logo.png"
+      image: "https://res.cloudinary.com/codersboard/image/upload/v1557148162/coders-board-dev/universities/ue.png"
     }
-    where: { id: "cjva1p3r9wfms0b223gbgo0as" }
+    where: { id: "" }
   ) {
     id
     name
@@ -38,7 +31,7 @@ mutation updateUniversity {
 }
 
 mutation deleteUniversity {
-  deleteUniversity(where: { id: "cjvaac3z5sl0i0b95r06uhxvr" }) {
+  deleteUniversity(where: { id: "" }) {
     id
     name
     image
@@ -49,8 +42,8 @@ mutation deleteUniversity {
 }
 mutation addUserToUniversity {
   addUserToUniversity(
-    userId: "cjvaaii6byyyk0b22gynewjho"
-    universityId: "cjvaag9voyyaf0b227omxzjup"
+    userId: ""
+    universityId: ""
   ) {
     id
     name

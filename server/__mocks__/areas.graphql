@@ -1,6 +1,10 @@
 mutation createArea {
   createArea(
-    data: { name: "Data Science", description: "Data Science area description" }
+    data: {
+      name: "UX/UI Design"
+      areaURL: "ux-ui-design"
+      description: "UX/UI design area description"
+    }
   ) {
     id
     name
@@ -10,8 +14,11 @@ mutation createArea {
 
 mutation updateArea {
   updateArea(
-    data: { name: "Web Development" }
-    where: { id: "cjva9ad49s8540b9580d6uzp9" }
+    data: {
+      color: "#52C41A"
+      image: "https://res.cloudinary.com/codersboard/image/upload/v1557272962/coders-board-dev/areas/data-science.svg"
+    }
+    where: { id: "" }
   ) {
     id
     name
@@ -20,7 +27,7 @@ mutation updateArea {
 }
 
 mutation deleteArea {
-  deleteArea(where: { id: "cjva9ad49s8540b9580d6uzp9" }) {
+  deleteArea(where: { id: "" }) {
     id
     name
     description

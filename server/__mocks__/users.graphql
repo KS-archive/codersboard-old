@@ -10,7 +10,7 @@ mutation createUser {
       password: "john-doe"
       role: "Członek CodersCrew"
       permissions: { set: MEMBER }
-      university: { connect: { id: "cjvat7awpy7d40b95x1xb420k" } }
+      university: { connect: { id: "" } }
       universityDepartment: "Nauk Ekonomicznych"
       fieldOfStudy: "Zarządzanie"
       year: 3
@@ -27,9 +27,9 @@ mutation createUser {
 mutation updateUser {
   updateUser(
     data: {
-      image: "https://i.redd.it/ooz0ycmouti21.png"
+      fullName: "John Smith"
     }
-    where: { id: "cjvaae7d3slp20b95m54iv552" }
+    where: { id: "" }
   ) {
     id
     fullName
@@ -37,7 +37,7 @@ mutation updateUser {
   }
 }
 mutation deleteUser {
-  deleteUser(where: { id: "cjvaqg4t2xc400b95wgv5b6fm" }) {
+  deleteUser(where: { id: "" }) {
     id
     fullName
     email
@@ -45,7 +45,7 @@ mutation deleteUser {
 }
 
 mutation signIn {
-  signIn(email: "konrad@coderscrew.pl", password: "1q2w3e4r") {
+  signIn(email: "john@coderscrew.pl", password: "john-doe") {
     id
   }
 }

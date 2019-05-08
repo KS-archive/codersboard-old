@@ -16,7 +16,7 @@ mutation createSuccess {
 mutation updateSuccess {
   updateSuccess(
     data: { name: "Our second success" }
-    where: { id: "cjva85ef4yazb0b221w2xb5z6" }
+    where: { id: "" }
   ) {
     id
     name
@@ -25,7 +25,7 @@ mutation updateSuccess {
 }
 
 mutation deleteSuccess {
-  deleteSuccess(where: { id: "cjva86c1zyb9l0b22yd2l6ool" }) {
+  deleteSuccess(where: { id: "" }) {
     id
     name
     date

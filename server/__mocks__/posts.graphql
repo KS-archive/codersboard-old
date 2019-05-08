@@ -3,7 +3,7 @@ mutation createPost {
     data: {
       title: "My new post"
       content: "Post content"
-      user: { connect: { id: "cjva5lza8r4hl0b95u9v4ieh6" } }
+      user: { connect: { id: "" } }
     }
   ) {
     id
@@ -19,7 +19,7 @@ mutation createPost {
 mutation updatePost {
   updatePost(
     data: { title: "My another new post" }
-    where: { id: "cjvaa5od5yuip0b22cz7xztbg" }
+    where: { id: "" }
   ) {
     id
     title
@@ -32,7 +32,7 @@ mutation updatePost {
 }
 
 mutation deletePost {
-  deletePost(where: { id: "cjvaa5od5yuip0b22cz7xztbg" }) {
+  deletePost(where: { id: "" }) {
     id
     title
     content

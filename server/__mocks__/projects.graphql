@@ -1,11 +1,12 @@
 mutation createProject {
   createProject(
     data: {
-      name: "inStudy"
-      description: "Some project description"
+      name: "CodersBoard"
+      projectURL: "codersboard"
+      description: "Opis projektu"
       image: "https://www.ittoolkit.com/assets/img/articles/600x300/project-definition.jpg"
       type: SOFTWARE
-      status: DONE
+      status: IN_PROGRESS
     }
   ) {
     id
@@ -15,8 +16,11 @@ mutation createProject {
 
 mutation updateProject {
   updateProject(
-    data: { name: "Schroniak" }
-    where: { id: "cjva8x3qdyhop0b22foqxdu78" }
+    data: {
+      image: "https://res.cloudinary.com/codersboard/image/upload/v1557273583/coders-board-dev/projects/eny.svg"
+      color: "#00E0FF"
+    }
+    where: { id: "" }
   ) {
     id
     name
@@ -24,7 +28,7 @@ mutation updateProject {
 }
 
 mutation deleteProject {
-  deleteProject(where: { id: "cjva8x3qdyhop0b22foqxdu78" }) {
+  deleteProject(where: { id: "" }) {
     id
     name
   }
@@ -35,16 +39,10 @@ query projects {
     id
     name
     description
+    projectURL
     image
-    startDate
-    finishDate
     type
     status
-    mainSlackChannel
-    gallery
-    slackChannels
-    users {
-      id
-    }
+    color
   }
 }
