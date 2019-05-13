@@ -8,7 +8,7 @@ const { TableContainer, TableColumn } = styles;
 
 const Table = ({ data }: Props) => {
   return (
-      <TableContainer dataSource={data} scroll={{ x: true }} rowKey="id">
+      <TableContainer dataSource={data} scroll={{ x: true }} pagination={false} rowKey="id">
         <TableColumn
           fixed
           title=""
