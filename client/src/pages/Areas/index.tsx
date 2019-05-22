@@ -8,7 +8,7 @@ const { AreasContainer, Header, AddButton, AreaCard, CoverImage, Grid } = styles
 const { Title } = Typography;
 const { Meta } = Card;
 
-const shorten = (str: string, maxLen: number) => str.length > maxLen ? `${str.substring(0, maxLen - 3)}...` : str;
+const shorten = (str: string, maxLen: number) => (str.length > maxLen ? `${str.substring(0, maxLen - 3)}...` : str);
 
 const Areas = () => {
   return (
@@ -24,12 +24,7 @@ const Areas = () => {
               {data.areas &&
                 data.areas.map(area => (
                   <Link key={area.id} to={`/areas/${area.areaURL}`}>
-                    <AreaCard
-                      hoverable
-                      cover={
-                        <CoverImage src={area.image} />
-                      }
-                    >
+                    <AreaCard hoverable cover={<CoverImage src={area.image} />}>
                       <Meta title={area.name} description={shorten(area.description, 120)} />
                     </AreaCard>
                   </Link>

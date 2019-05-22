@@ -4,7 +4,7 @@ import { FieldProps } from 'formik/dist/Field';
 import { FormItemProps } from 'antd/es/form';
 import { InputProps } from 'antd/es/input';
 
-type Props =  { autoComplete?: string } & FormItemProps & InputProps & FieldProps;
+type Props = { autoComplete?: string } & FormItemProps & InputProps & FieldProps;
 
 const getStatus = (form: any, errorMessage: any) => {
   if (errorMessage) {
@@ -13,8 +13,7 @@ const getStatus = (form: any, errorMessage: any) => {
     return 'validating';
   }
   return null;
-}
-
+};
 
 const FormikInput = ({ form, field: { name, onChange, onBlur, value }, ...props }: Props) => {
   const errorMessage = form.touched[name] && form.errors[name];
@@ -22,7 +21,13 @@ const FormikInput = ({ form, field: { name, onChange, onBlur, value }, ...props 
   const validateStatus = getStatus(form, errorMessage);
 
   return (
-    <Form.Item label={props.label} required={props.required} validateStatus={validateStatus} help={help} colon={props.colon}>
+    <Form.Item
+      label={props.label}
+      required={props.required}
+      validateStatus={validateStatus}
+      help={help}
+      colon={props.colon}
+    >
       <Input
         name={name}
         autoComplete={props.autoComplete}
@@ -41,7 +46,7 @@ const FormikInput = ({ form, field: { name, onChange, onBlur, value }, ...props 
         allowClear={props.allowClear}
       />
     </Form.Item>
-  )
-}
+  );
+};
 
 export default FormikInput;

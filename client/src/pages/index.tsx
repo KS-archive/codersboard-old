@@ -10,6 +10,7 @@ import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
 import Areas from 'pages/Areas';
+import SingleArea from 'pages/Areas/SingleArea';
 import Projects from 'pages/Projects';
 import Materials from 'pages/Materials';
 import AdminWrapper from 'pages/AdminWrapper';
@@ -45,6 +46,7 @@ const App = (props: Props) => {
                       <Switch>
                         <Route exact path="/members" component={Members} />
                         <Route exact path="/areas" component={Areas} />
+                        <Route exact path="/areas/:singleArea" component={SingleArea} />
                         <Route exact path="/projects" component={Projects} />
                         <Route exact path="/successes" component={() => <div>Sukcesy</div>} />
                         <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
