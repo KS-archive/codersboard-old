@@ -1,0 +1,41 @@
+{
+  "emmet.syntaxProfiles": {
+      "javascript": "jsx",
+      "typescript": "tsx"
+  },
+  "emmet.includeLanguages": {
+      "javascript": "javascriptreact",
+      "typescript": "css"
+  },
+  "emmet.triggerExpansionOnTab": true,
+  "workbench.editor.labelFormat": "short",
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "typescript.validate.enable": false,
+  "breadcrumbs.enabled": true,
+  "markdown.preview.breaks": true,
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      { "language": "typescript", "autoFix": true },
+      { "language": "typescriptreact", "autoFix": true }
+  ],
+  "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

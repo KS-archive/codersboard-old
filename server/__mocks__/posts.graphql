@@ -1,0 +1,64 @@
+mutation createPost {
+  createPost(
+    data: {
+      title: "My new post"
+      content: "Post content"
+      user: { connect: { id: "" } }
+    }
+  ) {
+    id
+    title
+    content
+    user {
+      id
+      fullName
+    }
+  }
+}
+
+mutation updatePost {
+  updatePost(
+    data: { title: "My another new post" }
+    where: { id: "" }
+  ) {
+    id
+    title
+    content
+    user {
+      id
+      fullName
+    }
+  }
+}
+
+mutation deletePost {
+  deletePost(where: { id: "" }) {
+    id
+    title
+    content
+  }
+}
+
+query posts {
+  posts {
+    id
+    title
+    content
+    tags {
+      id
+      name
+    }
+    area {
+      id
+      name
+    }
+    project {
+      id
+      name
+    }
+    user {
+      id
+      fullName
+    }
+  }
+}
