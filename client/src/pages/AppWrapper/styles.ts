@@ -7,7 +7,7 @@ export const Container = styled(Layout)`
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: ${get('color', 'background')};
+  background-color: ${get('color-background')};
 `;
 
 export const RightColumn = styled(Layout)`
@@ -15,5 +15,5 @@ export const RightColumn = styled(Layout)`
 `;
 
 export const Content = styled(Layout.Content)`
-  margin: ${get('space', 'xl')};
+  margin: ${get('space-32')};
 `;

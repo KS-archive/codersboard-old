@@ -13,7 +13,10 @@ const { HeaderContainer, Right, Name, Menu, MenuItem } = styles;
 
 const menu = (
   <Menu>
-    <MenuItem onClick={signOut}>Sign out</MenuItem>
+    <MenuItem>
+      <Link to="/settings">Ustawienia</Link>
+    </MenuItem>
+    <MenuItem onClick={signOut}>Wyloguj się</MenuItem>
   </Menu>
 );
 
@@ -29,7 +32,8 @@ const Header = ({ isSidebarCollapsed, toggleCollapsed, me }: Props) => {
       <Right>
         {isAdmin && (
           <Button>
-            <Link to="/admin" />Admin panel
+            <Link to="/admin" />
+            Admin panel
           </Button>
         )}
         <Dropdown overlay={menu} trigger={['click']}>

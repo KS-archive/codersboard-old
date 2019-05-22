@@ -18,10 +18,10 @@ export const AddButton = styled(Button)`
 
 export const Grid = styled.div`
   display: grid;
-  grid-gap: ${get('space', 'md')};
+  grid-gap: ${get('space-16')};
   grid-template-columns: repeat(5, 1fr);
   width: 100%;
-  padding: ${get('space', 'lg')} 0;
+  padding: ${get('space-24')} 0;
 
   > a {
     align-self: stretch;
@@ -83,15 +83,15 @@ export const CoverImage = styled.div<CoverImageProps>`
   height: 0;
   padding-top: 56%;
   background: url('${props => props.src}') no-repeat center/cover;
-  border-radius: ${get('radius')} ${get('radius')} 0 0;
+  border-radius: ${get('radius-4')} ${get('radius-4')} 0 0;
 
   &::before {
     content: '';
     position: absolute;
-    top: ${get('space', 'xl')};
-    bottom: ${get('space', 'xl')};
-    left: ${get('space', 'xl')};
-    right: ${get('space', 'xl')};
+    top: ${get('space-32')};
+    bottom: ${get('space-32')};
+    left: ${get('space-32')};
+    right: ${get('space-32')};
     background: url('${Lock}') no-repeat center/contain;
     visibility: ${props => (props.locked ? 'visible' : 'hidden')};
     opacity: 0.8;
@@ -104,7 +104,7 @@ export const CoverImage = styled.div<CoverImageProps>`
     bottom: 0;
     left: 0;
     right: 0;
-    background: ${get('color', 'white')};
+    background: ${get('color-grayscale-white')};
     visibility: ${props => (props.locked ? 'visible' : 'hidden')};
     opacity: 0.2;
   }
@@ -117,6 +117,6 @@ export const Description = styled.div`
 
   > div {
     margin-top: auto;
-    padding-top: ${get('space', 'md')};
+    padding-top: ${get('space-16')};
   }
 `;

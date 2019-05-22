@@ -17,10 +17,10 @@ export const AddButton = styled(Button)`
 
 export const Grid = styled.div`
   display: grid;
-  grid-gap: ${get('space', 'lg')};
+  grid-gap: ${get('space-24')};
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
-  padding: ${get('space', 'lg')} 0;
+  padding: ${get('space-24')} 0;
 
   > a {
     align-self: stretch;
@@ -59,7 +59,7 @@ export const ProjectCard = styled(Card)`
 
     .ant-card-meta-title {
       margin-bottom: 0;
-      font-size: ${get('size', 'lg')};
+      font-size: ${get('font-size-24')};
       font-weight: bold;
       white-space: normal;
     }
@@ -80,7 +80,7 @@ export const CoverImage = styled.div<CoverImageProps>`
   height: 0;
   padding-top: 56%;
   background: url('${props => props.src}') no-repeat center/cover;
-  border-radius: ${get('radius')} ${get('radius')} 0 0;
+  border-radius: ${get('radius-4')} ${get('radius-4')} 0 0;
 `;
 
 export const Description = styled.div`
@@ -89,11 +89,11 @@ export const Description = styled.div`
   height: 100%;
 
   > h4 {
-    padding-bottom: ${get('space', 'sm')};
+    padding-bottom: ${get('space-12')};
   }
 
   > div {
     margin-top: auto;
-    padding-top: ${get('space', 'md')};
+    padding-top: ${get('space-16')};
   }
 `;

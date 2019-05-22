@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
-import { ThemeProvider } from 'styled-components';
 import { Spin } from 'antd';
 
 import client from 'store/client';
@@ -12,6 +11,7 @@ import Members from 'pages/Members';
 import Areas from 'pages/Areas';
 import Projects from 'pages/Projects';
 import Materials from 'pages/Materials';
+import Settings from 'pages/Settings';
 import AdminWrapper from 'pages/AdminWrapper';
 
 import AdminMembers from 'pages/admin/Members';
@@ -19,7 +19,8 @@ import AdminUniversities from 'pages/admin/Universities';
 import AdminSkills from 'pages/admin/Skills';
 
 import GlobalStyle from 'styles/GlobalStyle';
-import lightTheme from 'styles/lightTheme';
+import theme from 'styles/theme';
+import generateCssVariables from 'styles/generateCssVariables';
 
 const App = (props: Props) => {
   const {
@@ -27,10 +28,13 @@ const App = (props: Props) => {
     history: { push },
   } = props;
 
+  useEffect(() => {
+    generateCssVariables(theme);
+  }, []);
+
   return (
     <>
       <ApolloProvider client={client}>
-        <ThemeProvider theme={lightTheme}>
           <MeQuery>
             {({ data: { me }, loading }) => {
               if (loading) return <Spin size="large" tip="Trwa ładowanie..." />;
@@ -50,6 +54,7 @@ const App = (props: Props) => {
                         <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
                         <Route exact path="/materials" component={Materials} />
                         <Route exact path="/stats" component={() => <div>Statystyki</div>} />
+                        <Route path="/settings" component={Settings} />
                         <Route path="/admin">
                           <AdminWrapper pathname={pathname} historyPush={push}>
                             <Switch>
@@ -66,9 +71,8 @@ const App = (props: Props) => {
               );
             }}
           </MeQuery>
-        </ThemeProvider>
       </ApolloProvider>
-      <GlobalStyle theme={lightTheme} />
+      <GlobalStyle />
     </>
   );
 };

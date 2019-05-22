@@ -9,7 +9,7 @@ export const MembersContainer = styled.div`
 export const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: ${get('space', 'lg')};
+  margin-bottom: ${get('space-32')};
 `;
 
 export const AddButton = styled(Button)`

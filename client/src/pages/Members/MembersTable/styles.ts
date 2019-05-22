@@ -10,7 +10,7 @@ export const TableContainer = styled(Table)`
   .image {
     max-width: 56px;
     min-width: 56px;
-    padding-right: ${get('space', 'xs')};
+    padding-right: ${get('space-4')};
   }
 
   .fullName {

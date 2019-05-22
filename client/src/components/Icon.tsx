@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Color } from 'types/styled';
 import get from 'styles/getStyle';
+import { Color } from 'types';
 
-const IconContainer = styled.div<{ size?: number; color?: Color }>`
+const IconContainer = styled.div<{ size?: number; color?: Color | string }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,23 +17,23 @@ const IconContainer = styled.div<{ size?: number; color?: Color }>`
   rect {
     width: 100%;
     height: 100%;
-    fill: ${props => get('color', props.color)(props)};
+    fill: ${props => props.color.includes('color') ? get(props.color as Color) : props.color};
   }
 `;
 
-const Icon = ({ icon: Component, size, color, onClick, className }: Props) => (
-  <IconContainer size={size} color={color} onClick={onClick} className={className}>
+const Icon = ({ icon: Component, ...props }: IIcon) => (
+  <IconContainer {...props}>
     <Component />
   </IconContainer>
 );
 
 Icon.defaultProps = {
   size: 16,
-  color: 'regularText',
+  color: 'color-text-regular',
   onClick: (e: React.MouseEvent) => {},
 };
 
-type Props = {
+type IIcon = {
   className?: string;
   size?: number;
   color?: Color;

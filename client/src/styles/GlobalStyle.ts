@@ -4,7 +4,7 @@ import antdOverwrite from './antdOverwrite';
 
 export default createGlobalStyle`
   body {
-    color: ${get('color', 'regularText')};
+    color: ${get('color-text-regular')};
   }
 
   p {
@@ -27,10 +27,10 @@ export default createGlobalStyle`
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: ${get('color', 'black')};
+      background-color: ${get('color-grayscale-black')};
 
       .ant-spin-text {
-        margin-left: ${get('space', 'sm')};
+        margin-left: ${get('space-12')};
       }
     }
   }

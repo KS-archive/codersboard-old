@@ -3,12 +3,12 @@ import { Layout, Menu as AntdMenu } from 'antd';
 import get from 'styles/getStyle';
 
 export const SidebarContainer = styled(Layout.Sider)`
-  background-color: ${get('color', 'black')};
+  background-color: ${get('color-grayscale-black')};
 `;
 
 export const LogoWrapper = styled.div`
   width: 100%;
-  padding: ${get('space', 'md')};
+  padding: ${get('space-16')};
 
   svg {
     width: 100%;
@@ -31,15 +31,15 @@ export const MenuItem = styled(AntdMenu.Item)`
     > a {
       display: flex;
       align-items: center;
-      color: ${get('color', 'white')};
+      color: ${get('color-grayscale-white')};
 
       span {
-        margin-left: ${get('space', 'md')};
+        margin-left: ${get('space-16')};
       }
     }
 
     &.ant-menu-item-selected {
-      background-color: ${get('color', 'primary')}
+      background-color: ${get('color-primary')}
     }
   }
 `;

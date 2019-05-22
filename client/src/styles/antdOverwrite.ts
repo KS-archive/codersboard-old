@@ -20,15 +20,15 @@ export default css`
   }
 
   .ant-card {
-    border-radius: ${get('radius')};
+    border-radius: ${get('radius-4')};
   }
 
   .ant-card-cover,
   .ant-card-cover > img {
-    border-radius: ${get('radius')} ${get('radius')} 0 0;
+    border-radius: ${get('radius-4')} ${get('radius-4')} 0 0;
   }
 
   .ant-card-actions {
-    border-radius: 0 0 ${get('radius')} ${get('radius')};
+    border-radius: 0 0 ${get('radius-4')} ${get('radius-4')};
   }
 `;

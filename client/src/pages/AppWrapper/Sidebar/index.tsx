@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Icon } from 'components';
+import { pathKeys } from 'utils/config';
 
 import { ReactComponent as NormalLogo } from 'static/logo.svg';
 import { ReactComponent as SmallLogo } from 'static/signet.svg';
@@ -16,8 +17,6 @@ import * as styles from './styles';
 
 const { SidebarContainer, LogoWrapper, Menu, MenuItem } = styles;
 
-const pathKeys = ['members', 'areas', 'projects', 'successes', 'events', 'materials', 'stats', 'admin'];
-
 const AppWrapper = ({ collapsed, location, history }: Props) => {
   const currentItem = location.pathname.split('/')[1];
 
@@ -31,43 +30,43 @@ const AppWrapper = ({ collapsed, location, history }: Props) => {
       <Menu mode="inline" selectedKeys={[currentItem]}>
         <MenuItem key="members">
           <Link to="/members">
-            <Icon icon={Users} color="white" />
+            <Icon icon={Users} color="color-grayscale-white" />
             <span>Członkowie</span>
           </Link>
         </MenuItem>
         <MenuItem key="areas">
           <Link to="/areas">
-            <Icon icon={UsersClass} color="white" />
+            <Icon icon={UsersClass} color="color-grayscale-white" />
             <span>Obszary</span>
           </Link>
         </MenuItem>
         <MenuItem key="projects">
           <Link to="/projects">
-            <Icon icon={Tasks} color="white" />
+            <Icon icon={Tasks} color="color-grayscale-white" />
             <span>Projekty</span>
           </Link>
         </MenuItem>
         <MenuItem key="successes">
           <Link to="/successes">
-            <Icon icon={Stars} color="white" />
+            <Icon icon={Stars} color="color-grayscale-white" />
             <span>Sukcesy</span>
           </Link>
         </MenuItem>
         <MenuItem key="events">
           <Link to="/events">
-            <Icon icon={CalendarAlt} color="white" />
+            <Icon icon={CalendarAlt} color="color-grayscale-white" />
             <span>Wydarzenia</span>
           </Link>
         </MenuItem>
         <MenuItem key="materials">
           <Link to="/materials">
-            <Icon icon={Books} color="white" />
+            <Icon icon={Books} color="color-grayscale-white" />
             <span>Materiały</span>
           </Link>
         </MenuItem>
         <MenuItem key="stats">
           <Link to="/stats">
-            <Icon icon={ChartBar} color="white" />
+            <Icon icon={ChartBar} color="color-grayscale-white" />
             <span>Statystyki</span>
           </Link>
         </MenuItem>

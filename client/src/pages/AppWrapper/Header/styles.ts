@@ -5,8 +5,8 @@ import get from 'styles/getStyle';
 export const HeaderContainer = styled(Layout.Header)`
   display: flex;
   align-items: center;
-  background-color: ${get('color', 'white')};
-  padding: 0 ${get('space', 'lg')};
+  background-color: ${get('color-grayscale-white')};
+  padding: 0 ${get('space-24')};
 
   svg {
     cursor: pointer;
@@ -25,7 +25,7 @@ export const Right = styled.div`
   }
 
   .ant-btn {
-    margin-right: ${get('space', 'lg')};
+    margin-right: ${get('space-24')};
 
     a {
       position: absolute;
@@ -38,7 +38,7 @@ export const Right = styled.div`
 `;
 
 export const Name = styled.p`
-  margin-left: ${get('space', 'xs')};
+  margin-left: ${get('space-4')};
 `;
 
 export const Menu = styled(AntdMenu)`

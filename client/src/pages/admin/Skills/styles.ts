@@ -17,13 +17,13 @@ export const AddButton = styled(Button)`
 
 export const SkillCard = styled(Card)`
   width: 100%;
-  margin-top: ${get('space', 'lg')};
+  margin-top: ${get('space-24')};
 
   .ant-card-cover {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: ${get('space', 'lg')};
+    padding: ${get('space-24')};
 
     img {
       height: 48px;
