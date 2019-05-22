@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Spin, Modal } from 'antd';
 import PostsQuery from 'store/post/queries/Posts';
 import { withMe, MeProps } from 'store/user/queries/Me';
+import Loader from 'components/Loader';
 import { PostsList, AddPostBtn, PostsWrapper } from './styles';
 import PostsListItem from './PostsListItem';
 import AddPost from './AddPost';
@@ -13,7 +14,7 @@ const Posts = (props: Props) => {
     <Fragment>
       <PostsQuery variables={{ area: props.area }}>
         {({ data, loading, error }) => {
-          if (loading) return <Spin tip="Loading..." size="large" />;
+          if (loading) return <Loader />;
           if (error) return <div>{error.message}</div>;
           return (
             <PostsWrapper>

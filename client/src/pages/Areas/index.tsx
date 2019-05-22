@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Card } from 'antd';
 import AreasQuery from 'store/area/queries/Areas';
+import Loader from 'components/Loader';
 import * as styles from './styles';
 
 const { AreasContainer, Header, AddButton, AreaCard, CoverImage, Grid } = styles;
@@ -19,6 +20,7 @@ const Areas = () => {
       </Header>
       <AreasQuery>
         {({ data, loading }) => {
+          if (loading) return <Loader />;
           return (
             <Grid>
               {data.areas &&

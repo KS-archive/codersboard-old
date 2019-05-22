@@ -28,7 +28,6 @@ export const withPosts = (WrapperComponent: any) => (props: any) => (
 );
 
 export default (props: Props) => {
-  console.log(props);
   return (
     <Query<Data, {}> query={POSTS} variables={props.variables}>
       {props.children}
