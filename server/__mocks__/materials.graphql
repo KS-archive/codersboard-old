@@ -1,0 +1,103 @@
+mutation createMaterial {
+  createMaterial(
+    data: {
+      title: "Facebook Marketing -  Build Facebook Messenger Chatbots"
+      description: "Facebook marketing & Facebook ads: Design, develop & optimize MobileMonkey Facebook Chatbots without writing any code!"
+      image: "https://i.udemycdn.com/course/750x422/1915496_85f4_2.jpg"
+      url: "https://www.udemy.com/facebook-messenger-chatbot-marketing-training"
+      tags: {
+        connect: [
+          { id: "" }
+          { id: "" }
+        ]
+      }
+      user: { connect: { id: "" } }
+      credential: { connect: { id: "" } }
+    }
+  ) {
+    id
+    title
+    description
+    image
+    url
+    tags {
+      name
+      color
+    }
+    user {
+      id
+      fullName
+    }
+  }
+}
+
+mutation updateMaterial {
+  updateMaterial(
+    data: { title: "Another title" }
+    where: { id: "" }
+  ) {
+    id
+    title
+  }
+}
+
+mutation deleteMaterial {
+  deleteMaterial(where: { id: "" }) {
+    id
+    title
+  }
+}
+
+query materials {
+  materials {
+    id
+    title
+    description
+    image
+    url
+    credential {
+      name
+    }
+    tags {
+      name
+      color
+    }
+    user {
+      fullName
+      image
+    }
+  }
+}
+
+mutation createMaterialTag {
+  createMaterialTag(data: { name: "Kurs", color: "green" }) {
+    id
+    name
+    color
+  }
+}
+
+mutation updateMaterialTag {
+  updateMaterialTag(
+    data: { color: "cyan" }
+    where: { id: "" }
+  ) {
+    id
+    name
+  }
+}
+
+mutation deleteMaterialTag {
+  deleteMaterialTag(where: { id: "" }) {
+    id
+    name
+  }
+}
+
+query materialTags {
+  materialTags {
+    id
+    name
+    color
+  }
+}

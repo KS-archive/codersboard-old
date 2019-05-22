@@ -7,6 +7,7 @@ enum Permission {
 
 enum MainPermission {
   OWNER
+  ADMIN
   MEMBER
   TRAINEE
   HR
@@ -14,30 +15,53 @@ enum MainPermission {
   DATA
 }
 
+enum Institution {
+  NONE
+  UE_ORGANIZATION
+  PWR_ORGANIZATION
+  ASSOCIATION
+}
+
 type User {
   id: ID! @id
   fullName: String!
-  photoURL: String!
+  profileURL: String! @unique
+  image: String!
   email: String! @unique
+  companyEmail: String
+  phone: String
   password: String!
+  role: String! @default(value: "Członek CodersCrew")
   areas: [UserArea!]!
   skills: [UserSkill!]!
   projects: [UserProject!]!
   permissions: [MainPermission!]! @scalarList(strategy: RELATION)
-  university: [University!]!
+  university: University
+  universityDepartment: String
+  fieldOfStudy: String
   year: Int
-  ownerOf: [ID!]! @scalarList(strategy: RELATION)
-  adminOf: [ID!]! @scalarList(strategy: RELATION)
-  memberOf: [ID!]! @scalarList(strategy: RELATION)
-  guestOf: [ID!]! @scalarList(strategy: RELATION)
+  indexNumber: Int @unique
+  institution: [Institution!]! @scalarList(strategy: RELATION)
+  slackId: String @unique
+  slackChannels: [SlackChannel!]!
+  credentials: [Credential!]!
+  special: [String!]! @scalarList(strategy: RELATION)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
 
-type University {
+type Credential {
   id: ID! @id
   name: String!
-  photoURL: String
+  login: String!
+  password: String!
+  users: [User!]!
+}
+
+type University {
+  id: ID! @id
+  name: String! @unique
+  image: String!
   users: [User!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
@@ -45,7 +69,8 @@ type University {
 
 type Skill {
   id: ID! @id
-  name: String!
+  name: String! @unique
+  icon: String
   users: [User!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
@@ -56,6 +81,12 @@ type UserSkill {
   skill: Skill!
   user: User!
   level: Int
+}
+
+type SlackChannel {
+  id: ID! @id
+  name: String
+  users: [User!]!
 }
 
 enum SuccessType {
@@ -94,9 +125,11 @@ enum ProjectStatus {
 
 type Project {
   id: ID! @id
-  name: String!
+  projectURL: String! @unique
+  name: String! @unique
   description: String!
   image: String!
+  color: String
   gallery: [String!]! @scalarList(strategy: RELATION)
   startDate: DateTime
   finishDate: DateTime
@@ -120,8 +153,11 @@ type UserProject {
 
 type Area {
   id: ID! @id
-  name: String!
+  areaURL: String! @unique
+  name: String! @unique
+  image: String
   description: String!
+  color: String
   mainSlackChannel: String
   slackChannels: [String!]! @scalarList(strategy: RELATION)
   users: [User!]!
@@ -136,4 +172,74 @@ type UserArea {
   role: String
   responsibilities: String
   permissions: Permission!
+}
+
+enum EventType {
+  OPEN
+  PRIVATE
+  PROJECT_MEETING
+  AREA_MEETING
+  OTHER
+}
+
+type Event {
+  id: ID! @id
+  summary: String!
+  description: String
+  start: TimeZoneDate @relation(name: "TimezoneRelationStart")
+  end: TimeZoneDate @relation(name: "TimezoneRelationEnd")
+  image: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  attendees: [Attendee!]! @scalarList(strategy: RELATION)
+  location: String
+  htmlLink: String
+  calendarEventId: String
+}
+
+type TimeZoneDate {
+  id: ID! @id
+  dateTime: DateTime!
+  timeZone: String
+}
+
+type Attendee {
+  id: ID! @id
+  email: String
+  responseStatus: String
+}
+
+type PostTag {
+  id: ID! @id
+  name: String!
+}
+
+type Post {
+  id: ID! @id
+  title: String!
+  content: String!
+  tags: [PostTag!]!
+  date: DateTime! @createdAt
+  area: Area
+  project: Project
+  user: User!
+}
+
+type MaterialTag {
+  id: ID! @id
+  name: String! @unique
+  color: String
+}
+
+type Material {
+  id: ID! @id
+  title: String! @unique
+  description: String
+  image: String
+  url: String
+  tags: [MaterialTag!]!
+  credential: Credential
+  user: User
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

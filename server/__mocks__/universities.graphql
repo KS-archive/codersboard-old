@@ -1,0 +1,68 @@
+mutation createUniversity {
+  createUniversity(
+    data: {
+      name: "Uniwersytet SWPS we Wrocławiu"
+      image: "https://res.cloudinary.com/codersboard/image/upload/v1557148657/coders-board-dev/universities/swps.png"
+    }
+  ) {
+    id
+    name
+    image
+    users {
+      id
+    }
+  }
+}
+
+mutation updateUniversity {
+  updateUniversity(
+    data: {
+      image: "https://res.cloudinary.com/codersboard/image/upload/v1557148162/coders-board-dev/universities/ue.png"
+    }
+    where: { id: "" }
+  ) {
+    id
+    name
+    image
+    users {
+      id
+    }
+  }
+}
+
+mutation deleteUniversity {
+  deleteUniversity(where: { id: "" }) {
+    id
+    name
+    image
+    users {
+      id
+    }
+  }
+}
+mutation addUserToUniversity {
+  addUserToUniversity(
+    userId: ""
+    universityId: ""
+  ) {
+    id
+    name
+    image
+    users {
+      id
+      fullName
+    }
+  }
+}
+
+query universities {
+  universities {
+    id
+    name
+    image
+    users {
+      id
+      fullName
+    }
+  }
+}

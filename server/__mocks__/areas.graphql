@@ -1,0 +1,49 @@
+mutation createArea {
+  createArea(
+    data: {
+      name: "UX/UI Design"
+      areaURL: "ux-ui-design"
+      description: "UX/UI design area description"
+    }
+  ) {
+    id
+    name
+    description
+  }
+}
+
+mutation updateArea {
+  updateArea(
+    data: {
+      color: "#52C41A"
+      image: "https://res.cloudinary.com/codersboard/image/upload/v1557272962/coders-board-dev/areas/data-science.svg"
+    }
+    where: { id: "" }
+  ) {
+    id
+    name
+    description
+  }
+}
+
+mutation deleteArea {
+  deleteArea(where: { id: "" }) {
+    id
+    name
+    description
+  }
+}
+
+query areas {
+  areas {
+    id
+    name
+    description
+    mainSlackChannel
+    slackChannels
+    users {
+      id
+      fullName
+    }
+  }
+}

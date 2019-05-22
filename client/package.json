@@ -3,29 +3,42 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/flat": "^0.0.28",
     "@types/jest": "24.0.12",
     "@types/node": "11.13.8",
     "@types/react": "16.8.15",
     "@types/react-dom": "16.8.4",
     "@types/react-router-dom": "^4.3.2",
     "@types/styled-components": "^4.1.14",
+    "@types/yup": "^0.26.13",
     "antd": "^3.16.6",
+    "apollo-boost": "^0.3.1",
+    "flat": "^4.1.0",
+    "formik": "^1.5.4",
+    "graphql": "^14.2.1",
     "prettier": "^1.17.0",
     "react": "^16.8.6",
+    "react-apollo": "^2.5.5",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
+    "source-map-explorer": "^1.8.0",
     "styled-components": "^4.2.0",
-    "typescript": "3.4.5"
+    "typescript": "3.4.5",
+    "yup": "^0.27.0"
   },
   "scripts": {
+    "analyze": "yarn run build && source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "react-hooks/exhaustive-deps": false
+    }
   },
   "browserslist": {
     "production": [

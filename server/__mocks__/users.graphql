@@ -1,0 +1,106 @@
+mutation createUser {
+  createUser(
+    data: {
+      fullName: "John Doe"
+      profileURL: "john-doe"
+      image: "https://i.redd.it/ooz0ycmouti21.png"
+      email: "john.doe@gmail.com"
+      companyEmail: "john@coderscrew.pl"
+      phone: "334125423"
+      password: "john-doe"
+      role: "Członek CodersCrew"
+      permissions: { set: MEMBER }
+      university: { connect: { id: "" } }
+      universityDepartment: "Nauk Ekonomicznych"
+      fieldOfStudy: "Zarządzanie"
+      year: 3
+      indexNumber: 541275
+      institution: { set:  UE_ORGANIZATION }
+    }
+  ) {
+    id
+    fullName
+    email
+  }
+}
+
+mutation updateUser {
+  updateUser(
+    data: {
+      fullName: "John Smith"
+    }
+    where: { id: "" }
+  ) {
+    id
+    fullName
+    email
+  }
+}
+mutation deleteUser {
+  deleteUser(where: { id: "" }) {
+    id
+    fullName
+    email
+  }
+}
+
+mutation signIn {
+  signIn(email: "john@coderscrew.pl", password: "john-doe") {
+    id
+  }
+}
+
+mutation signOut {
+  signOut {
+    message
+  }
+}
+
+query me {
+  me {
+    id
+    email
+    fullName
+    password
+    permissions
+    createdAt
+    updatedAt
+    special
+    university {
+      id
+      name
+    }
+  }
+}
+
+query users {
+  users {
+    id
+    fullName
+    profileURL
+    image
+    email
+    companyEmail
+    phone
+    role
+    areas {
+      area {
+        name
+      }
+    }
+    projects {
+      project {
+        name
+      }
+    }
+    university {
+      name
+      image
+    }
+    universityDepartment
+    fieldOfStudy
+    year
+    indexNumber
+    institution
+  }
+}

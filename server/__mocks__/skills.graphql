@@ -1,0 +1,40 @@
+mutation createSkill {
+  createSkill(
+    data: {
+      name: "Zeplin"
+      icon: "https://res.cloudinary.com/codersboard/image/upload/v1557160129/coders-board-dev/skills/zeplin.svg"
+    }
+  ) {
+    id
+    name
+  }
+}
+
+mutation updateSkill {
+  updateSkill(
+    data: {
+      icon: "https://res.cloudinary.com/codersboard/image/upload/v1557169635/coders-board-dev/skills/adobe-illustrator-cc.svg"
+    }
+    where: { id: "" }
+  ) {
+    id
+    name
+  }
+}
+
+mutation deleteSkill {
+  deleteSkill(where: { id: "" }) {
+    id
+    name
+  }
+}
+
+query skills {
+  skills {
+    id
+    name
+    icon
+    createdAt
+    updatedAt
+  }
+}

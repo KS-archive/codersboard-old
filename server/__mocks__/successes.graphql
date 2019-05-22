@@ -1,0 +1,51 @@
+mutation createSuccess {
+  createSuccess(
+    data: {
+      name: "Our first success"
+      description: "Short description of our first success"
+      date: "2019-05-05T01:08:13.843Z"
+      type: EPIC
+    }
+  ) {
+    id
+    name
+    date
+  }
+}
+
+mutation updateSuccess {
+  updateSuccess(
+    data: { name: "Our second success" }
+    where: { id: "" }
+  ) {
+    id
+    name
+    date
+  }
+}
+
+mutation deleteSuccess {
+  deleteSuccess(where: { id: "" }) {
+    id
+    name
+    date
+  }
+}
+
+query successes {
+  successes {
+    id
+    name
+    description
+    date
+    type
+    users {
+      id
+    }
+    project {
+      id
+    }
+    createdAt
+    updatedAt
+  }
+}

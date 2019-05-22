@@ -17,6 +17,14 @@
 .DS_Store
 */*.env*
 
+#static
+/client/src/static/fa
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+errors.log
+
+package-lock.json
+/server/export-*.zip
+
