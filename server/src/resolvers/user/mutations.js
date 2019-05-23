@@ -22,7 +22,7 @@ const signIn = async (parent, { email, password }, ctx, info) => {
   const user = await ctx.prisma.query.user({ where: { email } }, '{id permissions password special}');
 
   if (!user) {
-    throw new Error(`No such user found for email ${email}`);
+    throw new Error('EMAIL_DOESNT_EXIST');
   }
 
   const valid = await bcrypt.compare(password, user.password);
@@ -34,7 +34,7 @@ const signIn = async (parent, { email, password }, ctx, info) => {
       const special = user.special.filter(key => key !== 'DB_USER');
       await ctx.prisma.mutation.updateUser({ where: { id: user.id }, data: { password, special: { set: special } } }, info);
     } else {
-      throw new Error('Invalid Password!');
+      throw new Error('WRONG_PASSWORD');
     }
   }
 

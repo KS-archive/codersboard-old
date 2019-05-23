@@ -15,16 +15,12 @@ export const SIGN_IN = gql`
 export default (props: Props) => <Mutation<Data, Variables> mutation={SIGN_IN}>{props.children}</Mutation>;
 
 export const signIn = async (variables: Variables) => {
-  try {
-    const data = await client.mutate({
-      mutation: SIGN_IN,
-      variables,
-      refetchQueries: [{ query: ME }],
-    });
-    return data;
-  } catch (ex) {
-    return ex;
-  }
+  const data = await client.mutate({
+    mutation: SIGN_IN,
+    variables,
+    refetchQueries: [{ query: ME }],
+  });
+  return data;
 };
 
 interface Props {

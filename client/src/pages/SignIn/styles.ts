@@ -17,9 +17,9 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 320px;
+  width: 360px;
   min-height: 300px;
-  padding: ${get('space-24')};
+  padding: ${get('space-32')};
   padding-top: 48px;
   border-radius: ${get('radius-4')};
   box-shadow: ${get('shadow-small')};
