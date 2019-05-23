@@ -1,4 +1,5 @@
 import React from 'react';
+import { message } from 'antd';
 import { Formik, Field, FormikActions } from 'formik';
 import * as Yup from 'yup';
 import { ReactComponent as Logo } from 'static/logo.svg';
@@ -24,8 +25,20 @@ const SigninSchema = Yup.object().shape({
 });
 
 const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
-  actions.resetForm();
-  await signIn(values);
+  try {
+    await signIn(values);
+    message.success('Pomyślnie zalogowano do profilu');
+  } catch (ex) {
+    message.error('Błąd podczas próby zalogowania do panelu');
+    console.log(ex.message);
+    if (ex.message.includes('EMAIL_DOESNT_EXIST')) {
+      actions.setFieldError('email', 'Użytkownik o podanym adresie nie istnieje');
+    }
+    if (ex.message.includes('WRONG_PASSWORD')) {
+      actions.setFieldError('password', 'Błędne hasło');
+    }
+  }
+  actions.setSubmitting(false);
 };
 
 const SignIn = () => {

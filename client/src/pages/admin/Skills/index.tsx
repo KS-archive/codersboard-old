@@ -23,7 +23,7 @@ const Skills = () => {
           <Row gutter={24}>
             {data.skills &&
               data.skills.map(skill => (
-                <Col xs={24} md={12} xl={6} xxl={4}>
+                <Col key={skill.id} xs={24} md={12} xl={6} xxl={4}>
                   <SkillCard actions={[<Icon icon={Edit} />, <Icon icon={TrashAlt} />]}>
                     <Meta
                       title={skill.name}
