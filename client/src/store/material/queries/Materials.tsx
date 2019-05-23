@@ -17,6 +17,8 @@ export const MATERIALS = gql`
       credential {
         id
         name
+        login
+        password
       }
     }
   }

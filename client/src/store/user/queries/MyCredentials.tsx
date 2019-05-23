@@ -17,9 +17,9 @@ export const MY_CREDENTIALS = gql`
 `;
 
 export const withMyCredentials = (WrapperComponent: any) => (props: any) => (
-  <Query<Data, {}> query={MY_CREDENTIALS}>{({ data, error }) => {
+  <Query<Data, {}> query={MY_CREDENTIALS}>{({ data, error, loading }) => {
     const myCredentials = (data.me && data.me.credentials) ? data.me.credentials : [];
-    return <WrapperComponent {...props} myCredentials={myCredentials} />;
+    return <WrapperComponent {...props} myCredentials={myCredentials} myCredentialsLoading={loading} />;
   }}</Query>
 );
 
