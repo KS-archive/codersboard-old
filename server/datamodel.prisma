@@ -81,6 +81,7 @@ type UserSkill {
   skill: Skill!
   user: User!
   level: Int
+  createdAt: DateTime! @createdAt
 }
 
 type SlackChannel {

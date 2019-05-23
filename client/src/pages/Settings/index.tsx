@@ -39,7 +39,7 @@ const renderContent = (hash: string, me: MeProps) => {
       return <Integrations me={me} />;
 
     case `#skills`:
-      return <Skills me={me} />;
+      return <Skills />;
 
     default:
       return null;

@@ -1,111 +1,28 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Select } from 'antd';
-import { Formik, Form, Field, FieldArray, FieldProps } from 'formik';
-import { withSkills, SkillProps } from 'store/skill/queries/Skills';
-import { MeProps } from 'store/user/queries/Me';
-import { IOption } from 'components/formik/Select';
-import { SkillsWrapper, SkillCard, SkillName, Rating, RatingDot } from './styles';
+import React from 'react';
+import { message } from 'antd';
+import { Formik, FormikActions } from 'formik';
+import { updateMySkills } from 'store/skill/mutations/updateMySkills';
+import { withMySkills, Data as MySkillsData } from 'store/skill/queries/MySkills';
+import SkillsForm from './SkillsForm';
 
-const Option = Select.Option;
-
-const initialValues: Values = {
-  skills: [],
+const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
+  const valuesToSubmit = values.skills.map(({ skill, level, id }) => ({ skillId: skill.id, level, id }));
+  await updateMySkills(valuesToSubmit);
+  message.success('Twoje umiejętności zostały zaktualizowane');
+  actions.setSubmitting(false);
 };
 
-const handleSubmit = (values: Values) => {
-  console.log(values);
+const Skills: React.FC<Props> = ({ mySkills = [], mySkillsLoading }) => {
+  return <Formik initialValues={{ skills: mySkills }} enableReinitialize onSubmit={handleSubmit} component={SkillsForm} />
 };
 
-const sortSkillOptions = (a: IOption, b: IOption) => {
-  const labelA = a.label.toLowerCase();
-  const labelB = b.label.toLowerCase();
-
-  if (labelA < labelB) return -1;
-  if (labelA > labelB) return 1;
-  return 0;
-};
-
-const filterSkills = (inputValue: string, option: any) =>
-  option.props.children.toLowerCase().includes(inputValue.toLowerCase());
-
-const parseSkillsToOptions = (skills: SkillProps[]) =>
-  skills.map(skill => ({ label: skill.name, value: skill.id })).sort(sortSkillOptions);
-
-const Skills: React.FC<Props> = ({ me, skills = [] }) => {
-  const skillOptions = useMemo(() => parseSkillsToOptions(skills), [skills]);
-  const [options, setOptions] = useState(skillOptions);
-
-  useEffect(() => {
-    setOptions(skillOptions);
-    // eslint-disable-next-line
-  }, [skillOptions.length]);
-
-  const filterOptions = (value: string) => {
-    const newOptions = options.filter(option => option.value !== value);
-    setOptions(newOptions);
+export interface UserSkill {
+  id: string;
+  skill: {
+    id: string;
+    name: string;
+    icon: string;
   };
-
-  return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ values }) => {
-        return (
-          <Form>
-            <FieldArray
-              name="skills"
-              render={arrayHelpers => {
-                return (
-                  <>
-                    <Select
-                      showSearch
-                      filterOption={filterSkills}
-                      value={null}
-                      size="large"
-                      placeholder="Wyszukaj umiejętnośc lub dodaj nową"
-                      onSelect={(value, option: any) => {
-                        filterOptions(value as string);
-                        arrayHelpers.unshift({ skillId: value, skillLabel: option.props.children, level: 0 });
-                      }}
-
-                    >
-                      {options.map(option => <Option key={option.value}>{option.label}</Option>)}
-                    </Select>
-                    <SkillsWrapper>
-                      {values.skills.map((skill, index) => {
-                        return (
-                          <Field
-                            key={index}
-                            name={`skills.${index}`}
-                            render={({ field, form }: FieldProps) => {
-                              return (
-                                <SkillCard>
-                                  <SkillName>{field.value.skillLabel}</SkillName>
-                                  <Rating
-                                    value={field.value.level}
-                                    character={<RatingDot />}
-                                    onChange={value => form.setFieldValue(`skills.${index}`, { ...field.value, level: value })}
-                                    onBlur={() => form.setFieldTouched(`skills.${index}`, true)}
-                                  />
-                                </SkillCard>
-                              );
-                            }}
-                          />
-                        );
-                      })}
-                    </SkillsWrapper>
-                  </>
-                );
-              }}
-            />
-          </Form>
-        );
-      }}
-    </Formik>
-  );
-};
-
-interface UserSkill {
-  skillId: string;
-  skillLabel: string;
   level: number;
 }
 
@@ -113,9 +30,6 @@ interface Values {
   skills: UserSkill[];
 }
 
-interface Props {
-  me: MeProps;
-  skills: SkillProps[];
-}
+interface Props extends MySkillsData {}
 
-export default withSkills(Skills);
+export default withMySkills(Skills);
