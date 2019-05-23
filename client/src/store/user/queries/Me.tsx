@@ -11,6 +11,11 @@ export const ME = gql`
       image
       email
       permissions
+      skills {
+        skill {
+          id
+        }
+      }
     }
   }
 `;
@@ -31,6 +36,11 @@ export interface MeProps {
   image: string;
   email: string;
   permissions: MainPermission[];
+  skills: {
+    skill: {
+      id: string;
+    }
+  }[]
 }
 
 export interface Data {

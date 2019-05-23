@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Wed May 08 2019 02:12:07 GMT+0200 (Central European Summer Time)
+# timestamp: Thu May 23 2019 14:50:47 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -7640,6 +7640,7 @@ type UserSkill implements Node {
   skill: Skill!
   user: User!
   level: Int
+  createdAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -7684,11 +7685,14 @@ enum UserSkillOrderByInput {
   id_DESC
   level_ASC
   level_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type UserSkillPreviousValues {
   id: ID!
   level: Int
+  createdAt: DateTime!
 }
 
 input UserSkillScalarWhereInput {
@@ -7762,6 +7766,28 @@ input UserSkillScalarWhereInput {
 
   """All values greater than or equal the given value."""
   level_gte: Int
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
 }
 
 type UserSkillSubscriptionPayload {
@@ -7919,6 +7945,28 @@ input UserSkillWhereInput {
 
   """All values greater than or equal the given value."""
   level_gte: Int
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
   skill: SkillWhereInput
   user: UserWhereInput
 }

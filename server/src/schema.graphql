@@ -4,6 +4,12 @@ type Message {
   message: String
 }
 
+input UpdateMySkillsInput {
+  id: String,
+  skillId: String!,
+  level: Int!,
+}
+
 type Mutation {
   signIn(email: String!, password: String!): User!
   signOut: Message
@@ -24,6 +30,7 @@ type Mutation {
   createSkill(data: SkillCreateInput!): Skill!
   updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
   deleteSkill(where: SkillWhereUniqueInput!): Skill
+  updateMySkills(data: [UpdateMySkillsInput!]!): [UserSkill]!
 
   createProject(data: ProjectCreateInput!): Project!
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
@@ -59,6 +66,7 @@ type Query {
   universities(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University]!
   successes(where: SuccessWhereInput, orderBy: SuccessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Success]!
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
+  mySkills: [UserSkill]!
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
