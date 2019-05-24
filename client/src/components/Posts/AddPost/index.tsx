@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import { Formik, Field, Form, FormikActions } from 'formik';
 import * as Yup from 'yup';
+import { withMe, MeProps } from 'store/user/queries/Me';
 import { Input, TextArea } from '../../formik';
 import { addPost } from 'store/post/mutations/AddPost';
 
@@ -23,7 +24,7 @@ const AddPost = (props: Props) => {
         ...values,
         user: {
           connect: {
-            id: 'cjve18i8rzmew0b95ahmwqgvd',
+            id: props.me.id,
           },
         },
         area: {
@@ -61,6 +62,7 @@ interface IFormValues {
 interface Props {
   hideModal: Function;
   area: string;
+  me: MeProps;
 }
 
-export default AddPost;
+export default withMe(AddPost);
