@@ -7,3 +7,12 @@ export const Grid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
 `;
+
+export const Buttons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  button:last-of-type {
+    margin-left: ${get('space-16')};
+  }
+`;

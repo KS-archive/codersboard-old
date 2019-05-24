@@ -17,6 +17,7 @@ type Mutation {
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteUser(where: UserWhereUniqueInput!): User
+  updateProfile(data: UserUpdateInput!): User
 
   createUniversity(data: UniversityCreateInput!): University!
   updateUniversity(data: UniversityUpdateInput!, where: UniversityWhereUniqueInput!): University

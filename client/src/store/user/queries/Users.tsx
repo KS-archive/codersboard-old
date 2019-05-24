@@ -14,16 +14,21 @@ export const USERS = gql`
       phone
       role
       areas {
+        id
         area {
+          id
           name
         }
       }
       projects {
+        id
         project {
+          id
           name
         }
       }
       university {
+        id
         name
         image
       }
@@ -58,6 +63,7 @@ export interface User {
   areas: any;
   projects: any;
   university: {
+    id: string;
     name: string;
     image: string;
   };

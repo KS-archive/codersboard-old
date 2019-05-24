@@ -1,13 +1,23 @@
 import React from 'react';
+import { message } from 'antd';
 import { Formik, FormikActions } from 'formik';
 import { pick } from 'utils';
 import { MeProps, withMe } from 'store/user/queries/Me';
+import { updateProfile } from 'store/user/mutations/updateProfile';
 import AccountForm from './AccountForm';
 
-const handleSubmit = (values: Values, actions: FormikActions<Values>) => {
-  console.log(values);
+const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
+  try {
+    await updateProfile(values);
+    message.success('Twój profil został zaktualizowany');
+  } catch (ex) {
+    message.error('Podczas aktualizacji profilu wystąpił błąd');
+  }
   actions.setSubmitting(false);
 };
+
+// TODO: Data validation
+// TODO: Adding/updating image (with crop modal)
 
 const Account: React.FC<Props> = ({ me }) => {
   const initialValues = {

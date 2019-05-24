@@ -1,13 +1,14 @@
 import React from 'react';
-import { Typography } from 'antd';
+import { Typography, Button } from 'antd';
 import { Form, Field, FormikProps } from 'formik';
 import { Values } from '..';
 import { Input, NumberInput } from 'components/formik';
-import { Grid } from './styles';
+import UniversitySelect from './UniversitySelect';
+import { Grid, Buttons } from './styles';
 
 const { Title } = Typography;
 
-const AccountForm: React.FC<FormikProps<Values>> = ({ values }) => {
+const AccountForm: React.FC<FormikProps<Values>> = ({ values, dirty, isSubmitting }) => {
   return (
     <Form>
       <Title level={4}>Podstawowe dane</Title>
@@ -21,7 +22,7 @@ const AccountForm: React.FC<FormikProps<Values>> = ({ values }) => {
       </Grid>
       <Title level={4}>Studia</Title>
       <Grid>
-        <Field name="university" component={Input} label="Uczelnia" />
+        <UniversitySelect />
         {values.university && (
           <>
             <Field name="universityDepartment" component={Input} label="Wydział" />
@@ -31,6 +32,14 @@ const AccountForm: React.FC<FormikProps<Values>> = ({ values }) => {
           </>
         )}
       </Grid>
+      <Buttons>
+        <Button type="danger" htmlType="reset" disabled={!dirty || isSubmitting}>
+          Anuluj
+        </Button>
+        <Button type="primary" htmlType="submit" loading={isSubmitting} disabled={!dirty}>
+          Zapisz zmiany
+        </Button>
+      </Buttons>
     </Form>
   );
 };

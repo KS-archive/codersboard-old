@@ -32,7 +32,10 @@ const signIn = async (parent, { email, password }, ctx, info) => {
     if (user.permissions.includes('OWNER') && user.special.includes('DB_USER') && user.password === password) {
       password = await bcrypt.hash(password, 10);
       const special = user.special.filter(key => key !== 'DB_USER');
-      await ctx.prisma.mutation.updateUser({ where: { id: user.id }, data: { password, special: { set: special } } }, info);
+      await ctx.prisma.mutation.updateUser(
+        { where: { id: user.id }, data: { password, special: { set: special } } },
+        info,
+      );
     } else {
       throw new Error('WRONG_PASSWORD');
     }
@@ -53,10 +56,23 @@ const signOut = (parent, args, ctx, info) => {
   return { message: 'Logged out' };
 };
 
+const updateProfile = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+  const user = await ctx.prisma.query.user({ where: { id: ctx.request.userId } }, '{ university { id } }');
+
+  if (user.university && !args.data.university) {
+    args = { ...args, data: { ...args.data, university: { disconnect: true } } };
+  }
+
+  args = { ...args, where: { id: ctx.request.userId } };
+  return ctx.prisma.mutation.updateUser(args, info);
+};
+
 module.exports = {
   createUser,
   updateUser,
   deleteUser,
   signIn,
   signOut,
-}
+  updateProfile,
+};
