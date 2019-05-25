@@ -2,13 +2,17 @@ import { css } from 'styled-components';
 import get from 'styles/getStyle';
 
 export default css`
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1.ant-typography,
+  h2.ant-typography,
+  h3.ant-typography,
+  h4.ant-typography,
+  h5.ant-typography,
+  h6.ant-typography {
     margin: 0;
+  }
+
+  .ant-tooltip-inner > a > div {
+    display: none;
   }
 
   .ant-form-item-label {

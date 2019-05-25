@@ -17,40 +17,50 @@ const deleteSkill = async (parent, args, ctx, info) => {
 
 const updateMySkills = async (parent, args, ctx, info) => {
   await validate(ctx).userExist();
-  const currentSkills = await ctx.prisma.query.userSkills({ where: { user: { id: ctx.request.userId } } }, '{ id }');
+  const currentUserSkills = await ctx.prisma.query.userSkills({ where: { user: { id: ctx.request.userId } } }, '{ id skill { id } }');
 
-  const currentSkillsIds = currentSkills.map(({ id }) => id);
-  const newSkillsIds = args.data.filter(({ id }) => !!id).map(({ id }) => id);
+  const newUserSkillsIds = args.data.filter(({ id }) => !!id).map(({ id }) => id);
 
-  const toDelete = currentSkillsIds.filter(skillId => !newSkillsIds.includes(skillId));
+  const toDelete = currentUserSkills.filter(({ id }) => !newUserSkillsIds.includes(id));
+
   const [toCreate, toUpdate] = args.data.reduce(
-    (acc, skill) => {
-      if (!skill.id) acc[0].push(skill);
-      else if (currentSkills.find(({ id }) => id === skill.id).level !== skill.level) acc[1].push(skill);
+    (acc, userSkill) => {
+      if (!userSkill.id) acc[0].push(userSkill);
+      else if (currentUserSkills.find(({ id }) => id === userSkill.id).level !== userSkill.level) acc[1].push(userSkill);
       return acc;
     },
     [[], []],
   );
 
-  for (const skillId of toDelete) {
+  for (const userSkill of toDelete) {
+    await ctx.prisma.mutation.updateSkill({
+      where: { id: userSkill.skill.id },
+      data: { users: { disconnect: { id: ctx.request.userId } } },
+    });
+
     await ctx.prisma.mutation.deleteUserSkill({
-      where: { id: skillId },
+      where: { id: userSkill.id },
     });
   }
 
-  for (const skill of toUpdate) {
+  for (const userSkill of toUpdate) {
     await ctx.prisma.mutation.updateUserSkill({
-      where: { id: skill.id },
-      data: { level: skill.level },
+      where: { id: userSkill.id },
+      data: { level: userSkill.level },
     });
   }
 
-  for (const skill of toCreate.reverse()) {
+  for (const userSkill of toCreate.reverse()) {
+    await ctx.prisma.mutation.updateSkill({
+      where: { id: userSkill.skill.id },
+      data: { users: { connect: { id: ctx.request.userId } } },
+    });
+
     await ctx.prisma.mutation.createUserSkill({
       data: {
-        level: skill.level,
+        level: userSkill.level,
         user: { connect: { id: ctx.request.userId } },
-        skill: { connect: { id: skill.skillId } },
+        skill: { connect: { id: userSkill.skill.id } },
       },
     });
   }

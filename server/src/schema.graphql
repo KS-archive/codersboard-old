@@ -5,9 +5,9 @@ type Message {
 }
 
 input UpdateMySkillsInput {
-  id: String,
-  skillId: String!,
-  level: Int!,
+  id: String
+  skill: SkillCreateInput
+  level: Int!
 }
 
 type Mutation {

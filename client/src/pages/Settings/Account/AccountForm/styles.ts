@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Typography } from 'antd';
 import get from 'styles/getStyle';
 import { ImageUpload } from 'components/formik';
 
@@ -7,6 +8,12 @@ export const Grid = styled.div`
   grid-gap: 0 ${get('space-32')};
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
+`;
+
+export const Title = styled(Typography.Title)`
+  &.ant-typography {
+    margin-bottom: ${get('space-12')};
+  }
 `;
 
 export const Row1 = styled.div`

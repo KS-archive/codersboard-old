@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'formik';
 import { Select } from 'components/formik';
-import { withUniversities, UniversityProps } from 'store/university/queries/Universities';
+import withUniversities, { IUniversityProps } from './withUniversities';
 
 const UniversitySelect: React.FC<Props> = ({ universities = [] }) => {
   const options = universities.map(({ id, name }) => ({ label: name, value: id }));
@@ -9,7 +9,7 @@ const UniversitySelect: React.FC<Props> = ({ universities = [] }) => {
 };
 
 interface Props {
-  universities: UniversityProps[];
+  universities: IUniversityProps[];
 }
 
 export default withUniversities(UniversitySelect);

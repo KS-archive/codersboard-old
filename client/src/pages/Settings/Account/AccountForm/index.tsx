@@ -1,12 +1,10 @@
 import React from 'react';
-import { Typography, Button } from 'antd';
+import { Button } from 'antd';
 import { Form, Field, FormikProps } from 'formik';
 import { Values } from '..';
 import { Input, NumberInput } from 'components/formik';
 import UniversitySelect from './UniversitySelect';
-import { Grid, Buttons, UserImageUpload, Row1, BasicDataColumn, StudiesDetails } from './styles';
-
-const { Title } = Typography;
+import { Grid, Title, Buttons, UserImageUpload, Row1, BasicDataColumn, StudiesDetails } from './styles';
 
 const AccountForm: React.FC<FormikProps<Values>> = ({ values, dirty, isSubmitting }) => {
   return (
