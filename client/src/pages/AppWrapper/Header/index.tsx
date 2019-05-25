@@ -11,15 +11,6 @@ import * as styles from './styles';
 
 const { HeaderContainer, Right, Name, Menu, MenuItem } = styles;
 
-const menu = (
-  <Menu>
-    <MenuItem>
-      <Link to="/settings">Ustawienia</Link>
-    </MenuItem>
-    <MenuItem onClick={signOut}>Wyloguj się</MenuItem>
-  </Menu>
-);
-
 const adminPermissions = ['OWNER', 'ADMIN', 'HR', 'FINANCE'];
 const hasAdminPermission = (permission: MainPermission) => adminPermissions.includes(permission);
 
@@ -36,7 +27,17 @@ const Header = ({ isSidebarCollapsed, toggleCollapsed, me }: Props) => {
             Admin panel
           </Button>
         )}
-        <Dropdown overlay={menu} trigger={['click']}>
+        <Dropdown
+          overlay={
+            <Menu>
+              <MenuItem>
+                <Link to={`/settings/${me.profileURL}`}>Ustawienia</Link>
+              </MenuItem>
+              <MenuItem onClick={signOut}>Wyloguj się</MenuItem>
+            </Menu>
+          }
+          trigger={['click']}
+        >
           <div>
             <Avatar size={32} src={me && me.image} />
             <Name>{me && me.fullName}</Name>

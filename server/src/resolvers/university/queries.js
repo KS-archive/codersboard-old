@@ -1,4 +1,4 @@
-const validate = require('../../utils/validate');
+const validate = require('utils/validate');
 
 const universities = async (parent, args, ctx, info) => {
   await validate(ctx).userExist();

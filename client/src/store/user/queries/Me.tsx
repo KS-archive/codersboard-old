@@ -8,6 +8,7 @@ export const ME = gql`
     me {
       id
       fullName
+      profileURL
       image
       email
       companyEmail
@@ -53,6 +54,7 @@ interface Props {
 export interface MeProps {
   id: string;
   fullName: string;
+  profileURL: string;
   image: string;
   email: string;
   companyEmail?: string;

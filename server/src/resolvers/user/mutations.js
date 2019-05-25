@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const validate = require('../../utils/validate');
+const validate = require('utils/validate');
 
 const createUser = async (parent, args, ctx, info) => {
   await validate(ctx).userHasPermission(['OWNER', 'HR']);

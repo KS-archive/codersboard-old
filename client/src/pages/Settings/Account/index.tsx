@@ -1,58 +1,56 @@
 import React from 'react';
 import { message } from 'antd';
 import { Formik, FormikActions } from 'formik';
-import { pick, uploadToCloudinary } from 'utils';
-import { MeProps, withMe } from 'store/user/queries/Me';
+import { omit, uploadToCloudinary } from 'utils';
+import withMe, { IWithMe } from './store/withMe';
 import { updateProfile } from 'store/user/mutations/updateProfile';
 import AccountForm from './AccountForm';
+
+let profileURL = '';
 
 const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
   try {
     if (typeof values.image === 'object') {
-      const image = await uploadToCloudinary(values.image, 'coders-board-dev-profile-image');
+      const file = new File([values.image], profileURL, {
+        type: values.image.type,
+      });
+      const image = await uploadToCloudinary(file, 'coders-board-dev/profile-image');
       values.image = image;
-    };
+    }
     await updateProfile(values);
     message.success('Twój profil został zaktualizowany');
   } catch (ex) {
+    console.log(ex);
     message.error('Podczas aktualizacji profilu wystąpił błąd');
   }
   actions.setSubmitting(false);
 };
 
-// TODO: Data validation
-// TODO: Add crop modal to image uploader
-
 const Account: React.FC<Props> = ({ me }) => {
-  const initialValues = {
-    ...pick(me, [
-      'companyEmail',
-      'email',
-      'fieldOfStudy',
-      'fullName',
-      'image',
-      'indexNumber',
-      'phone',
-      'role',
-      'universityDepartment',
-      'year',
-    ]),
-  };
-  initialValues.university = me.university && me.university.id
+  profileURL = me.profileURL;
+  const university = me.university && me.university.id;
+  const initialValues: Values = omit({ ...me, university }, ['id', 'profileURL', '__typename']);
 
-  return <Formik initialValues={initialValues} enableReinitialize onSubmit={handleSubmit} component={AccountForm} />;
+  return (
+    <Formik
+      initialValues={initialValues}
+      enableReinitialize
+      onSubmit={handleSubmit}
+      component={AccountForm}
+      initialStatus={{ profileURL }}
+    />
+  );
 };
 
-interface Props {
-  me: MeProps;
-}
+interface Props extends IWithMe {}
 
 export interface Values {
   companyEmail: string;
+  profileURL: string;
   email: string;
   fieldOfStudy: string;
   fullName: string;
-  image: string;
+  image: any;
   indexNumber: number;
   phone: string;
   role: string;

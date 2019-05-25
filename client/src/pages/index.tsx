@@ -59,7 +59,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                       <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
                       <Route exact path="/materials" component={Materials} />
                       <Route exact path="/stats" component={() => <div>Statystyki</div>} />
-                      <Route path="/settings" component={Settings} />
+                      <Route path="/settings/:profileURL" component={Settings} />
                       <Route path="/admin">
                         <AdminWrapper>
                           <Switch>

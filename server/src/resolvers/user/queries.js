@@ -1,4 +1,4 @@
-const validate = require('../../utils/validate');
+const validate = require('utils/validate');
 
 const me = async (parent, args, ctx, info) => {
   if (!ctx.request.userId) {
