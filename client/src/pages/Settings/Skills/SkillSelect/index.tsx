@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Select } from 'antd';
-import { withSkills, SkillProps } from 'store/skill/queries/Skills';
+import withSkills, { IWithSkills, ISkill } from '../store/withSkills';
+import { IMySkill } from '../store/withMySkills';
 import { OptionContent, Icon, Text } from './styles';
-import { UserSkill } from '..';
 
 const { Option } = Select;
 
-const sortSkills = (a: SkillProps, b: SkillProps) => {
+const sortSkills = (a: ISkill, b: ISkill) => {
   const labelA = a.name.toLowerCase();
   const labelB = b.name.toLowerCase();
 
@@ -42,13 +42,11 @@ const Skills: React.FC<Props> = ({ skills = [], unshift, values }) => {
       loading={!options.length}
       filterOption={filterSkills}
       value={undefined}
-      size="large"
       placeholder="Wyszukaj umiejętność lub dodaj nową"
       defaultActiveFirstOption={false}
       showArrow={false}
       onSelect={(value, option: any) => {
         const skill = skills.find(({ id }) => id === value);
-        delete skill.users;
         filterOptions(value as string);
         unshift({ skill, level: 0 });
       }}
@@ -65,10 +63,9 @@ const Skills: React.FC<Props> = ({ skills = [], unshift, values }) => {
   );
 };
 
-interface Props {
+interface Props extends IWithSkills {
   unshift: (value: any) => void;
-  skills: SkillProps[];
-  values: UserSkill[];
+  values: IMySkill[];
 }
 
 export default withSkills(Skills);

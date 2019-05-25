@@ -11,13 +11,9 @@ export default createGlobalStyle`
     margin: 0;
   }
 
-  .ant-tooltip-inner > a > div {
-    display: none;
-  }
+  ${antdOverwrite}
 
   #root {
-    ${antdOverwrite}
-
     > .ant-spin {
       position: fixed;
       top: 0;

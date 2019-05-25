@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import get from 'styles/getStyle';
+
 export const OptionContent = styled.div`
   display: flex;
   align-items: center;

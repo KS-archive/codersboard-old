@@ -1,24 +1,18 @@
 import React from 'react';
 import { Form, Input } from 'antd';
+
 import { FieldProps } from 'formik/dist/Field';
 import { FormItemProps } from 'antd/es/form';
 import { InputProps } from 'antd/es/input';
 
-type Props = { autoComplete?: string } & FormItemProps & InputProps & FieldProps;
+import { getStatus } from 'components/formik/helpers';
 
-const getStatus = (form: any, errorMessage: any) => {
-  if (errorMessage) {
-    return 'error';
-  } else if (form.isSubmitting || form.isValidating) {
-    return 'validating';
-  }
-  return null;
-};
+type Props = { autoComplete?: string } & FormItemProps & InputProps & FieldProps;
 
 const FormikInput = ({ form, field: { name, onChange, onBlur, value }, ...props }: Props) => {
   const errorMessage = form.touched[name] && form.errors[name];
   const help = errorMessage || props.help || undefined;
-  const validateStatus = getStatus(form, errorMessage);
+  const validateStatus = getStatus(form, errorMessage as string);
 
   return (
     <Form.Item

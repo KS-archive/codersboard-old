@@ -1,5 +1,5 @@
-export default () => new Promise((resolve) => {
+export default (time: number) => new Promise((resolve) => {
   setTimeout(() => {
     resolve('Hello');
-  }, 2000);
+  }, time);
 });
