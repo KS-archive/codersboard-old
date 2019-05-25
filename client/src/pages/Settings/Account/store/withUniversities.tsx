@@ -17,10 +17,12 @@ export interface IUniversityProps {
   name: string;
 }
 
-export interface Data {
+interface IData {
   universities: IUniversityProps[];
 }
 
+export interface IWithUniversities extends IData {}
+
 export default (WrapperComponent: any) => (props: any) => (
-  <Query<Data, {}> query={UNIVERSITIES}>{({ data }) => <WrapperComponent {...props} universities={data.universities} />}</Query>
+  <Query<IData, {}> query={UNIVERSITIES}>{({ data }) => <WrapperComponent {...props} universities={data.universities} />}</Query>
 );

@@ -3,9 +3,9 @@ import { Tag, Button, Popover } from 'antd';
 import { ReactComponent as LockOpen } from 'static/fa/regular/lock-open-alt.svg';
 import { ReactComponent as Link } from 'static/fa/regular/link.svg';
 import { Icon } from 'components';
+import { shorten } from 'utils';
 import { Description, Buttons } from './styles';
 
-const shorten = (str: string, maxLen: number) => (str.length > maxLen ? `${str.substring(0, maxLen - 3)}...` : str);
 
 const renderTag = ({ name, color }: ITag) => (
   <Tag key={name} color={color}>

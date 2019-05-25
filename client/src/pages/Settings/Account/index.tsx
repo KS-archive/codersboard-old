@@ -14,7 +14,7 @@ const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
       const file = new File([values.image], profileURL, {
         type: values.image.type,
       });
-      const image = await uploadToCloudinary(file, 'coders-board-dev/profile-image');
+      const image = await uploadToCloudinary(file, 'profile-image');
       values.image = image;
     }
     await updateProfile(values);

@@ -19,8 +19,11 @@ export interface IArea {
   image: string;
 }
 
-export interface IWithArea {
+interface IData {
   area: IArea;
+}
+
+export interface IWithArea extends IData {
   areaLoading: boolean;
 }
 
@@ -29,7 +32,7 @@ interface IQueryVaraibles {
 }
 
 export default (WrapperComponent: any) => (props: RouteComponentProps<{ areaURL: string }>) => (
-  <Query<IWithArea, IQueryVaraibles> query={AREA} variables={{ areaURL: props.match.params.areaURL }}>
+  <Query<IData, IQueryVaraibles> query={AREA} variables={{ areaURL: props.match.params.areaURL }}>
     {({ data, loading }) => <WrapperComponent {...props} area={data.area} areaLoading={loading} />}
   </Query>
 );

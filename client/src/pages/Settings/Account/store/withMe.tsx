@@ -44,10 +44,12 @@ export interface IMe {
   indexNumber?: number;
 }
 
-export interface IWithMe {
+interface IData {
   me: IMe;
 }
 
+export interface IWithMe extends IData {}
+
 export default (WrapperComponent: any) => (props: any) => (
-  <Query<IWithMe, {}> query={ME}>{({ data }) => <WrapperComponent {...props} me={data.me} />}</Query>
+  <Query<IData, {}> query={ME}>{({ data }) => <WrapperComponent {...props} me={data.me} />}</Query>
 );
