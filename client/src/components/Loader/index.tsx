@@ -5,7 +5,7 @@ import { SpinContainer } from './styles';
 const Loader = () => {
   return (
     <SpinContainer>
-      <Spin tip="Loading..." size="large" />
+      <Spin tip=" Loading..." size="large" />
     </SpinContainer>
   );
 };

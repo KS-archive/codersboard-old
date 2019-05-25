@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { Spin, Modal } from 'antd';
+import React, { useState } from 'react';
+import { Modal } from 'antd';
 import PostsQuery from 'store/post/queries/Posts';
 import { withMe, MeProps } from 'store/user/queries/Me';
 import Loader from '../Loader';
@@ -11,7 +11,7 @@ const Posts = (props: Props) => {
   const [modal, showModal] = useState(false);
 
   return (
-    <Fragment>
+    <>
       <PostsQuery variables={{ area: props.area }}>
         {({ data, loading, error }) => {
           if (loading) return <Loader />;
@@ -41,7 +41,7 @@ const Posts = (props: Props) => {
       <Modal title="Dodaj nowy post" footer={null} visible={modal} onCancel={(): void => showModal(false)}>
         <AddPost area={props.area} hideModal={() => showModal(false)} />
       </Modal>
-    </Fragment>
+    </>
   );
 };
 
