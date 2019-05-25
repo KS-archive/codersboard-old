@@ -1,13 +1,17 @@
 import React from 'react';
 import { message } from 'antd';
 import { Formik, FormikActions } from 'formik';
-import { pick } from 'utils';
+import { pick, uploadToCloudinary } from 'utils';
 import { MeProps, withMe } from 'store/user/queries/Me';
 import { updateProfile } from 'store/user/mutations/updateProfile';
 import AccountForm from './AccountForm';
 
 const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
   try {
+    if (typeof values.image === 'object') {
+      const image = await uploadToCloudinary(values.image, 'coders-board-dev-profile-image');
+      values.image = image;
+    };
     await updateProfile(values);
     message.success('Twój profil został zaktualizowany');
   } catch (ex) {
@@ -17,7 +21,7 @@ const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
 };
 
 // TODO: Data validation
-// TODO: Adding/updating image (with crop modal)
+// TODO: Add crop modal to image uploader
 
 const Account: React.FC<Props> = ({ me }) => {
   const initialValues = {

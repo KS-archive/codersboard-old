@@ -4,7 +4,7 @@ import { Form, Field, FormikProps } from 'formik';
 import { Values } from '..';
 import { Input, NumberInput } from 'components/formik';
 import UniversitySelect from './UniversitySelect';
-import { Grid, Buttons } from './styles';
+import { Grid, Buttons, UserImageUpload, Row1, BasicDataColumn, StudiesDetails } from './styles';
 
 const { Title } = Typography;
 
@@ -12,13 +12,17 @@ const AccountForm: React.FC<FormikProps<Values>> = ({ values, dirty, isSubmittin
   return (
     <Form>
       <Title level={4}>Podstawowe dane</Title>
+      <Row1>
+        <Field name="image" component={UserImageUpload} label="Zdjęcie profilowe" width={400} height={400} />
+        <BasicDataColumn>
+          <Field name="fullName" component={Input} label="Imię i nazwisko" />
+          <Field name="role" component={Input} label="Rola w CodersCrew" />
+          <Field name="phone" component={Input} label="Telefon" />
+        </BasicDataColumn>
+      </Row1>
       <Grid>
-        <Field name="fullName" component={Input} label="Imię i nazwisko" />
-        <Field name="phone" component={Input} label="Telefon" />
         <Field name="email" component={Input} label="E-mail" />
         <Field name="companyEmail" component={Input} label="E-mail CodersCrew" />
-        <Field name="image" component={Input} label="Zdjęcie profilowe" />
-        <Field name="role" component={Input} label="Rola w CodersCrew" />
       </Grid>
       <Title level={4}>Studia</Title>
       <Grid>
@@ -27,8 +31,10 @@ const AccountForm: React.FC<FormikProps<Values>> = ({ values, dirty, isSubmittin
           <>
             <Field name="universityDepartment" component={Input} label="Wydział" />
             <Field name="fieldOfStudy" component={Input} label="Kierunek" />
-            <Field name="year" component={NumberInput} min={1} max={5} label="Rok studiów" />
-            <Field name="indexNumber" component={NumberInput} label="Numer indeksu" />
+            <StudiesDetails>
+              <Field name="year" component={NumberInput} min={1} max={5} label="Rok studiów" />
+              <Field name="indexNumber" component={NumberInput} label="Numer indeksu" />
+            </StudiesDetails>
           </>
         )}
       </Grid>

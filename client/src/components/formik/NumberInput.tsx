@@ -1,24 +1,18 @@
 import React from 'react';
 import { Form, InputNumber } from 'antd';
+
 import { FormItemProps } from 'antd/es/form';
 import { InputNumberProps } from 'antd/lib/input-number';
 import { FieldProps } from 'formik/dist/Field';
 
-type Props = FormItemProps & InputNumberProps & FieldProps;
+import { getStatus } from 'components/formik/helpers';
 
-const getStatus = (form: any, errorMessage: any) => {
-  if (errorMessage) {
-    return 'error';
-  } else if (form.isSubmitting || form.isValidating) {
-    return 'validating';
-  }
-  return null;
-};
+type Props = FormItemProps & InputNumberProps & FieldProps;
 
 const NumberInput = ({ form, field: { name, onChange, onBlur, value }, ...props }: Props) => {
   const errorMessage = form.touched[name] && form.errors[name];
   const help = errorMessage || props.help || undefined;
-  const validateStatus = getStatus(form, errorMessage);
+  const validateStatus = getStatus(form, errorMessage as string);
   const handleChange = (value: number) => {
     form.setFieldValue(name, value);
   };
