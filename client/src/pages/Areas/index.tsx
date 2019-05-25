@@ -25,7 +25,7 @@ const Areas = () => {
             <Grid>
               {data.areas &&
                 data.areas.map(area => (
-                  <Link key={area.id} to={`/areas/${area.areaURL}`}>
+                  <Link key={area.id} to={`/areas/${area.areaURL}/news`}>
                     <AreaCard hoverable cover={<CoverImage src={area.image} />}>
                       <Meta title={area.name} description={shorten(area.description, 120)} />
                     </AreaCard>

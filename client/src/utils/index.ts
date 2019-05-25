@@ -14,3 +14,5 @@ export const uploadToCloudinary = async (file: File, presetName: string): Promis
 
   return data.secure_url;
 };
+
+export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);

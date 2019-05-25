@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Card } from 'antd';
-import { MaterialProps } from 'store/material/queries/Materials';
+import { IMaterial } from '../store/withMaterials';
 import { withMyCredentials, CredentialsProps } from 'store/user/queries/MyCredentials';
 import CardDescription from '../CardDescription';
 import { MaterialCardContainer, CoverImage } from './styles';
@@ -61,7 +61,7 @@ class MaterialCard extends PureComponent<Props, State> {
   }
 }
 
-interface Props extends MaterialProps {
+interface Props extends IMaterial {
   myCredentials: CredentialsProps[];
   myCredentialsLoading: boolean;
 }

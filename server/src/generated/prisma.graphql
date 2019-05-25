@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Thu May 23 2019 14:50:47 GMT+0200 (Central European Summer Time)
+# timestamp: Sat May 25 2019 16:07:15 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -2052,6 +2052,8 @@ type Material implements Node {
   tags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag!]
   credential: Credential
   user: User
+  area: Area
+  project: Project
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2075,6 +2077,8 @@ input MaterialCreateInput {
   tags: MaterialTagCreateManyInput
   credential: CredentialCreateOneInput
   user: UserCreateOneInput
+  area: AreaCreateOneInput
+  project: ProjectCreateOneInput
 }
 
 """An edge in a connection."""
@@ -2561,6 +2565,8 @@ input MaterialUpdateInput {
   tags: MaterialTagUpdateManyInput
   credential: CredentialUpdateOneInput
   user: UserUpdateOneInput
+  area: AreaUpdateOneInput
+  project: ProjectUpdateOneInput
 }
 
 input MaterialUpdateManyMutationInput {
@@ -2828,6 +2834,8 @@ input MaterialWhereInput {
   tags_none: MaterialTagWhereInput
   credential: CredentialWhereInput
   user: UserWhereInput
+  area: AreaWhereInput
+  project: ProjectWhereInput
 }
 
 input MaterialWhereUniqueInput {

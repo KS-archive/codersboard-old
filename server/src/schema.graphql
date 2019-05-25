@@ -70,6 +70,7 @@ type Query {
   mySkills: [UserSkill]!
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
+  area(where: AreaWhereUniqueInput!): Area
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   materials(where: MaterialWhereInput, orderBy: MaterialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Material]!

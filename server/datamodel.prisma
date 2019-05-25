@@ -241,6 +241,8 @@ type Material {
   tags: [MaterialTag!]!
   credential: Credential
   user: User
+  area: Area
+  project: Project
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

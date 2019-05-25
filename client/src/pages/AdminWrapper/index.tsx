@@ -1,30 +1,48 @@
 import React from 'react';
-import Navbar from './Navbar';
-import * as styles from './styles';
+import { Navbar } from 'components';
+import { withRouter, RouteComponentProps } from 'react-router';
+import { AdminWrapperContainer, AdminContent, Text } from './styles';
 
-const { AdminWrapperContainer, AdminContent } = styles;
+// const adminPaths = ['members', 'universities', 'skills'];
 
-const adminPaths = ['members', 'universities', 'skills'];
+const navItems = [
+  {
+    key: 'members',
+    label: 'Członkowie',
+  },
+  {
+    key: 'universities',
+    label: 'Uczelnie',
+  },
+  {
+    key: 'skills',
+    label: 'Umiejętności',
+  },
+];
 
-const AdminWrapper = (props: Props) => {
-  const isAdminPath = adminPaths.some(path => props.pathname.includes(path));
+const AdminWrapper: React.FC<IProps> = ({ children, history, location }) => {
+  const pathnameArr = location.pathname.split('/');
 
-  if (!isAdminPath) {
-    props.historyPush('/admin/members');
+  if (pathnameArr.length === 2) {
+    history.replace(location.pathname + '/members');
+    return null;
   }
+
+  const path = location.pathname.split('/')[1];
+  const pathBase = pathnameArr.slice(0, pathnameArr.length - 1).join('/');
 
   return (
     <AdminWrapperContainer>
-      <Navbar pathname={props.pathname} />
-      <AdminContent>{props.children}</AdminContent>
+      <Navbar path={path} pathBase={pathBase} navItems={navItems}>
+        <Text>Panel administracyjny</Text>
+      </Navbar>
+      <AdminContent>{children}</AdminContent>
     </AdminWrapperContainer>
   );
 };
 
-interface Props {
+interface IProps extends RouteComponentProps {
   children: React.ReactElement;
-  pathname: string;
-  historyPush: (path: string) => void;
 }
 
-export default AdminWrapper;
+export default withRouter(AdminWrapper);
