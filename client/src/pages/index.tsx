@@ -9,10 +9,13 @@ import { apollo } from 'utils';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
-import Projects from 'pages/Projects';
 import Successes from 'pages/Successes';
 import Materials from 'pages/Materials';
 import Settings from 'pages/Settings';
+
+import Projects from 'pages/project/Projects';
+import ProjectWrapper from 'pages/project/Wrapper';
+import ProjectMembers from 'pages/project/Members';
 
 import Areas from 'pages/area/Areas';
 import AreaWrapper from 'pages/area/Wrapper';
@@ -66,6 +69,15 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                         </AreaWrapper>
                       </Route>
                       <Route exact path="/projects" component={Projects} />
+                      <Route path="/projects/:projectURL">
+                        <ProjectWrapper>
+                          <Switch>
+                            <Route exact path="/projects/:projectURL/news" component={() => <div>Aktualności</div>} />
+                            <Route exact path="/projects/:projectURL/members" component={ProjectMembers} />
+                            <Route exact path="/projects/:projectURL/materials" component={() => <div>Materiały</div>} />
+                          </Switch>
+                        </ProjectWrapper>
+                      </Route>
                       <Route exact path="/successes" component={Successes} />
                       <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
                       <Route exact path="/materials" component={Materials} />
@@ -95,7 +107,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
 
 interface IData {
   me: {
-    id: string
+    id: string;
   };
 }
 

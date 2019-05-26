@@ -36,6 +36,9 @@ type Mutation {
   createProject(data: ProjectCreateInput!): Project!
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   deleteProject(where: ProjectWhereUniqueInput!): Project
+  createProjectMember(data: ProjectMemberCreateInput!): ProjectMember!
+  updateProjectMember(data: ProjectMemberUpdateInput!, where: ProjectMemberWhereUniqueInput!): ProjectMember
+  deleteProjectMember(where: ProjectMemberWhereUniqueInput!): ProjectMember
 
   createArea(data: AreaCreateInput!): Area!
   updateArea(data: AreaUpdateInput!, where: AreaWhereUniqueInput!): Area
@@ -69,6 +72,7 @@ type Query {
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   mySkills: [UserSkill]!
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
+  project(where: ProjectWhereUniqueInput!): Project
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   area(where: AreaWhereUniqueInput!): Area
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
