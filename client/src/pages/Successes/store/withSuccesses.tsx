@@ -22,8 +22,6 @@ export const SUCCESSES = gql`
         projectURL
         image
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -31,10 +29,10 @@ export const SUCCESSES = gql`
 export type SuccessType = 'EPIC' | 'SMALL' | 'NEWS'
 
 export interface ISuccess {
-  id: string;
+  id?: string;
   name: string;
   description: string;
-  date: Date;
+  date: string;
   type: SuccessType;
   users: {
     id: string;

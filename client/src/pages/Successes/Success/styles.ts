@@ -1,9 +1,24 @@
 import styled from 'styled-components';
 import { Timeline } from 'antd';
+import { Icon } from 'components';
 import get from 'styles/getStyle';
 
 export const SuccessContainer = styled(Timeline.Item)`
+  position: relative;
   margin-bottom: ${get('space-24')};
+`;
+
+export const EditIcon = styled(Icon)`
+  position: absolute;
+  top: ${get('space-12')};
+  right: ${get('space-12')};
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  ${SuccessContainer}:hover & {
+    opacity: 1;
+  }
 `;
 
 export const Content = styled.div`

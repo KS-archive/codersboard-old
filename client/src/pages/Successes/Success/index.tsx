@@ -1,41 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Tooltip } from 'antd';
+import { Avatar, Tooltip, Dropdown, Menu } from 'antd';
 
-import { Icon } from 'components';
-import { ReactComponent as Trophy } from 'static/fa/regular/trophy-alt.svg';
-import { ReactComponent as Medal } from 'static/fa/regular/medal.svg';
-import { ReactComponent as Newspaper } from 'static/fa/regular/newspaper.svg';
+import { ReactComponent as EllipsisV } from 'static/fa/regular/ellipsis-v.svg';
 
-import { ISuccess, SuccessType } from '../store/withSuccesses';
-import { SuccessContainer, DotContainer, Content, Name, DateString, Description, Users, Project } from './styles';
+import { ISuccess } from '../store/withSuccesses';
+import Dot from './Dot';
+import { SuccessContainer, EditIcon, Content, Name, DateString, Description, Users, Project } from './styles';
 
-const dotConfigs = {
-  EPIC: {
-    color: '#faad14',
-    icon: Trophy,
-  },
-  SMALL: {
-    color: '#1890ff',
-    icon: Medal,
-  },
-  NEWS: {
-    color: '#13c2c2',
-    icon: Newspaper,
-  },
-};
-
-const Dot: React.FC<{ type: SuccessType }> = ({ type }) => {
-  const { color, icon } = dotConfigs[type];
-
-  return (
-    <DotContainer color={color}>
-      <Icon color="#fff" icon={icon} />
-    </DotContainer>
-  );
-};
-
-const Success: React.FC<IProps> = ({ name, description, date, type, users, project }) => {
+const Success: React.FC<IProps> = ({ name, description, date, type, users, project, onEdit, onDelete }) => {
   const localeDate = new Date(date).toLocaleString('pl-PL', { month: 'long', day: '2-digit', year: 'numeric' });
 
   return (
@@ -67,10 +40,23 @@ const Success: React.FC<IProps> = ({ name, description, date, type, users, proje
           </Project>
         )}
       </Content>
+      <Dropdown
+        overlay={
+          <Menu>
+            <Menu.Item onClick={onEdit}>Edytuj sukces</Menu.Item>
+            <Menu.Item onClick={onDelete}>Usuń sukces</Menu.Item>
+          </Menu>
+        }
+      >
+        <EditIcon icon={EllipsisV} color="color-grayscale-grey" size={24} />
+      </Dropdown>
     </SuccessContainer>
   );
 };
 
-interface IProps extends ISuccess {}
+interface IProps extends ISuccess {
+  onEdit: () => void;
+  onDelete: () => void;
+}
 
 export default Success;
