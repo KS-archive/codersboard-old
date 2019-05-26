@@ -31,7 +31,7 @@ const Header: React.FC<IProps> = ({ isSidebarCollapsed, toggleCollapsed, me }) =
           overlay={
             <Menu>
               <MenuItem>
-                <Link to={`/settings/${me.profileURL}`}>Ustawienia</Link>
+                <Link to={`/settings/${me && me.profileURL}`}>Ustawienia</Link>
               </MenuItem>
               <MenuItem onClick={signOut}>Wyloguj się</MenuItem>
             </Menu>

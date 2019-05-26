@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { message } from 'antd';
 import { Formik, Field, FormikActions } from 'formik';
 import * as Yup from 'yup';
@@ -6,9 +7,7 @@ import { ReactComponent as Logo } from 'static/logo.svg';
 import signIn, { ISignInVariables } from './store/signIn';
 import { Button } from 'antd';
 import { Input } from 'components/formik';
-import * as styles from './styles';
-
-const { Container, Content, LogoWrapper, Form } = styles;
+import { Container, Content, LogoWrapper, Form } from './styles';
 
 const initialValues: ISignInVariables = {
   email: '',
@@ -28,6 +27,7 @@ const handleSubmit = async (values: ISignInVariables, actions: FormikActions<ISi
   try {
     await signIn(values);
     message.success('Pomyślnie zalogowano do profilu');
+    actions.setStatus('submitted');
   } catch (ex) {
     message.error('Błąd podczas próby zalogowania do panelu');
     console.log(ex.message);
@@ -41,32 +41,37 @@ const handleSubmit = async (values: ISignInVariables, actions: FormikActions<ISi
   actions.setSubmitting(false);
 };
 
-const SignIn = () => (
+const SignIn: React.FC<IProps> = ({ history }) => (
   <Container>
     <Content>
       <LogoWrapper>
         <Logo />
       </LogoWrapper>
       <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={SigninSchema}>
-        {({ isSubmitting }) => (
-          <Form>
-            <Field name="email" component={Input} label="Adres e-mail" size="large" autoComplete="email" />
-            <Field
-              name="password"
-              component={Input}
-              label="Hasło"
-              type="password"
-              size="large"
-              autoComplete="current-password"
-            />
-            <Button htmlType="submit" size="large" type="primary" block loading={isSubmitting}>
-              Zaloguj się
-            </Button>
-          </Form>
-        )}
+        {({ isSubmitting, status }) => {
+          if (status === 'submitted') history.push('/');
+          return (
+            <Form>
+              <Field name="email" component={Input} label="Adres e-mail" size="large" autoComplete="email" />
+              <Field
+                name="password"
+                component={Input}
+                label="Hasło"
+                type="password"
+                size="large"
+                autoComplete="current-password"
+              />
+              <Button htmlType="submit" size="large" type="primary" block loading={isSubmitting}>
+                Zaloguj się
+              </Button>
+            </Form>
+          );
+        }}
       </Formik>
     </Content>
   </Container>
 );
 
-export default SignIn;
+interface IProps extends RouteComponentProps {}
+
+export default withRouter(SignIn);

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 import { Spin } from 'antd';
 
 import { apollo } from 'utils';
-import MeQuery from 'store/user/queries/Me';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
@@ -25,6 +26,14 @@ import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
 import generateCssVariables from 'styles/generateCssVariables';
 
+const ME = gql`
+  {
+    me {
+      id
+    }
+  }
+`;
+
 const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: { push } }) => {
   useEffect(() => {
     generateCssVariables(theme);
@@ -33,7 +42,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
   return (
     <>
       <ApolloProvider client={apollo}>
-        <MeQuery>
+        <Query<IData, {}> query={ME}>
           {({ data: { me }, loading }) => {
             if (loading) return <Spin size="large" tip="Trwa ładowanie..." />;
             if (!me && pathname !== '/sign-in') push('/sign-in');
@@ -77,11 +86,17 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
               </Switch>
             );
           }}
-        </MeQuery>
+        </Query>
       </ApolloProvider>
       <GlobalStyle />
     </>
   );
 };
+
+interface IData {
+  me: {
+    id: string
+  };
+}
 
 export default withRouter(App);
