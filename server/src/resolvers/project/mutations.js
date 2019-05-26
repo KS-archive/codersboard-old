@@ -16,17 +16,17 @@ const deleteProject = async (parent, args, ctx, info) => {
 };
 
 const createProjectMember = async (parent, args, ctx, info) => {
-  await validate(ctx).userHasPermission(['OWNER']);
+  await validate(ctx).userHasPermission(['OWNER', 'ADMIN']);
   return ctx.prisma.mutation.createProjectMember(args, info);
 };
 
 const updateProjectMember = async (parent, args, ctx, info) => {
-  await validate(ctx).userHasPermission(['OWNER']);
+  await validate(ctx).userHasPermission(['OWNER', 'ADMIN']);
   return ctx.prisma.mutation.updateProjectMember(args, info);
 };
 
 const deleteProjectMember = async (parent, args, ctx, info) => {
-  await validate(ctx).userHasPermission(['OWNER']);
+  await validate(ctx).userHasPermission(['OWNER', 'ADMIN']);
   return ctx.prisma.mutation.deleteProjectMember(args, info);
 };
 

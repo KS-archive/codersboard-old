@@ -6,7 +6,6 @@ export const MemberContainer = styled(List.Item)`
   #root & {
     padding: ${get('space-16')};
     border: ${get('border-light')};
-    margin: ${get('space-16')};
     background-color: ${get('color-grayscale-white')};
     border-radius: ${get('radius-4')};
 
@@ -40,4 +39,5 @@ export const MemberContainer = styled(List.Item)`
 
 export const Content = styled.p`
   margin-top: ${get('space-8')};
+  white-space: pre-line;
 `;

@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 
-const MEMBERS = gql`
+export const MEMBERS = gql`
   query project($projectURL: String!) {
     project(where: { projectURL: $projectURL }) {
       id
@@ -23,7 +23,7 @@ const MEMBERS = gql`
   }
 `;
 
-type PermissionType = 'OWNER' | 'ADMIN' | 'MEMBER' | 'GUEST';
+export type PermissionType = 'OWNER' | 'ADMIN' | 'MEMBER' | 'GUEST';
 
 export interface IMember {
   id: string;

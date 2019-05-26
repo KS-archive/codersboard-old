@@ -32,7 +32,7 @@ type User {
   phone: String
   password: String!
   role: String! @default(value: "Członek CodersCrew")
-  areas: [UserArea!]!
+  areas: [AreaMember!]!
   skills: [UserSkill!]!
   projects: [ProjectMember!]!
   permissions: [MainPermission!]! @scalarList(strategy: RELATION)
@@ -162,12 +162,12 @@ type Area {
   color: String
   mainSlackChannel: String
   slackChannels: [String!]! @scalarList(strategy: RELATION)
-  users: [User!]!
+  members: [AreaMember!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
 
-type UserArea {
+type AreaMember {
   id: ID! @id
   user: User!
   area: Area!
