@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from 'antd';
-import { User } from 'store/user/queries/Users'
+import { IUser } from '../store/UsersQuery';
 import * as styles from './styles';
 
 const { TableContainer, TableColumn } = styles;
@@ -30,7 +30,7 @@ const Table = ({ data }: Props) => {
 };
 
 interface Props {
-  data?: User[];
+  data?: IUser[];
 }
 
 export default Table;

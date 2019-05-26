@@ -23,6 +23,11 @@ const MATERIALS = gql`
   }
 `;
 
+interface Tag {
+  name: string;
+  color: string;
+};
+
 export interface IMaterial {
   id: string;
   title: string;
@@ -36,8 +41,11 @@ export interface IMaterial {
   };
 }
 
-export interface IWithMaterials {
+interface IData {
   materials: IMaterial[];
+}
+
+export interface IWithMaterials extends IData {
   materialsLoading: boolean;
 }
 
@@ -45,13 +53,8 @@ interface IQueryVaraibles {
   areaURL?: string;
 }
 
-type Tag = {
-  name: string;
-  color: string;
-};
-
 export default (WrapperComponent: any) => (props: RouteComponentProps<{ areaURL: string }>) => (
-  <Query<IWithMaterials, IQueryVaraibles> query={MATERIALS} variables={{ areaURL: props.match.params.areaURL }}>
+  <Query<IData, IQueryVaraibles> query={MATERIALS} variables={{ areaURL: props.match.params.areaURL }}>
     {({ data, loading }) => <WrapperComponent {...props} materials={data.materials} materialsLoading={loading} />}
   </Query>
 );

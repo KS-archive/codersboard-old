@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import { Card } from 'antd';
 import { IMaterial } from '../store/withMaterials';
-import { withMyCredentials, CredentialsProps } from 'store/user/queries/MyCredentials';
+import withMyCredentials, { IWithMyCredentials, ICredential } from '../store/withMyCredentials';
 import CardDescription from '../CardDescription';
 import { MaterialCardContainer, CoverImage } from './styles';
 
 const { Meta } = Card;
 
-class MaterialCard extends PureComponent<Props, State> {
-  credentials?: ICredentials;
+class MaterialCard extends PureComponent<IProps, IState> {
+  credentials?: ICredential;
 
   state = {
     hasCredentials: false,
@@ -20,7 +20,7 @@ class MaterialCard extends PureComponent<Props, State> {
     }
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: IProps) {
     if (prevProps.myCredentialsLoading && !this.props.myCredentialsLoading) {
       this.initializeCredentials();
     }
@@ -61,19 +61,10 @@ class MaterialCard extends PureComponent<Props, State> {
   }
 }
 
-interface Props extends IMaterial {
-  myCredentials: CredentialsProps[];
-  myCredentialsLoading: boolean;
-}
+interface IProps extends IMaterial, IWithMyCredentials {}
 
-interface State {
+interface IState {
   hasCredentials: boolean;
-}
-
-interface ICredentials {
-  name: string;
-  login: string;
-  password: string;
 }
 
 export default withMyCredentials(MaterialCard);

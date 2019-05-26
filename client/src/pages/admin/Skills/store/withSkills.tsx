@@ -26,11 +26,13 @@ export interface ISkill {
   users: IUser[];
 }
 
-export interface IWithSkills {
+interface IData {
   skills: ISkill[];
 }
 
+export interface IWithSkills extends IData {}
+
 export default (WrapperComponent: any) => (props: any) => (
-  <Query<IWithSkills, {}> query={SKILLS}>{({ data }) => <WrapperComponent {...props} skills={data.skills} />}</Query>
+  <Query<IData, {}> query={SKILLS}>{({ data }) => <WrapperComponent {...props} skills={data.skills} />}</Query>
 );
 

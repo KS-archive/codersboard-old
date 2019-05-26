@@ -28,7 +28,7 @@ const AdminWrapper: React.FC<IProps> = ({ children, history, location }) => {
     return null;
   }
 
-  const path = location.pathname.split('/')[1];
+  const path = location.pathname.split('/')[2];
   const pathBase = pathnameArr.slice(0, pathnameArr.length - 1).join('/');
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
-import client from 'store/client';
+import { apollo } from 'utils';
 import { POSTS } from '../queries/Posts';
 
 export const ADD_POST = gql`
@@ -21,7 +21,7 @@ export default (props: Props) => (
 export const addPost = async (variables: Variables, queryVariable: string) => {
   try {
     console.log(variables);
-    const data = await client.mutate({
+    const data = await apollo.mutate({
       mutation: ADD_POST,
       variables,
       refetchQueries: [{ query: POSTS, variables: { area: queryVariable } }],

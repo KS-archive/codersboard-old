@@ -27,12 +27,14 @@ export interface IMySkill {
   level: number;
 }
 
-export interface IWithMySkills {
+interface IData {
   mySkills: IMySkill[];
 }
 
+export interface IWithMySkills extends IData {}
+
 export default (WrapperComponent: any) => (props: any) => (
-  <Query<IWithMySkills, {}> query={MY_SKILLS}>
+  <Query<IData, {}> query={MY_SKILLS}>
     {({ data }) => <WrapperComponent {...props} mySkills={data.mySkills} />}
   </Query>
 );

@@ -3,18 +3,19 @@ import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom
 import { ApolloProvider } from 'react-apollo';
 import { Spin } from 'antd';
 
-import client from 'store/client';
+import { apollo } from 'utils';
 import MeQuery from 'store/user/queries/Me';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
-import Areas from 'pages/Areas';
-import AreaWrapper from 'pages/AreaWrapper';
 import Projects from 'pages/Projects';
 import Materials from 'pages/Materials';
 import Settings from 'pages/Settings';
-import AdminWrapper from 'pages/AdminWrapper';
 
+import Areas from 'pages/area/Areas';
+import AreaWrapper from 'pages/area/Wrapper';
+
+import AdminWrapper from 'pages/admin/Wrapper';
 import AdminMembers from 'pages/admin/Members';
 import AdminUniversities from 'pages/admin/Universities';
 import AdminSkills from 'pages/admin/Skills';
@@ -30,7 +31,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
 
   return (
     <>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apollo}>
         <MeQuery>
           {({ data: { me }, loading }) => {
             if (loading) return <Spin size="large" tip="Trwa ładowanie..." />;
@@ -59,7 +60,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                       <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
                       <Route exact path="/materials" component={Materials} />
                       <Route exact path="/stats" component={() => <div>Statystyki</div>} />
-                      <Route path="/settings" component={Settings} />
+                      <Route path="/settings/:profileURL" component={Settings} />
                       <Route path="/admin">
                         <AdminWrapper>
                           <Switch>

@@ -1,4 +1,4 @@
-const validate = require('../../utils/validate');
+const validate = require('utils/validate');
 
 const createProject = async (parent, args, ctx, info) => {
   await validate(ctx).userHasPermission(['OWNER']);
