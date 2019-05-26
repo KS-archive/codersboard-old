@@ -34,6 +34,7 @@ export default {
   },
   space: {
     64: '64px',
+    48: '48px',
     32: '32px',
     24: '24px',
     16: '16px',
@@ -48,5 +49,8 @@ export default {
   },
   shadow: {
     small: '0px 5px 7px -2px rgba(0, 0, 0, 0.4)',
+  },
+  border: {
+    light: '1px solid #e8e8e8',
   },
 };

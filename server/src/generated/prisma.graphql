@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Sat May 25 2019 16:07:15 GMT+0200 (Central European Summer Time)
+# timestamp: Sun May 26 2019 13:40:53 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -2857,11 +2857,11 @@ type Mutation {
   createTimeZoneDate(data: TimeZoneDateCreateInput!): TimeZoneDate!
   createSkill(data: SkillCreateInput!): Skill!
   createAttendee(data: AttendeeCreateInput!): Attendee!
-  createUser(data: UserCreateInput!): User!
   createProject(data: ProjectCreateInput!): Project!
   createCredential(data: CredentialCreateInput!): Credential!
   createArea(data: AreaCreateInput!): Area!
   createMaterialTag(data: MaterialTagCreateInput!): MaterialTag!
+  createUser(data: UserCreateInput!): User!
   updateUniversity(data: UniversityUpdateInput!, where: UniversityWhereUniqueInput!): University
   updateUserSkill(data: UserSkillUpdateInput!, where: UserSkillWhereUniqueInput!): UserSkill
   updateSlackChannel(data: SlackChannelUpdateInput!, where: SlackChannelWhereUniqueInput!): SlackChannel
@@ -2875,11 +2875,11 @@ type Mutation {
   updateTimeZoneDate(data: TimeZoneDateUpdateInput!, where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
   updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
   updateAttendee(data: AttendeeUpdateInput!, where: AttendeeWhereUniqueInput!): Attendee
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateCredential(data: CredentialUpdateInput!, where: CredentialWhereUniqueInput!): Credential
   updateArea(data: AreaUpdateInput!, where: AreaWhereUniqueInput!): Area
   updateMaterialTag(data: MaterialTagUpdateInput!, where: MaterialTagWhereUniqueInput!): MaterialTag
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteUniversity(where: UniversityWhereUniqueInput!): University
   deleteUserSkill(where: UserSkillWhereUniqueInput!): UserSkill
   deleteSlackChannel(where: SlackChannelWhereUniqueInput!): SlackChannel
@@ -2893,11 +2893,11 @@ type Mutation {
   deleteTimeZoneDate(where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
   deleteSkill(where: SkillWhereUniqueInput!): Skill
   deleteAttendee(where: AttendeeWhereUniqueInput!): Attendee
-  deleteUser(where: UserWhereUniqueInput!): User
   deleteProject(where: ProjectWhereUniqueInput!): Project
   deleteCredential(where: CredentialWhereUniqueInput!): Credential
   deleteArea(where: AreaWhereUniqueInput!): Area
   deleteMaterialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
+  deleteUser(where: UserWhereUniqueInput!): User
   upsertUniversity(where: UniversityWhereUniqueInput!, create: UniversityCreateInput!, update: UniversityUpdateInput!): University!
   upsertUserSkill(where: UserSkillWhereUniqueInput!, create: UserSkillCreateInput!, update: UserSkillUpdateInput!): UserSkill!
   upsertSlackChannel(where: SlackChannelWhereUniqueInput!, create: SlackChannelCreateInput!, update: SlackChannelUpdateInput!): SlackChannel!
@@ -2911,11 +2911,11 @@ type Mutation {
   upsertTimeZoneDate(where: TimeZoneDateWhereUniqueInput!, create: TimeZoneDateCreateInput!, update: TimeZoneDateUpdateInput!): TimeZoneDate!
   upsertSkill(where: SkillWhereUniqueInput!, create: SkillCreateInput!, update: SkillUpdateInput!): Skill!
   upsertAttendee(where: AttendeeWhereUniqueInput!, create: AttendeeCreateInput!, update: AttendeeUpdateInput!): Attendee!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
   upsertCredential(where: CredentialWhereUniqueInput!, create: CredentialCreateInput!, update: CredentialUpdateInput!): Credential!
   upsertArea(where: AreaWhereUniqueInput!, create: AreaCreateInput!, update: AreaUpdateInput!): Area!
   upsertMaterialTag(where: MaterialTagWhereUniqueInput!, create: MaterialTagCreateInput!, update: MaterialTagUpdateInput!): MaterialTag!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyUniversities(data: UniversityUpdateManyMutationInput!, where: UniversityWhereInput): BatchPayload!
   updateManyUserSkills(data: UserSkillUpdateManyMutationInput!, where: UserSkillWhereInput): BatchPayload!
   updateManySlackChannels(data: SlackChannelUpdateManyMutationInput!, where: SlackChannelWhereInput): BatchPayload!
@@ -2929,11 +2929,11 @@ type Mutation {
   updateManyTimeZoneDates(data: TimeZoneDateUpdateManyMutationInput!, where: TimeZoneDateWhereInput): BatchPayload!
   updateManySkills(data: SkillUpdateManyMutationInput!, where: SkillWhereInput): BatchPayload!
   updateManyAttendees(data: AttendeeUpdateManyMutationInput!, where: AttendeeWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
   updateManyCredentials(data: CredentialUpdateManyMutationInput!, where: CredentialWhereInput): BatchPayload!
   updateManyAreas(data: AreaUpdateManyMutationInput!, where: AreaWhereInput): BatchPayload!
   updateManyMaterialTags(data: MaterialTagUpdateManyMutationInput!, where: MaterialTagWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyUniversities(where: UniversityWhereInput): BatchPayload!
   deleteManyUserSkills(where: UserSkillWhereInput): BatchPayload!
   deleteManySlackChannels(where: SlackChannelWhereInput): BatchPayload!
@@ -2947,11 +2947,11 @@ type Mutation {
   deleteManyTimeZoneDates(where: TimeZoneDateWhereInput): BatchPayload!
   deleteManySkills(where: SkillWhereInput): BatchPayload!
   deleteManyAttendees(where: AttendeeWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyProjects(where: ProjectWhereInput): BatchPayload!
   deleteManyCredentials(where: CredentialWhereInput): BatchPayload!
   deleteManyAreas(where: AreaWhereInput): BatchPayload!
   deleteManyMaterialTags(where: MaterialTagWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -4239,11 +4239,11 @@ type Query {
   timeZoneDates(where: TimeZoneDateWhereInput, orderBy: TimeZoneDateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeZoneDate]!
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   attendees(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential]!
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   materialTags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   university(where: UniversityWhereUniqueInput!): University
   userSkill(where: UserSkillWhereUniqueInput!): UserSkill
   slackChannel(where: SlackChannelWhereUniqueInput!): SlackChannel
@@ -4257,11 +4257,11 @@ type Query {
   timeZoneDate(where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
   skill(where: SkillWhereUniqueInput!): Skill
   attendee(where: AttendeeWhereUniqueInput!): Attendee
-  user(where: UserWhereUniqueInput!): User
   project(where: ProjectWhereUniqueInput!): Project
   credential(where: CredentialWhereUniqueInput!): Credential
   area(where: AreaWhereUniqueInput!): Area
   materialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
+  user(where: UserWhereUniqueInput!): User
   universitiesConnection(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UniversityConnection!
   userSkillsConnection(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserSkillConnection!
   slackChannelsConnection(where: SlackChannelWhereInput, orderBy: SlackChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SlackChannelConnection!
@@ -4275,11 +4275,11 @@ type Query {
   timeZoneDatesConnection(where: TimeZoneDateWhereInput, orderBy: TimeZoneDateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeZoneDateConnection!
   skillsConnection(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SkillConnection!
   attendeesConnection(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendeeConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
   credentialsConnection(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CredentialConnection!
   areasConnection(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AreaConnection!
   materialTagsConnection(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MaterialTagConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -4936,11 +4936,11 @@ type Subscription {
   timeZoneDate(where: TimeZoneDateSubscriptionWhereInput): TimeZoneDateSubscriptionPayload
   skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
   attendee(where: AttendeeSubscriptionWhereInput): AttendeeSubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   credential(where: CredentialSubscriptionWhereInput): CredentialSubscriptionPayload
   area(where: AreaSubscriptionWhereInput): AreaSubscriptionPayload
   materialTag(where: MaterialTagSubscriptionWhereInput): MaterialTagSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type Success implements Node {
@@ -4950,6 +4950,7 @@ type Success implements Node {
   date: DateTime!
   type: SuccessType!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  creator: User
   project: Project
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -4972,6 +4973,7 @@ input SuccessCreateInput {
   date: DateTime!
   type: SuccessType!
   users: UserCreateManyInput
+  creator: UserCreateOneInput
   project: ProjectCreateOneInput
 }
 
@@ -5060,6 +5062,7 @@ input SuccessUpdateInput {
   date: DateTime
   type: SuccessType
   users: UserUpdateManyInput
+  creator: UserUpdateOneInput
   project: ProjectUpdateOneInput
 }
 
@@ -5278,6 +5281,7 @@ input SuccessWhereInput {
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
+  creator: UserWhereInput
   project: ProjectWhereInput
 }
 

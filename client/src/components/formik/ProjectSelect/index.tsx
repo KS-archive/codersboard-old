@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Form, Select } from 'antd';
-
 import { FieldProps } from 'formik/dist/Field';
 import { FormItemProps } from 'antd/es/form';
 import { SelectProps } from 'antd/es/select';
 
 import { getStatus } from 'components/formik/helpers';
+
+import withProjects, { IWithProjects } from './withProjects';
+import { OptionContent, Image, Text } from './styles';
 
 const Option = Select.Option;
 
@@ -16,18 +18,17 @@ const FormItem = styled(Form.Item)`
   }
 `;
 
-export interface IOption {
-  value: string;
-  label?: string;
-}
-
-const FormikSelect = ({ form, field: { name, onChange, onBlur, value }, ...props }: Props) => {
+const ProjectSelect = ({ form, field: { name, onChange, onBlur, value }, projects = [], projectsLoading, ...props }: Props) => {
   const errorMessage = form.touched[name] && form.errors[name];
   const help = errorMessage || props.help || undefined;
   const validateStatus = getStatus(form, errorMessage as string);
   const handleChange = (value: any) => {
     form.setFieldValue(name, value);
   };
+
+  if (projectsLoading) {
+    value = undefined;
+  }
 
   return (
     <FormItem
@@ -42,17 +43,22 @@ const FormikSelect = ({ form, field: { name, onChange, onBlur, value }, ...props
         value={value}
         onChange={handleChange}
         onBlur={onBlur}
-        loading={validateStatus === 'validating'}
+        loading={validateStatus === 'validating' || projectsLoading}
         {...props}
       >
-        {props.options.map(option => (
-          <Option key={option.value}>{option.label || option.value}</Option>
+        {projects.map(project => (
+          <Option key={project.id} title={project.name}>
+            <OptionContent>
+              <Image src={project.image} />
+              <Text>{project.name}</Text>
+            </OptionContent>
+          </Option>
         ))}
       </Select>
     </FormItem>
   );
 };
 
-type Props = { name: string; options: IOption[] } & FormItemProps & SelectProps & FieldProps;
+type Props = { name: string } & FormItemProps & SelectProps & FieldProps & IWithProjects;
 
-export default FormikSelect;
+export default withProjects(ProjectSelect);
