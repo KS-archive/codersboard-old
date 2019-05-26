@@ -8,13 +8,14 @@ import MeQuery from 'store/user/queries/Me';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
-import Areas from 'pages/Areas';
-import AreaWrapper from 'pages/AreaWrapper';
 import Projects from 'pages/Projects';
 import Materials from 'pages/Materials';
 import Settings from 'pages/Settings';
-import AdminWrapper from 'pages/AdminWrapper';
 
+import Areas from 'pages/area/Areas';
+import AreaWrapper from 'pages/area/Wrapper';
+
+import AdminWrapper from 'pages/admin/Wrapper';
 import AdminMembers from 'pages/admin/Members';
 import AdminUniversities from 'pages/admin/Universities';
 import AdminSkills from 'pages/admin/Skills';
