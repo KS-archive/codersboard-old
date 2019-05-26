@@ -9,6 +9,7 @@ import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
 import Projects from 'pages/Projects';
+import Successes from 'pages/Successes';
 import Materials from 'pages/Materials';
 import Settings from 'pages/Settings';
 
@@ -56,7 +57,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                         </AreaWrapper>
                       </Route>
                       <Route exact path="/projects" component={Projects} />
-                      <Route exact path="/successes" component={() => <div>Sukcesy</div>} />
+                      <Route exact path="/successes" component={Successes} />
                       <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
                       <Route exact path="/materials" component={Materials} />
                       <Route exact path="/stats" component={() => <div>Statystyki</div>} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Form, Select } from 'antd';
 
 import { FieldProps } from 'formik/dist/Field';
@@ -8,6 +9,12 @@ import { SelectProps } from 'antd/es/select';
 import { getStatus } from 'components/formik/helpers';
 
 const Option = Select.Option;
+
+const FormItem = styled(Form.Item)`
+  .ant-select {
+    width: 100%;
+  }
+`;
 
 export interface IOption {
   value: string;
@@ -23,7 +30,7 @@ const FormikSelect = ({ form, field: { name, onChange, onBlur, value }, ...props
   };
 
   return (
-    <Form.Item
+    <FormItem
       label={props.label}
       required={props.required}
       validateStatus={validateStatus}
@@ -42,7 +49,7 @@ const FormikSelect = ({ form, field: { name, onChange, onBlur, value }, ...props
           <Option key={option.value}>{option.label || option.value}</Option>
         ))}
       </Select>
-    </Form.Item>
+    </FormItem>
   );
 };
 

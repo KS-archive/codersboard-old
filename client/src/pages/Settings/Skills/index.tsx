@@ -5,20 +5,20 @@ import updateMySkills from './store/updateMySkills';
 import withMySkills, { IWithMySkills, IMySkill } from './store/withMySkills';
 import SkillsForm from './SkillsForm';
 
-const handleSubmit = async (values: Values, actions: FormikActions<Values>) => {
+const handleSubmit = async (values: IValues, actions: FormikActions<IValues>) => {
   await updateMySkills(values.skills);
   message.success('Twoje umiejętności zostały zaktualizowane');
   actions.setSubmitting(false);
 };
 
-const Skills: React.FC<Props> = ({ mySkills = [] }) => {
+const Skills: React.FC<IProps> = ({ mySkills = [] }) => {
   return <Formik initialValues={{ skills: mySkills }} enableReinitialize onSubmit={handleSubmit} component={SkillsForm} />
 };
 
-interface Values {
+interface IValues {
   skills: IMySkill[];
 }
 
-interface Props extends IWithMySkills {}
+interface IProps extends IWithMySkills {}
 
 export default withMySkills(Skills);

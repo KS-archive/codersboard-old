@@ -36,7 +36,7 @@ Icon.defaultProps = {
 type IIcon = {
   className?: string;
   size?: number;
-  color?: Color;
+  color?: Color | string;
   icon: React.ElementType;
   onClick?: (e: React.MouseEvent) => void;
 };

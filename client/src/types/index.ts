@@ -24,6 +24,7 @@ export type Style =
   | 'radius-4'
   | 'radius-8'
   | 'shadow-small'
+  | 'border-light'
   | 'space-2'
   | 'space-4'
   | 'space-8'
@@ -31,6 +32,7 @@ export type Style =
   | 'space-16'
   | 'space-24'
   | 'space-32'
+  | 'space-48'
   | 'space-64';
 
 export type Color =

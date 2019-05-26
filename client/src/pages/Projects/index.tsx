@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Typography, Card, Tag } from 'antd';
+import { Typography, Card, Tag, Spin } from 'antd';
 import { shorten } from 'utils';
 import withProjects, { IWithProjects, IProject } from './store/withProjects';
 import { ProjectsContainer, Header, AddButton, ProjectCard, CoverImage, Description, Grid } from './styles';
@@ -59,15 +59,17 @@ const Projects: React.FC<IProps> = ({ projects = [], projectsLoading }) => (
       <Title level={2}>Projekty</Title>
       <AddButton type="primary">Stwórz projekt</AddButton>
     </Header>
-    <Grid>
-      {projects.map(project => (
-        <Link key={project.id} to={`/projects/${project.projectURL}`}>
-          <ProjectCard hoverable cover={<CoverImage src={project.image} />}>
-            <Meta title={project.name} description={renderDescription(project)} />
-          </ProjectCard>
-        </Link>
-      ))}
-    </Grid>
+    <Spin tip="Wczytywanie projektów" spinning={projectsLoading}>
+      <Grid>
+        {projects.map(project => (
+          <Link key={project.id} to={`/projects/${project.projectURL}`}>
+            <ProjectCard hoverable cover={<CoverImage src={project.image} />}>
+              <Meta title={project.name} description={renderDescription(project)} />
+            </ProjectCard>
+          </Link>
+        ))}
+      </Grid>
+    </Spin>
   </ProjectsContainer>
 );
 
