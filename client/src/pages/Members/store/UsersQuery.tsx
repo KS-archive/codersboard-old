@@ -41,17 +41,7 @@ export const USERS = gql`
   }
 `;
 
-export const withUsers = (WrapperComponent: any) => (props: any) => (
-  <Query<Data, {}> query={USERS}>{({ data }) => <WrapperComponent {...props} users={data.users} />}</Query>
-);
-
-export default (props: Props) => <Query<Data, {}> query={USERS}>{props.children}</Query>;
-
-interface Props {
-  children: (data: QueryResult<Data>) => React.ReactElement;
-}
-
-export interface User {
+export interface IUser {
   id: string;
   fullName: string;
   profileURL: string;
@@ -74,6 +64,12 @@ export interface User {
   institution: string[];
 }
 
-export interface Data {
-  users: User[];
+export interface IData {
+  users: IUser[];
 }
+
+interface IProps {
+  children: (data: QueryResult<IData>) => React.ReactElement;
+}
+
+export default (props: IProps) => <Query<IData, {}> query={USERS}>{props.children}</Query>;

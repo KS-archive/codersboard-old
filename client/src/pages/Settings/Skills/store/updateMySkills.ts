@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import client from 'store/client';
+import { apollo } from 'utils';
 import { IMySkill } from './withMySkills';
 
 const MY_SKILLS = gql`
@@ -47,7 +47,7 @@ export default async (variables: IMySkill[]) => {
     delete variable.skill.__typename;
     return variable;
   });
-  const data: IUpdateMySkillsResponse = await client.mutate({
+  const data: IUpdateMySkillsResponse = await apollo.mutate({
     mutation: UPDATE_MY_SKILLS,
     variables: { data: variables },
     refetchQueries: [{ query: MY_SKILLS }, { query: SKILLS }],

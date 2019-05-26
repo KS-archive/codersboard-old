@@ -3,10 +3,10 @@ import { Avatar, Dropdown, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Indent } from 'static/fa/regular/indent.svg';
 import { ReactComponent as Outdent } from 'static/fa/regular/outdent.svg';
-import { withMe, MeProps } from 'store/user/queries/Me';
-import { signOut } from 'store/user/mutations/SignOut';
 import { Icon } from 'components';
 import { MainPermission } from 'types/User';
+import signOut from './store/signOut';
+import withMe, { IWithMe } from './store/withMe';
 import * as styles from './styles';
 
 const { HeaderContainer, Right, Name, Menu, MenuItem } = styles;
@@ -14,7 +14,7 @@ const { HeaderContainer, Right, Name, Menu, MenuItem } = styles;
 const adminPermissions = ['OWNER', 'ADMIN', 'HR', 'FINANCE'];
 const hasAdminPermission = (permission: MainPermission) => adminPermissions.includes(permission);
 
-const Header = ({ isSidebarCollapsed, toggleCollapsed, me }: Props) => {
+const Header: React.FC<IProps> = ({ isSidebarCollapsed, toggleCollapsed, me }) => {
   const isAdmin = me && me.permissions.some(hasAdminPermission);
 
   return (
@@ -48,10 +48,9 @@ const Header = ({ isSidebarCollapsed, toggleCollapsed, me }: Props) => {
   );
 };
 
-interface Props {
+interface IProps extends IWithMe {
   isSidebarCollapsed: boolean;
   toggleCollapsed: () => void;
-  me: MeProps;
 }
 
 export default withMe(Header);

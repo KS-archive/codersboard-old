@@ -3,7 +3,7 @@ import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom
 import { ApolloProvider } from 'react-apollo';
 import { Spin } from 'antd';
 
-import client from 'store/client';
+import { apollo } from 'utils';
 import MeQuery from 'store/user/queries/Me';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
@@ -30,7 +30,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
 
   return (
     <>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apollo}>
         <MeQuery>
           {({ data: { me }, loading }) => {
             if (loading) return <Spin size="large" tip="Trwa ładowanie..." />;

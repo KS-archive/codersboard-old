@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import client from 'store/client';
+import { apollo } from 'utils';
 
 const ME = gql`
   {
@@ -29,7 +29,7 @@ export interface ISignInVariables {
 }
 
 export default async (variables: ISignInVariables) => {
-  const data: ISignInResponse = await client.mutate({
+  const data: ISignInResponse = await apollo.mutate({
     mutation: SIGN_IN,
     variables,
     refetchQueries: [{ query: ME }],

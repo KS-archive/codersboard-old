@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from 'antd';
 import MembersTable from './MembersTable';
-import UsersQuery from 'store/user/queries/Users';
+import UsersQuery from './store/UsersQuery';
 import * as styles from './styles';
 
 const { MembersContainer, Header, AddButton } = styles;
