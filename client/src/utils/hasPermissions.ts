@@ -5,6 +5,7 @@ import { apollo } from '.';
 export const MY_PERMISSIONS = gql`
   {
     me {
+      id
       permissions
     }
   }

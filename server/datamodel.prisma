@@ -32,9 +32,9 @@ type User {
   phone: String
   password: String!
   role: String! @default(value: "Członek CodersCrew")
-  areas: [UserArea!]!
+  areas: [AreaMember!]!
   skills: [UserSkill!]!
-  projects: [UserProject!]!
+  projects: [ProjectMember!]!
   permissions: [MainPermission!]! @scalarList(strategy: RELATION)
   university: University
   universityDepartment: String
@@ -139,16 +139,16 @@ type Project {
   status: ProjectStatus!
   mainSlackChannel: String
   slackChannels: [String!]! @scalarList(strategy: RELATION)
-  users: [User!]!
+  members: [ProjectMember!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
 
-type UserProject {
+type ProjectMember {
   id: ID! @id
   user: User!
   project: Project!
-  role: String
+  role: String @default(value: "Członek projektu")
   responsibilities: String
   permissions: Permission!
 }
@@ -162,12 +162,12 @@ type Area {
   color: String
   mainSlackChannel: String
   slackChannels: [String!]! @scalarList(strategy: RELATION)
-  users: [User!]!
+  members: [AreaMember!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
 
-type UserArea {
+type AreaMember {
   id: ID! @id
   user: User!
   area: Area!

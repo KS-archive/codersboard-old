@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 import { Spin } from 'antd';
 
 import { apollo } from 'utils';
-import MeQuery from 'store/user/queries/Me';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Members from 'pages/Members';
-import Projects from 'pages/Projects';
 import Successes from 'pages/Successes';
 import Materials from 'pages/Materials';
 import Settings from 'pages/Settings';
+
+import Projects from 'pages/project/Projects';
+import ProjectWrapper from 'pages/project/Wrapper';
+import ProjectMembers from 'pages/project/Members';
 
 import Areas from 'pages/area/Areas';
 import AreaWrapper from 'pages/area/Wrapper';
@@ -25,6 +29,14 @@ import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
 import generateCssVariables from 'styles/generateCssVariables';
 
+const ME = gql`
+  {
+    me {
+      id
+    }
+  }
+`;
+
 const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: { push } }) => {
   useEffect(() => {
     generateCssVariables(theme);
@@ -33,7 +45,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
   return (
     <>
       <ApolloProvider client={apollo}>
-        <MeQuery>
+        <Query<IData, {}> query={ME}>
           {({ data: { me }, loading }) => {
             if (loading) return <Spin size="large" tip="Trwa ładowanie..." />;
             if (!me && pathname !== '/sign-in') push('/sign-in');
@@ -57,6 +69,15 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                         </AreaWrapper>
                       </Route>
                       <Route exact path="/projects" component={Projects} />
+                      <Route path="/projects/:projectURL">
+                        <ProjectWrapper>
+                          <Switch>
+                            <Route exact path="/projects/:projectURL/news" component={() => <div>Aktualności</div>} />
+                            <Route exact path="/projects/:projectURL/members" component={ProjectMembers} />
+                            <Route exact path="/projects/:projectURL/materials" component={() => <div>Materiały</div>} />
+                          </Switch>
+                        </ProjectWrapper>
+                      </Route>
                       <Route exact path="/successes" component={Successes} />
                       <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
                       <Route exact path="/materials" component={Materials} />
@@ -77,11 +98,17 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
               </Switch>
             );
           }}
-        </MeQuery>
+        </Query>
       </ApolloProvider>
       <GlobalStyle />
     </>
   );
 };
+
+interface IData {
+  me: {
+    id: string;
+  };
+}
 
 export default withRouter(App);

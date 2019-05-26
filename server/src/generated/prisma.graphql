@@ -1,7 +1,11 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Sun May 26 2019 13:40:53 GMT+0200 (Central European Summer Time)
+# timestamp: Sun May 26 2019 21:26:37 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
+  count: Int!
+}
+
+type AggregateAreaMember {
   count: Int!
 }
 
@@ -37,6 +41,10 @@ type AggregateProject {
   count: Int!
 }
 
+type AggregateProjectMember {
+  count: Int!
+}
+
 type AggregateSkill {
   count: Int!
 }
@@ -61,14 +69,6 @@ type AggregateUser {
   count: Int!
 }
 
-type AggregateUserArea {
-  count: Int!
-}
-
-type AggregateUserProject {
-  count: Int!
-}
-
 type AggregateUserSkill {
   count: Int!
 }
@@ -82,7 +82,7 @@ type Area implements Node {
   color: String
   mainSlackChannel: String
   slackChannels: [String!]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  members(where: AreaMemberWhereInput, orderBy: AreaMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AreaMember!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -106,7 +106,7 @@ input AreaCreateInput {
   color: String
   mainSlackChannel: String
   slackChannels: AreaCreateslackChannelsInput
-  users: UserCreateManyInput
+  members: AreaMemberCreateManyWithoutAreaInput
 }
 
 input AreaCreateOneInput {
@@ -114,8 +114,24 @@ input AreaCreateOneInput {
   connect: AreaWhereUniqueInput
 }
 
+input AreaCreateOneWithoutMembersInput {
+  create: AreaCreateWithoutMembersInput
+  connect: AreaWhereUniqueInput
+}
+
 input AreaCreateslackChannelsInput {
   set: [String!]
+}
+
+input AreaCreateWithoutMembersInput {
+  id: ID
+  areaURL: String!
+  name: String!
+  image: String
+  description: String!
+  color: String
+  mainSlackChannel: String
+  slackChannels: AreaCreateslackChannelsInput
 }
 
 """An edge in a connection."""
@@ -125,6 +141,497 @@ type AreaEdge {
 
   """A cursor for use in pagination."""
   cursor: String!
+}
+
+type AreaMember implements Node {
+  id: ID!
+  user: User!
+  area: Area!
+  role: String
+  responsibilities: String
+  permissions: Permission!
+}
+
+"""A connection to a list of items."""
+type AreaMemberConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AreaMemberEdge]!
+  aggregate: AggregateAreaMember!
+}
+
+input AreaMemberCreateInput {
+  id: ID
+  role: String
+  responsibilities: String
+  permissions: Permission!
+  user: UserCreateOneWithoutAreasInput!
+  area: AreaCreateOneWithoutMembersInput!
+}
+
+input AreaMemberCreateManyWithoutAreaInput {
+  create: [AreaMemberCreateWithoutAreaInput!]
+  connect: [AreaMemberWhereUniqueInput!]
+}
+
+input AreaMemberCreateManyWithoutUserInput {
+  create: [AreaMemberCreateWithoutUserInput!]
+  connect: [AreaMemberWhereUniqueInput!]
+}
+
+input AreaMemberCreateWithoutAreaInput {
+  id: ID
+  role: String
+  responsibilities: String
+  permissions: Permission!
+  user: UserCreateOneWithoutAreasInput!
+}
+
+input AreaMemberCreateWithoutUserInput {
+  id: ID
+  role: String
+  responsibilities: String
+  permissions: Permission!
+  area: AreaCreateOneWithoutMembersInput!
+}
+
+"""An edge in a connection."""
+type AreaMemberEdge {
+  """The item at the end of the edge."""
+  node: AreaMember!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AreaMemberOrderByInput {
+  id_ASC
+  id_DESC
+  role_ASC
+  role_DESC
+  responsibilities_ASC
+  responsibilities_DESC
+  permissions_ASC
+  permissions_DESC
+}
+
+type AreaMemberPreviousValues {
+  id: ID!
+  role: String
+  responsibilities: String
+  permissions: Permission!
+}
+
+input AreaMemberScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AreaMemberScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AreaMemberScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AreaMemberScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  role: String
+
+  """All values that are not equal to given value."""
+  role_not: String
+
+  """All values that are contained in given list."""
+  role_in: [String!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [String!]
+
+  """All values less than the given value."""
+  role_lt: String
+
+  """All values less than or equal the given value."""
+  role_lte: String
+
+  """All values greater than the given value."""
+  role_gt: String
+
+  """All values greater than or equal the given value."""
+  role_gte: String
+
+  """All values containing the given string."""
+  role_contains: String
+
+  """All values not containing the given string."""
+  role_not_contains: String
+
+  """All values starting with the given string."""
+  role_starts_with: String
+
+  """All values not starting with the given string."""
+  role_not_starts_with: String
+
+  """All values ending with the given string."""
+  role_ends_with: String
+
+  """All values not ending with the given string."""
+  role_not_ends_with: String
+  responsibilities: String
+
+  """All values that are not equal to given value."""
+  responsibilities_not: String
+
+  """All values that are contained in given list."""
+  responsibilities_in: [String!]
+
+  """All values that are not contained in given list."""
+  responsibilities_not_in: [String!]
+
+  """All values less than the given value."""
+  responsibilities_lt: String
+
+  """All values less than or equal the given value."""
+  responsibilities_lte: String
+
+  """All values greater than the given value."""
+  responsibilities_gt: String
+
+  """All values greater than or equal the given value."""
+  responsibilities_gte: String
+
+  """All values containing the given string."""
+  responsibilities_contains: String
+
+  """All values not containing the given string."""
+  responsibilities_not_contains: String
+
+  """All values starting with the given string."""
+  responsibilities_starts_with: String
+
+  """All values not starting with the given string."""
+  responsibilities_not_starts_with: String
+
+  """All values ending with the given string."""
+  responsibilities_ends_with: String
+
+  """All values not ending with the given string."""
+  responsibilities_not_ends_with: String
+  permissions: Permission
+
+  """All values that are not equal to given value."""
+  permissions_not: Permission
+
+  """All values that are contained in given list."""
+  permissions_in: [Permission!]
+
+  """All values that are not contained in given list."""
+  permissions_not_in: [Permission!]
+}
+
+type AreaMemberSubscriptionPayload {
+  mutation: MutationType!
+  node: AreaMember
+  updatedFields: [String!]
+  previousValues: AreaMemberPreviousValues
+}
+
+input AreaMemberSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AreaMemberSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AreaMemberSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AreaMemberSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AreaMemberWhereInput
+}
+
+input AreaMemberUpdateInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+  user: UserUpdateOneRequiredWithoutAreasInput
+  area: AreaUpdateOneRequiredWithoutMembersInput
+}
+
+input AreaMemberUpdateManyDataInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+}
+
+input AreaMemberUpdateManyMutationInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+}
+
+input AreaMemberUpdateManyWithoutAreaInput {
+  create: [AreaMemberCreateWithoutAreaInput!]
+  connect: [AreaMemberWhereUniqueInput!]
+  set: [AreaMemberWhereUniqueInput!]
+  disconnect: [AreaMemberWhereUniqueInput!]
+  delete: [AreaMemberWhereUniqueInput!]
+  update: [AreaMemberUpdateWithWhereUniqueWithoutAreaInput!]
+  updateMany: [AreaMemberUpdateManyWithWhereNestedInput!]
+  deleteMany: [AreaMemberScalarWhereInput!]
+  upsert: [AreaMemberUpsertWithWhereUniqueWithoutAreaInput!]
+}
+
+input AreaMemberUpdateManyWithoutUserInput {
+  create: [AreaMemberCreateWithoutUserInput!]
+  connect: [AreaMemberWhereUniqueInput!]
+  set: [AreaMemberWhereUniqueInput!]
+  disconnect: [AreaMemberWhereUniqueInput!]
+  delete: [AreaMemberWhereUniqueInput!]
+  update: [AreaMemberUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [AreaMemberUpdateManyWithWhereNestedInput!]
+  deleteMany: [AreaMemberScalarWhereInput!]
+  upsert: [AreaMemberUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input AreaMemberUpdateManyWithWhereNestedInput {
+  where: AreaMemberScalarWhereInput!
+  data: AreaMemberUpdateManyDataInput!
+}
+
+input AreaMemberUpdateWithoutAreaDataInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+  user: UserUpdateOneRequiredWithoutAreasInput
+}
+
+input AreaMemberUpdateWithoutUserDataInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+  area: AreaUpdateOneRequiredWithoutMembersInput
+}
+
+input AreaMemberUpdateWithWhereUniqueWithoutAreaInput {
+  where: AreaMemberWhereUniqueInput!
+  data: AreaMemberUpdateWithoutAreaDataInput!
+}
+
+input AreaMemberUpdateWithWhereUniqueWithoutUserInput {
+  where: AreaMemberWhereUniqueInput!
+  data: AreaMemberUpdateWithoutUserDataInput!
+}
+
+input AreaMemberUpsertWithWhereUniqueWithoutAreaInput {
+  where: AreaMemberWhereUniqueInput!
+  update: AreaMemberUpdateWithoutAreaDataInput!
+  create: AreaMemberCreateWithoutAreaInput!
+}
+
+input AreaMemberUpsertWithWhereUniqueWithoutUserInput {
+  where: AreaMemberWhereUniqueInput!
+  update: AreaMemberUpdateWithoutUserDataInput!
+  create: AreaMemberCreateWithoutUserInput!
+}
+
+input AreaMemberWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AreaMemberWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AreaMemberWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AreaMemberWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  role: String
+
+  """All values that are not equal to given value."""
+  role_not: String
+
+  """All values that are contained in given list."""
+  role_in: [String!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [String!]
+
+  """All values less than the given value."""
+  role_lt: String
+
+  """All values less than or equal the given value."""
+  role_lte: String
+
+  """All values greater than the given value."""
+  role_gt: String
+
+  """All values greater than or equal the given value."""
+  role_gte: String
+
+  """All values containing the given string."""
+  role_contains: String
+
+  """All values not containing the given string."""
+  role_not_contains: String
+
+  """All values starting with the given string."""
+  role_starts_with: String
+
+  """All values not starting with the given string."""
+  role_not_starts_with: String
+
+  """All values ending with the given string."""
+  role_ends_with: String
+
+  """All values not ending with the given string."""
+  role_not_ends_with: String
+  responsibilities: String
+
+  """All values that are not equal to given value."""
+  responsibilities_not: String
+
+  """All values that are contained in given list."""
+  responsibilities_in: [String!]
+
+  """All values that are not contained in given list."""
+  responsibilities_not_in: [String!]
+
+  """All values less than the given value."""
+  responsibilities_lt: String
+
+  """All values less than or equal the given value."""
+  responsibilities_lte: String
+
+  """All values greater than the given value."""
+  responsibilities_gt: String
+
+  """All values greater than or equal the given value."""
+  responsibilities_gte: String
+
+  """All values containing the given string."""
+  responsibilities_contains: String
+
+  """All values not containing the given string."""
+  responsibilities_not_contains: String
+
+  """All values starting with the given string."""
+  responsibilities_starts_with: String
+
+  """All values not starting with the given string."""
+  responsibilities_not_starts_with: String
+
+  """All values ending with the given string."""
+  responsibilities_ends_with: String
+
+  """All values not ending with the given string."""
+  responsibilities_not_ends_with: String
+  permissions: Permission
+
+  """All values that are not equal to given value."""
+  permissions_not: Permission
+
+  """All values that are contained in given list."""
+  permissions_in: [Permission!]
+
+  """All values that are not contained in given list."""
+  permissions_not_in: [Permission!]
+  user: UserWhereInput
+  area: AreaWhereInput
+}
+
+input AreaMemberWhereUniqueInput {
+  id: ID
 }
 
 enum AreaOrderByInput {
@@ -206,7 +713,7 @@ input AreaUpdateDataInput {
   color: String
   mainSlackChannel: String
   slackChannels: AreaUpdateslackChannelsInput
-  users: UserUpdateManyInput
+  members: AreaMemberUpdateManyWithoutAreaInput
 }
 
 input AreaUpdateInput {
@@ -217,7 +724,7 @@ input AreaUpdateInput {
   color: String
   mainSlackChannel: String
   slackChannels: AreaUpdateslackChannelsInput
-  users: UserUpdateManyInput
+  members: AreaMemberUpdateManyWithoutAreaInput
 }
 
 input AreaUpdateManyMutationInput {
@@ -239,20 +746,35 @@ input AreaUpdateOneInput {
   upsert: AreaUpsertNestedInput
 }
 
-input AreaUpdateOneRequiredInput {
-  create: AreaCreateInput
+input AreaUpdateOneRequiredWithoutMembersInput {
+  create: AreaCreateWithoutMembersInput
   connect: AreaWhereUniqueInput
-  update: AreaUpdateDataInput
-  upsert: AreaUpsertNestedInput
+  update: AreaUpdateWithoutMembersDataInput
+  upsert: AreaUpsertWithoutMembersInput
 }
 
 input AreaUpdateslackChannelsInput {
   set: [String!]
 }
 
+input AreaUpdateWithoutMembersDataInput {
+  areaURL: String
+  name: String
+  image: String
+  description: String
+  color: String
+  mainSlackChannel: String
+  slackChannels: AreaUpdateslackChannelsInput
+}
+
 input AreaUpsertNestedInput {
   update: AreaUpdateDataInput!
   create: AreaCreateInput!
+}
+
+input AreaUpsertWithoutMembersInput {
+  update: AreaUpdateWithoutMembersDataInput!
+  create: AreaCreateWithoutMembersInput!
 }
 
 input AreaWhereInput {
@@ -588,9 +1110,9 @@ input AreaWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  users_every: UserWhereInput
-  users_some: UserWhereInput
-  users_none: UserWhereInput
+  members_every: AreaMemberWhereInput
+  members_some: AreaMemberWhereInput
+  members_none: AreaMemberWhereInput
 }
 
 input AreaWhereUniqueInput {
@@ -2848,16 +3370,16 @@ type Mutation {
   createUserSkill(data: UserSkillCreateInput!): UserSkill!
   createSlackChannel(data: SlackChannelCreateInput!): SlackChannel!
   createSuccess(data: SuccessCreateInput!): Success!
-  createUserProject(data: UserProjectCreateInput!): UserProject!
-  createUserArea(data: UserAreaCreateInput!): UserArea!
+  createProjectMember(data: ProjectMemberCreateInput!): ProjectMember!
+  createAreaMember(data: AreaMemberCreateInput!): AreaMember!
   createEvent(data: EventCreateInput!): Event!
   createPost(data: PostCreateInput!): Post!
   createMaterial(data: MaterialCreateInput!): Material!
   createPostTag(data: PostTagCreateInput!): PostTag!
+  createProject(data: ProjectCreateInput!): Project!
   createTimeZoneDate(data: TimeZoneDateCreateInput!): TimeZoneDate!
   createSkill(data: SkillCreateInput!): Skill!
   createAttendee(data: AttendeeCreateInput!): Attendee!
-  createProject(data: ProjectCreateInput!): Project!
   createCredential(data: CredentialCreateInput!): Credential!
   createArea(data: AreaCreateInput!): Area!
   createMaterialTag(data: MaterialTagCreateInput!): MaterialTag!
@@ -2866,16 +3388,16 @@ type Mutation {
   updateUserSkill(data: UserSkillUpdateInput!, where: UserSkillWhereUniqueInput!): UserSkill
   updateSlackChannel(data: SlackChannelUpdateInput!, where: SlackChannelWhereUniqueInput!): SlackChannel
   updateSuccess(data: SuccessUpdateInput!, where: SuccessWhereUniqueInput!): Success
-  updateUserProject(data: UserProjectUpdateInput!, where: UserProjectWhereUniqueInput!): UserProject
-  updateUserArea(data: UserAreaUpdateInput!, where: UserAreaWhereUniqueInput!): UserArea
+  updateProjectMember(data: ProjectMemberUpdateInput!, where: ProjectMemberWhereUniqueInput!): ProjectMember
+  updateAreaMember(data: AreaMemberUpdateInput!, where: AreaMemberWhereUniqueInput!): AreaMember
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateMaterial(data: MaterialUpdateInput!, where: MaterialWhereUniqueInput!): Material
   updatePostTag(data: PostTagUpdateInput!, where: PostTagWhereUniqueInput!): PostTag
+  updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateTimeZoneDate(data: TimeZoneDateUpdateInput!, where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
   updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
   updateAttendee(data: AttendeeUpdateInput!, where: AttendeeWhereUniqueInput!): Attendee
-  updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateCredential(data: CredentialUpdateInput!, where: CredentialWhereUniqueInput!): Credential
   updateArea(data: AreaUpdateInput!, where: AreaWhereUniqueInput!): Area
   updateMaterialTag(data: MaterialTagUpdateInput!, where: MaterialTagWhereUniqueInput!): MaterialTag
@@ -2884,16 +3406,16 @@ type Mutation {
   deleteUserSkill(where: UserSkillWhereUniqueInput!): UserSkill
   deleteSlackChannel(where: SlackChannelWhereUniqueInput!): SlackChannel
   deleteSuccess(where: SuccessWhereUniqueInput!): Success
-  deleteUserProject(where: UserProjectWhereUniqueInput!): UserProject
-  deleteUserArea(where: UserAreaWhereUniqueInput!): UserArea
+  deleteProjectMember(where: ProjectMemberWhereUniqueInput!): ProjectMember
+  deleteAreaMember(where: AreaMemberWhereUniqueInput!): AreaMember
   deleteEvent(where: EventWhereUniqueInput!): Event
   deletePost(where: PostWhereUniqueInput!): Post
   deleteMaterial(where: MaterialWhereUniqueInput!): Material
   deletePostTag(where: PostTagWhereUniqueInput!): PostTag
+  deleteProject(where: ProjectWhereUniqueInput!): Project
   deleteTimeZoneDate(where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
   deleteSkill(where: SkillWhereUniqueInput!): Skill
   deleteAttendee(where: AttendeeWhereUniqueInput!): Attendee
-  deleteProject(where: ProjectWhereUniqueInput!): Project
   deleteCredential(where: CredentialWhereUniqueInput!): Credential
   deleteArea(where: AreaWhereUniqueInput!): Area
   deleteMaterialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
@@ -2902,16 +3424,16 @@ type Mutation {
   upsertUserSkill(where: UserSkillWhereUniqueInput!, create: UserSkillCreateInput!, update: UserSkillUpdateInput!): UserSkill!
   upsertSlackChannel(where: SlackChannelWhereUniqueInput!, create: SlackChannelCreateInput!, update: SlackChannelUpdateInput!): SlackChannel!
   upsertSuccess(where: SuccessWhereUniqueInput!, create: SuccessCreateInput!, update: SuccessUpdateInput!): Success!
-  upsertUserProject(where: UserProjectWhereUniqueInput!, create: UserProjectCreateInput!, update: UserProjectUpdateInput!): UserProject!
-  upsertUserArea(where: UserAreaWhereUniqueInput!, create: UserAreaCreateInput!, update: UserAreaUpdateInput!): UserArea!
+  upsertProjectMember(where: ProjectMemberWhereUniqueInput!, create: ProjectMemberCreateInput!, update: ProjectMemberUpdateInput!): ProjectMember!
+  upsertAreaMember(where: AreaMemberWhereUniqueInput!, create: AreaMemberCreateInput!, update: AreaMemberUpdateInput!): AreaMember!
   upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertMaterial(where: MaterialWhereUniqueInput!, create: MaterialCreateInput!, update: MaterialUpdateInput!): Material!
   upsertPostTag(where: PostTagWhereUniqueInput!, create: PostTagCreateInput!, update: PostTagUpdateInput!): PostTag!
+  upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
   upsertTimeZoneDate(where: TimeZoneDateWhereUniqueInput!, create: TimeZoneDateCreateInput!, update: TimeZoneDateUpdateInput!): TimeZoneDate!
   upsertSkill(where: SkillWhereUniqueInput!, create: SkillCreateInput!, update: SkillUpdateInput!): Skill!
   upsertAttendee(where: AttendeeWhereUniqueInput!, create: AttendeeCreateInput!, update: AttendeeUpdateInput!): Attendee!
-  upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
   upsertCredential(where: CredentialWhereUniqueInput!, create: CredentialCreateInput!, update: CredentialUpdateInput!): Credential!
   upsertArea(where: AreaWhereUniqueInput!, create: AreaCreateInput!, update: AreaUpdateInput!): Area!
   upsertMaterialTag(where: MaterialTagWhereUniqueInput!, create: MaterialTagCreateInput!, update: MaterialTagUpdateInput!): MaterialTag!
@@ -2920,16 +3442,16 @@ type Mutation {
   updateManyUserSkills(data: UserSkillUpdateManyMutationInput!, where: UserSkillWhereInput): BatchPayload!
   updateManySlackChannels(data: SlackChannelUpdateManyMutationInput!, where: SlackChannelWhereInput): BatchPayload!
   updateManySuccesses(data: SuccessUpdateManyMutationInput!, where: SuccessWhereInput): BatchPayload!
-  updateManyUserProjects(data: UserProjectUpdateManyMutationInput!, where: UserProjectWhereInput): BatchPayload!
-  updateManyUserAreas(data: UserAreaUpdateManyMutationInput!, where: UserAreaWhereInput): BatchPayload!
+  updateManyProjectMembers(data: ProjectMemberUpdateManyMutationInput!, where: ProjectMemberWhereInput): BatchPayload!
+  updateManyAreaMembers(data: AreaMemberUpdateManyMutationInput!, where: AreaMemberWhereInput): BatchPayload!
   updateManyEvents(data: EventUpdateManyMutationInput!, where: EventWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
   updateManyMaterials(data: MaterialUpdateManyMutationInput!, where: MaterialWhereInput): BatchPayload!
   updateManyPostTags(data: PostTagUpdateManyMutationInput!, where: PostTagWhereInput): BatchPayload!
+  updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
   updateManyTimeZoneDates(data: TimeZoneDateUpdateManyMutationInput!, where: TimeZoneDateWhereInput): BatchPayload!
   updateManySkills(data: SkillUpdateManyMutationInput!, where: SkillWhereInput): BatchPayload!
   updateManyAttendees(data: AttendeeUpdateManyMutationInput!, where: AttendeeWhereInput): BatchPayload!
-  updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
   updateManyCredentials(data: CredentialUpdateManyMutationInput!, where: CredentialWhereInput): BatchPayload!
   updateManyAreas(data: AreaUpdateManyMutationInput!, where: AreaWhereInput): BatchPayload!
   updateManyMaterialTags(data: MaterialTagUpdateManyMutationInput!, where: MaterialTagWhereInput): BatchPayload!
@@ -2938,16 +3460,16 @@ type Mutation {
   deleteManyUserSkills(where: UserSkillWhereInput): BatchPayload!
   deleteManySlackChannels(where: SlackChannelWhereInput): BatchPayload!
   deleteManySuccesses(where: SuccessWhereInput): BatchPayload!
-  deleteManyUserProjects(where: UserProjectWhereInput): BatchPayload!
-  deleteManyUserAreas(where: UserAreaWhereInput): BatchPayload!
+  deleteManyProjectMembers(where: ProjectMemberWhereInput): BatchPayload!
+  deleteManyAreaMembers(where: AreaMemberWhereInput): BatchPayload!
   deleteManyEvents(where: EventWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyMaterials(where: MaterialWhereInput): BatchPayload!
   deleteManyPostTags(where: PostTagWhereInput): BatchPayload!
+  deleteManyProjects(where: ProjectWhereInput): BatchPayload!
   deleteManyTimeZoneDates(where: TimeZoneDateWhereInput): BatchPayload!
   deleteManySkills(where: SkillWhereInput): BatchPayload!
   deleteManyAttendees(where: AttendeeWhereInput): BatchPayload!
-  deleteManyProjects(where: ProjectWhereInput): BatchPayload!
   deleteManyCredentials(where: CredentialWhereInput): BatchPayload!
   deleteManyAreas(where: AreaWhereInput): BatchPayload!
   deleteManyMaterialTags(where: MaterialTagWhereInput): BatchPayload!
@@ -3587,7 +4109,7 @@ type Project implements Node {
   status: ProjectStatus!
   mainSlackChannel: String
   slackChannels: [String!]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  members(where: ProjectMemberWhereInput, orderBy: ProjectMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProjectMember!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -3620,7 +4142,7 @@ input ProjectCreateInput {
   mainSlackChannel: String
   gallery: ProjectCreategalleryInput
   slackChannels: ProjectCreateslackChannelsInput
-  users: UserCreateManyInput
+  members: ProjectMemberCreateManyWithoutProjectInput
 }
 
 input ProjectCreateOneInput {
@@ -3628,8 +4150,29 @@ input ProjectCreateOneInput {
   connect: ProjectWhereUniqueInput
 }
 
+input ProjectCreateOneWithoutMembersInput {
+  create: ProjectCreateWithoutMembersInput
+  connect: ProjectWhereUniqueInput
+}
+
 input ProjectCreateslackChannelsInput {
   set: [String!]
+}
+
+input ProjectCreateWithoutMembersInput {
+  id: ID
+  projectURL: String!
+  name: String!
+  description: String!
+  image: String!
+  color: String
+  startDate: DateTime
+  finishDate: DateTime
+  type: ProjectType!
+  status: ProjectStatus!
+  mainSlackChannel: String
+  gallery: ProjectCreategalleryInput
+  slackChannels: ProjectCreateslackChannelsInput
 }
 
 """An edge in a connection."""
@@ -3639,6 +4182,497 @@ type ProjectEdge {
 
   """A cursor for use in pagination."""
   cursor: String!
+}
+
+type ProjectMember implements Node {
+  id: ID!
+  user: User!
+  project: Project!
+  role: String
+  responsibilities: String
+  permissions: Permission!
+}
+
+"""A connection to a list of items."""
+type ProjectMemberConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProjectMemberEdge]!
+  aggregate: AggregateProjectMember!
+}
+
+input ProjectMemberCreateInput {
+  id: ID
+  role: String
+  responsibilities: String
+  permissions: Permission!
+  user: UserCreateOneWithoutProjectsInput!
+  project: ProjectCreateOneWithoutMembersInput!
+}
+
+input ProjectMemberCreateManyWithoutProjectInput {
+  create: [ProjectMemberCreateWithoutProjectInput!]
+  connect: [ProjectMemberWhereUniqueInput!]
+}
+
+input ProjectMemberCreateManyWithoutUserInput {
+  create: [ProjectMemberCreateWithoutUserInput!]
+  connect: [ProjectMemberWhereUniqueInput!]
+}
+
+input ProjectMemberCreateWithoutProjectInput {
+  id: ID
+  role: String
+  responsibilities: String
+  permissions: Permission!
+  user: UserCreateOneWithoutProjectsInput!
+}
+
+input ProjectMemberCreateWithoutUserInput {
+  id: ID
+  role: String
+  responsibilities: String
+  permissions: Permission!
+  project: ProjectCreateOneWithoutMembersInput!
+}
+
+"""An edge in a connection."""
+type ProjectMemberEdge {
+  """The item at the end of the edge."""
+  node: ProjectMember!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ProjectMemberOrderByInput {
+  id_ASC
+  id_DESC
+  role_ASC
+  role_DESC
+  responsibilities_ASC
+  responsibilities_DESC
+  permissions_ASC
+  permissions_DESC
+}
+
+type ProjectMemberPreviousValues {
+  id: ID!
+  role: String
+  responsibilities: String
+  permissions: Permission!
+}
+
+input ProjectMemberScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProjectMemberScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProjectMemberScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProjectMemberScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  role: String
+
+  """All values that are not equal to given value."""
+  role_not: String
+
+  """All values that are contained in given list."""
+  role_in: [String!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [String!]
+
+  """All values less than the given value."""
+  role_lt: String
+
+  """All values less than or equal the given value."""
+  role_lte: String
+
+  """All values greater than the given value."""
+  role_gt: String
+
+  """All values greater than or equal the given value."""
+  role_gte: String
+
+  """All values containing the given string."""
+  role_contains: String
+
+  """All values not containing the given string."""
+  role_not_contains: String
+
+  """All values starting with the given string."""
+  role_starts_with: String
+
+  """All values not starting with the given string."""
+  role_not_starts_with: String
+
+  """All values ending with the given string."""
+  role_ends_with: String
+
+  """All values not ending with the given string."""
+  role_not_ends_with: String
+  responsibilities: String
+
+  """All values that are not equal to given value."""
+  responsibilities_not: String
+
+  """All values that are contained in given list."""
+  responsibilities_in: [String!]
+
+  """All values that are not contained in given list."""
+  responsibilities_not_in: [String!]
+
+  """All values less than the given value."""
+  responsibilities_lt: String
+
+  """All values less than or equal the given value."""
+  responsibilities_lte: String
+
+  """All values greater than the given value."""
+  responsibilities_gt: String
+
+  """All values greater than or equal the given value."""
+  responsibilities_gte: String
+
+  """All values containing the given string."""
+  responsibilities_contains: String
+
+  """All values not containing the given string."""
+  responsibilities_not_contains: String
+
+  """All values starting with the given string."""
+  responsibilities_starts_with: String
+
+  """All values not starting with the given string."""
+  responsibilities_not_starts_with: String
+
+  """All values ending with the given string."""
+  responsibilities_ends_with: String
+
+  """All values not ending with the given string."""
+  responsibilities_not_ends_with: String
+  permissions: Permission
+
+  """All values that are not equal to given value."""
+  permissions_not: Permission
+
+  """All values that are contained in given list."""
+  permissions_in: [Permission!]
+
+  """All values that are not contained in given list."""
+  permissions_not_in: [Permission!]
+}
+
+type ProjectMemberSubscriptionPayload {
+  mutation: MutationType!
+  node: ProjectMember
+  updatedFields: [String!]
+  previousValues: ProjectMemberPreviousValues
+}
+
+input ProjectMemberSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProjectMemberSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProjectMemberSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProjectMemberSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ProjectMemberWhereInput
+}
+
+input ProjectMemberUpdateInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+  user: UserUpdateOneRequiredWithoutProjectsInput
+  project: ProjectUpdateOneRequiredWithoutMembersInput
+}
+
+input ProjectMemberUpdateManyDataInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+}
+
+input ProjectMemberUpdateManyMutationInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+}
+
+input ProjectMemberUpdateManyWithoutProjectInput {
+  create: [ProjectMemberCreateWithoutProjectInput!]
+  connect: [ProjectMemberWhereUniqueInput!]
+  set: [ProjectMemberWhereUniqueInput!]
+  disconnect: [ProjectMemberWhereUniqueInput!]
+  delete: [ProjectMemberWhereUniqueInput!]
+  update: [ProjectMemberUpdateWithWhereUniqueWithoutProjectInput!]
+  updateMany: [ProjectMemberUpdateManyWithWhereNestedInput!]
+  deleteMany: [ProjectMemberScalarWhereInput!]
+  upsert: [ProjectMemberUpsertWithWhereUniqueWithoutProjectInput!]
+}
+
+input ProjectMemberUpdateManyWithoutUserInput {
+  create: [ProjectMemberCreateWithoutUserInput!]
+  connect: [ProjectMemberWhereUniqueInput!]
+  set: [ProjectMemberWhereUniqueInput!]
+  disconnect: [ProjectMemberWhereUniqueInput!]
+  delete: [ProjectMemberWhereUniqueInput!]
+  update: [ProjectMemberUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [ProjectMemberUpdateManyWithWhereNestedInput!]
+  deleteMany: [ProjectMemberScalarWhereInput!]
+  upsert: [ProjectMemberUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ProjectMemberUpdateManyWithWhereNestedInput {
+  where: ProjectMemberScalarWhereInput!
+  data: ProjectMemberUpdateManyDataInput!
+}
+
+input ProjectMemberUpdateWithoutProjectDataInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+  user: UserUpdateOneRequiredWithoutProjectsInput
+}
+
+input ProjectMemberUpdateWithoutUserDataInput {
+  role: String
+  responsibilities: String
+  permissions: Permission
+  project: ProjectUpdateOneRequiredWithoutMembersInput
+}
+
+input ProjectMemberUpdateWithWhereUniqueWithoutProjectInput {
+  where: ProjectMemberWhereUniqueInput!
+  data: ProjectMemberUpdateWithoutProjectDataInput!
+}
+
+input ProjectMemberUpdateWithWhereUniqueWithoutUserInput {
+  where: ProjectMemberWhereUniqueInput!
+  data: ProjectMemberUpdateWithoutUserDataInput!
+}
+
+input ProjectMemberUpsertWithWhereUniqueWithoutProjectInput {
+  where: ProjectMemberWhereUniqueInput!
+  update: ProjectMemberUpdateWithoutProjectDataInput!
+  create: ProjectMemberCreateWithoutProjectInput!
+}
+
+input ProjectMemberUpsertWithWhereUniqueWithoutUserInput {
+  where: ProjectMemberWhereUniqueInput!
+  update: ProjectMemberUpdateWithoutUserDataInput!
+  create: ProjectMemberCreateWithoutUserInput!
+}
+
+input ProjectMemberWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProjectMemberWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProjectMemberWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProjectMemberWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  role: String
+
+  """All values that are not equal to given value."""
+  role_not: String
+
+  """All values that are contained in given list."""
+  role_in: [String!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [String!]
+
+  """All values less than the given value."""
+  role_lt: String
+
+  """All values less than or equal the given value."""
+  role_lte: String
+
+  """All values greater than the given value."""
+  role_gt: String
+
+  """All values greater than or equal the given value."""
+  role_gte: String
+
+  """All values containing the given string."""
+  role_contains: String
+
+  """All values not containing the given string."""
+  role_not_contains: String
+
+  """All values starting with the given string."""
+  role_starts_with: String
+
+  """All values not starting with the given string."""
+  role_not_starts_with: String
+
+  """All values ending with the given string."""
+  role_ends_with: String
+
+  """All values not ending with the given string."""
+  role_not_ends_with: String
+  responsibilities: String
+
+  """All values that are not equal to given value."""
+  responsibilities_not: String
+
+  """All values that are contained in given list."""
+  responsibilities_in: [String!]
+
+  """All values that are not contained in given list."""
+  responsibilities_not_in: [String!]
+
+  """All values less than the given value."""
+  responsibilities_lt: String
+
+  """All values less than or equal the given value."""
+  responsibilities_lte: String
+
+  """All values greater than the given value."""
+  responsibilities_gt: String
+
+  """All values greater than or equal the given value."""
+  responsibilities_gte: String
+
+  """All values containing the given string."""
+  responsibilities_contains: String
+
+  """All values not containing the given string."""
+  responsibilities_not_contains: String
+
+  """All values starting with the given string."""
+  responsibilities_starts_with: String
+
+  """All values not starting with the given string."""
+  responsibilities_not_starts_with: String
+
+  """All values ending with the given string."""
+  responsibilities_ends_with: String
+
+  """All values not ending with the given string."""
+  responsibilities_not_ends_with: String
+  permissions: Permission
+
+  """All values that are not equal to given value."""
+  permissions_not: Permission
+
+  """All values that are contained in given list."""
+  permissions_in: [Permission!]
+
+  """All values that are not contained in given list."""
+  permissions_not_in: [Permission!]
+  user: UserWhereInput
+  project: ProjectWhereInput
+}
+
+input ProjectMemberWhereUniqueInput {
+  id: ID
 }
 
 enum ProjectOrderByInput {
@@ -3754,7 +4788,7 @@ input ProjectUpdateDataInput {
   mainSlackChannel: String
   gallery: ProjectUpdategalleryInput
   slackChannels: ProjectUpdateslackChannelsInput
-  users: UserUpdateManyInput
+  members: ProjectMemberUpdateManyWithoutProjectInput
 }
 
 input ProjectUpdategalleryInput {
@@ -3774,7 +4808,7 @@ input ProjectUpdateInput {
   mainSlackChannel: String
   gallery: ProjectUpdategalleryInput
   slackChannels: ProjectUpdateslackChannelsInput
-  users: UserUpdateManyInput
+  members: ProjectMemberUpdateManyWithoutProjectInput
 }
 
 input ProjectUpdateManyMutationInput {
@@ -3801,20 +4835,40 @@ input ProjectUpdateOneInput {
   upsert: ProjectUpsertNestedInput
 }
 
-input ProjectUpdateOneRequiredInput {
-  create: ProjectCreateInput
+input ProjectUpdateOneRequiredWithoutMembersInput {
+  create: ProjectCreateWithoutMembersInput
   connect: ProjectWhereUniqueInput
-  update: ProjectUpdateDataInput
-  upsert: ProjectUpsertNestedInput
+  update: ProjectUpdateWithoutMembersDataInput
+  upsert: ProjectUpsertWithoutMembersInput
 }
 
 input ProjectUpdateslackChannelsInput {
   set: [String!]
 }
 
+input ProjectUpdateWithoutMembersDataInput {
+  projectURL: String
+  name: String
+  description: String
+  image: String
+  color: String
+  startDate: DateTime
+  finishDate: DateTime
+  type: ProjectType
+  status: ProjectStatus
+  mainSlackChannel: String
+  gallery: ProjectUpdategalleryInput
+  slackChannels: ProjectUpdateslackChannelsInput
+}
+
 input ProjectUpsertNestedInput {
   update: ProjectUpdateDataInput!
   create: ProjectCreateInput!
+}
+
+input ProjectUpsertWithoutMembersInput {
+  update: ProjectUpdateWithoutMembersDataInput!
+  create: ProjectCreateWithoutMembersInput!
 }
 
 input ProjectWhereInput {
@@ -4214,9 +5268,9 @@ input ProjectWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  users_every: UserWhereInput
-  users_some: UserWhereInput
-  users_none: UserWhereInput
+  members_every: ProjectMemberWhereInput
+  members_some: ProjectMemberWhereInput
+  members_none: ProjectMemberWhereInput
 }
 
 input ProjectWhereUniqueInput {
@@ -4230,16 +5284,16 @@ type Query {
   userSkills(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserSkill]!
   slackChannels(where: SlackChannelWhereInput, orderBy: SlackChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SlackChannel]!
   successes(where: SuccessWhereInput, orderBy: SuccessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Success]!
-  userProjects(where: UserProjectWhereInput, orderBy: UserProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserProject]!
-  userAreas(where: UserAreaWhereInput, orderBy: UserAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserArea]!
+  projectMembers(where: ProjectMemberWhereInput, orderBy: ProjectMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProjectMember]!
+  areaMembers(where: AreaMemberWhereInput, orderBy: AreaMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AreaMember]!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   materials(where: MaterialWhereInput, orderBy: MaterialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Material]!
   postTags(where: PostTagWhereInput, orderBy: PostTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PostTag]!
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   timeZoneDates(where: TimeZoneDateWhereInput, orderBy: TimeZoneDateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeZoneDate]!
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   attendees(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee]!
-  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential]!
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   materialTags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag]!
@@ -4248,16 +5302,16 @@ type Query {
   userSkill(where: UserSkillWhereUniqueInput!): UserSkill
   slackChannel(where: SlackChannelWhereUniqueInput!): SlackChannel
   success(where: SuccessWhereUniqueInput!): Success
-  userProject(where: UserProjectWhereUniqueInput!): UserProject
-  userArea(where: UserAreaWhereUniqueInput!): UserArea
+  projectMember(where: ProjectMemberWhereUniqueInput!): ProjectMember
+  areaMember(where: AreaMemberWhereUniqueInput!): AreaMember
   event(where: EventWhereUniqueInput!): Event
   post(where: PostWhereUniqueInput!): Post
   material(where: MaterialWhereUniqueInput!): Material
   postTag(where: PostTagWhereUniqueInput!): PostTag
+  project(where: ProjectWhereUniqueInput!): Project
   timeZoneDate(where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
   skill(where: SkillWhereUniqueInput!): Skill
   attendee(where: AttendeeWhereUniqueInput!): Attendee
-  project(where: ProjectWhereUniqueInput!): Project
   credential(where: CredentialWhereUniqueInput!): Credential
   area(where: AreaWhereUniqueInput!): Area
   materialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
@@ -4266,16 +5320,16 @@ type Query {
   userSkillsConnection(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserSkillConnection!
   slackChannelsConnection(where: SlackChannelWhereInput, orderBy: SlackChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SlackChannelConnection!
   successesConnection(where: SuccessWhereInput, orderBy: SuccessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuccessConnection!
-  userProjectsConnection(where: UserProjectWhereInput, orderBy: UserProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserProjectConnection!
-  userAreasConnection(where: UserAreaWhereInput, orderBy: UserAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserAreaConnection!
+  projectMembersConnection(where: ProjectMemberWhereInput, orderBy: ProjectMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectMemberConnection!
+  areaMembersConnection(where: AreaMemberWhereInput, orderBy: AreaMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AreaMemberConnection!
   eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   materialsConnection(where: MaterialWhereInput, orderBy: MaterialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MaterialConnection!
   postTagsConnection(where: PostTagWhereInput, orderBy: PostTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostTagConnection!
+  projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
   timeZoneDatesConnection(where: TimeZoneDateWhereInput, orderBy: TimeZoneDateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeZoneDateConnection!
   skillsConnection(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SkillConnection!
   attendeesConnection(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendeeConnection!
-  projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
   credentialsConnection(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CredentialConnection!
   areasConnection(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AreaConnection!
   materialTagsConnection(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MaterialTagConnection!
@@ -4927,16 +5981,16 @@ type Subscription {
   userSkill(where: UserSkillSubscriptionWhereInput): UserSkillSubscriptionPayload
   slackChannel(where: SlackChannelSubscriptionWhereInput): SlackChannelSubscriptionPayload
   success(where: SuccessSubscriptionWhereInput): SuccessSubscriptionPayload
-  userProject(where: UserProjectSubscriptionWhereInput): UserProjectSubscriptionPayload
-  userArea(where: UserAreaSubscriptionWhereInput): UserAreaSubscriptionPayload
+  projectMember(where: ProjectMemberSubscriptionWhereInput): ProjectMemberSubscriptionPayload
+  areaMember(where: AreaMemberSubscriptionWhereInput): AreaMemberSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   material(where: MaterialSubscriptionWhereInput): MaterialSubscriptionPayload
   postTag(where: PostTagSubscriptionWhereInput): PostTagSubscriptionPayload
+  project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   timeZoneDate(where: TimeZoneDateSubscriptionWhereInput): TimeZoneDateSubscriptionPayload
   skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
   attendee(where: AttendeeSubscriptionWhereInput): AttendeeSubscriptionPayload
-  project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   credential(where: CredentialSubscriptionWhereInput): CredentialSubscriptionPayload
   area(where: AreaSubscriptionWhereInput): AreaSubscriptionPayload
   materialTag(where: MaterialTagSubscriptionWhereInput): MaterialTagSubscriptionPayload
@@ -5850,9 +6904,9 @@ type User implements Node {
   phone: String
   password: String!
   role: String!
-  areas(where: UserAreaWhereInput, orderBy: UserAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserArea!]
+  areas(where: AreaMemberWhereInput, orderBy: AreaMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AreaMember!]
   skills(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserSkill!]
-  projects(where: UserProjectWhereInput, orderBy: UserProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserProject!]
+  projects(where: ProjectMemberWhereInput, orderBy: ProjectMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProjectMember!]
   permissions: [MainPermission!]!
   university: University
   universityDepartment: String
@@ -5866,454 +6920,6 @@ type User implements Node {
   special: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
-}
-
-type UserArea implements Node {
-  id: ID!
-  user: User!
-  area: Area!
-  role: String
-  responsibilities: String
-  permissions: Permission!
-}
-
-"""A connection to a list of items."""
-type UserAreaConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [UserAreaEdge]!
-  aggregate: AggregateUserArea!
-}
-
-input UserAreaCreateInput {
-  id: ID
-  role: String
-  responsibilities: String
-  permissions: Permission!
-  user: UserCreateOneWithoutAreasInput!
-  area: AreaCreateOneInput!
-}
-
-input UserAreaCreateManyWithoutUserInput {
-  create: [UserAreaCreateWithoutUserInput!]
-  connect: [UserAreaWhereUniqueInput!]
-}
-
-input UserAreaCreateWithoutUserInput {
-  id: ID
-  role: String
-  responsibilities: String
-  permissions: Permission!
-  area: AreaCreateOneInput!
-}
-
-"""An edge in a connection."""
-type UserAreaEdge {
-  """The item at the end of the edge."""
-  node: UserArea!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum UserAreaOrderByInput {
-  id_ASC
-  id_DESC
-  role_ASC
-  role_DESC
-  responsibilities_ASC
-  responsibilities_DESC
-  permissions_ASC
-  permissions_DESC
-}
-
-type UserAreaPreviousValues {
-  id: ID!
-  role: String
-  responsibilities: String
-  permissions: Permission!
-}
-
-input UserAreaScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserAreaScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserAreaScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserAreaScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  role: String
-
-  """All values that are not equal to given value."""
-  role_not: String
-
-  """All values that are contained in given list."""
-  role_in: [String!]
-
-  """All values that are not contained in given list."""
-  role_not_in: [String!]
-
-  """All values less than the given value."""
-  role_lt: String
-
-  """All values less than or equal the given value."""
-  role_lte: String
-
-  """All values greater than the given value."""
-  role_gt: String
-
-  """All values greater than or equal the given value."""
-  role_gte: String
-
-  """All values containing the given string."""
-  role_contains: String
-
-  """All values not containing the given string."""
-  role_not_contains: String
-
-  """All values starting with the given string."""
-  role_starts_with: String
-
-  """All values not starting with the given string."""
-  role_not_starts_with: String
-
-  """All values ending with the given string."""
-  role_ends_with: String
-
-  """All values not ending with the given string."""
-  role_not_ends_with: String
-  responsibilities: String
-
-  """All values that are not equal to given value."""
-  responsibilities_not: String
-
-  """All values that are contained in given list."""
-  responsibilities_in: [String!]
-
-  """All values that are not contained in given list."""
-  responsibilities_not_in: [String!]
-
-  """All values less than the given value."""
-  responsibilities_lt: String
-
-  """All values less than or equal the given value."""
-  responsibilities_lte: String
-
-  """All values greater than the given value."""
-  responsibilities_gt: String
-
-  """All values greater than or equal the given value."""
-  responsibilities_gte: String
-
-  """All values containing the given string."""
-  responsibilities_contains: String
-
-  """All values not containing the given string."""
-  responsibilities_not_contains: String
-
-  """All values starting with the given string."""
-  responsibilities_starts_with: String
-
-  """All values not starting with the given string."""
-  responsibilities_not_starts_with: String
-
-  """All values ending with the given string."""
-  responsibilities_ends_with: String
-
-  """All values not ending with the given string."""
-  responsibilities_not_ends_with: String
-  permissions: Permission
-
-  """All values that are not equal to given value."""
-  permissions_not: Permission
-
-  """All values that are contained in given list."""
-  permissions_in: [Permission!]
-
-  """All values that are not contained in given list."""
-  permissions_not_in: [Permission!]
-}
-
-type UserAreaSubscriptionPayload {
-  mutation: MutationType!
-  node: UserArea
-  updatedFields: [String!]
-  previousValues: UserAreaPreviousValues
-}
-
-input UserAreaSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserAreaSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserAreaSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserAreaSubscriptionWhereInput!]
-
-  """The subscription event gets dispatched when it's listed in mutation_in"""
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: UserAreaWhereInput
-}
-
-input UserAreaUpdateInput {
-  role: String
-  responsibilities: String
-  permissions: Permission
-  user: UserUpdateOneRequiredWithoutAreasInput
-  area: AreaUpdateOneRequiredInput
-}
-
-input UserAreaUpdateManyDataInput {
-  role: String
-  responsibilities: String
-  permissions: Permission
-}
-
-input UserAreaUpdateManyMutationInput {
-  role: String
-  responsibilities: String
-  permissions: Permission
-}
-
-input UserAreaUpdateManyWithoutUserInput {
-  create: [UserAreaCreateWithoutUserInput!]
-  connect: [UserAreaWhereUniqueInput!]
-  set: [UserAreaWhereUniqueInput!]
-  disconnect: [UserAreaWhereUniqueInput!]
-  delete: [UserAreaWhereUniqueInput!]
-  update: [UserAreaUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [UserAreaUpdateManyWithWhereNestedInput!]
-  deleteMany: [UserAreaScalarWhereInput!]
-  upsert: [UserAreaUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input UserAreaUpdateManyWithWhereNestedInput {
-  where: UserAreaScalarWhereInput!
-  data: UserAreaUpdateManyDataInput!
-}
-
-input UserAreaUpdateWithoutUserDataInput {
-  role: String
-  responsibilities: String
-  permissions: Permission
-  area: AreaUpdateOneRequiredInput
-}
-
-input UserAreaUpdateWithWhereUniqueWithoutUserInput {
-  where: UserAreaWhereUniqueInput!
-  data: UserAreaUpdateWithoutUserDataInput!
-}
-
-input UserAreaUpsertWithWhereUniqueWithoutUserInput {
-  where: UserAreaWhereUniqueInput!
-  update: UserAreaUpdateWithoutUserDataInput!
-  create: UserAreaCreateWithoutUserInput!
-}
-
-input UserAreaWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserAreaWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserAreaWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserAreaWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  role: String
-
-  """All values that are not equal to given value."""
-  role_not: String
-
-  """All values that are contained in given list."""
-  role_in: [String!]
-
-  """All values that are not contained in given list."""
-  role_not_in: [String!]
-
-  """All values less than the given value."""
-  role_lt: String
-
-  """All values less than or equal the given value."""
-  role_lte: String
-
-  """All values greater than the given value."""
-  role_gt: String
-
-  """All values greater than or equal the given value."""
-  role_gte: String
-
-  """All values containing the given string."""
-  role_contains: String
-
-  """All values not containing the given string."""
-  role_not_contains: String
-
-  """All values starting with the given string."""
-  role_starts_with: String
-
-  """All values not starting with the given string."""
-  role_not_starts_with: String
-
-  """All values ending with the given string."""
-  role_ends_with: String
-
-  """All values not ending with the given string."""
-  role_not_ends_with: String
-  responsibilities: String
-
-  """All values that are not equal to given value."""
-  responsibilities_not: String
-
-  """All values that are contained in given list."""
-  responsibilities_in: [String!]
-
-  """All values that are not contained in given list."""
-  responsibilities_not_in: [String!]
-
-  """All values less than the given value."""
-  responsibilities_lt: String
-
-  """All values less than or equal the given value."""
-  responsibilities_lte: String
-
-  """All values greater than the given value."""
-  responsibilities_gt: String
-
-  """All values greater than or equal the given value."""
-  responsibilities_gte: String
-
-  """All values containing the given string."""
-  responsibilities_contains: String
-
-  """All values not containing the given string."""
-  responsibilities_not_contains: String
-
-  """All values starting with the given string."""
-  responsibilities_starts_with: String
-
-  """All values not starting with the given string."""
-  responsibilities_not_starts_with: String
-
-  """All values ending with the given string."""
-  responsibilities_ends_with: String
-
-  """All values not ending with the given string."""
-  responsibilities_not_ends_with: String
-  permissions: Permission
-
-  """All values that are not equal to given value."""
-  permissions_not: Permission
-
-  """All values that are contained in given list."""
-  permissions_in: [Permission!]
-
-  """All values that are not contained in given list."""
-  permissions_not_in: [Permission!]
-  user: UserWhereInput
-  area: AreaWhereInput
-}
-
-input UserAreaWhereUniqueInput {
-  id: ID
 }
 
 """A connection to a list of items."""
@@ -6344,9 +6950,9 @@ input UserCreateInput {
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   special: UserCreatespecialInput
-  areas: UserAreaCreateManyWithoutUserInput
+  areas: AreaMemberCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
-  projects: UserProjectCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
@@ -6423,7 +7029,7 @@ input UserCreateWithoutAreasInput {
   institution: UserCreateinstitutionInput
   special: UserCreatespecialInput
   skills: UserSkillCreateManyWithoutUserInput
-  projects: UserProjectCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
@@ -6447,9 +7053,9 @@ input UserCreateWithoutCredentialsInput {
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   special: UserCreatespecialInput
-  areas: UserAreaCreateManyWithoutUserInput
+  areas: AreaMemberCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
-  projects: UserProjectCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
 }
@@ -6472,7 +7078,7 @@ input UserCreateWithoutProjectsInput {
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   special: UserCreatespecialInput
-  areas: UserAreaCreateManyWithoutUserInput
+  areas: AreaMemberCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
@@ -6497,8 +7103,8 @@ input UserCreateWithoutSkillsInput {
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   special: UserCreatespecialInput
-  areas: UserAreaCreateManyWithoutUserInput
-  projects: UserProjectCreateManyWithoutUserInput
+  areas: AreaMemberCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
@@ -6522,9 +7128,9 @@ input UserCreateWithoutSlackChannelsInput {
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   special: UserCreatespecialInput
-  areas: UserAreaCreateManyWithoutUserInput
+  areas: AreaMemberCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
-  projects: UserProjectCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
 }
@@ -6547,9 +7153,9 @@ input UserCreateWithoutUniversityInput {
   permissions: UserCreatepermissionsInput
   institution: UserCreateinstitutionInput
   special: UserCreatespecialInput
-  areas: UserAreaCreateManyWithoutUserInput
+  areas: AreaMemberCreateManyWithoutUserInput
   skills: UserSkillCreateManyWithoutUserInput
-  projects: UserProjectCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
 }
@@ -6618,454 +7224,6 @@ type UserPreviousValues {
   special: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
-}
-
-type UserProject implements Node {
-  id: ID!
-  user: User!
-  project: Project!
-  role: String
-  responsibilities: String
-  permissions: Permission!
-}
-
-"""A connection to a list of items."""
-type UserProjectConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [UserProjectEdge]!
-  aggregate: AggregateUserProject!
-}
-
-input UserProjectCreateInput {
-  id: ID
-  role: String
-  responsibilities: String
-  permissions: Permission!
-  user: UserCreateOneWithoutProjectsInput!
-  project: ProjectCreateOneInput!
-}
-
-input UserProjectCreateManyWithoutUserInput {
-  create: [UserProjectCreateWithoutUserInput!]
-  connect: [UserProjectWhereUniqueInput!]
-}
-
-input UserProjectCreateWithoutUserInput {
-  id: ID
-  role: String
-  responsibilities: String
-  permissions: Permission!
-  project: ProjectCreateOneInput!
-}
-
-"""An edge in a connection."""
-type UserProjectEdge {
-  """The item at the end of the edge."""
-  node: UserProject!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum UserProjectOrderByInput {
-  id_ASC
-  id_DESC
-  role_ASC
-  role_DESC
-  responsibilities_ASC
-  responsibilities_DESC
-  permissions_ASC
-  permissions_DESC
-}
-
-type UserProjectPreviousValues {
-  id: ID!
-  role: String
-  responsibilities: String
-  permissions: Permission!
-}
-
-input UserProjectScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserProjectScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserProjectScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserProjectScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  role: String
-
-  """All values that are not equal to given value."""
-  role_not: String
-
-  """All values that are contained in given list."""
-  role_in: [String!]
-
-  """All values that are not contained in given list."""
-  role_not_in: [String!]
-
-  """All values less than the given value."""
-  role_lt: String
-
-  """All values less than or equal the given value."""
-  role_lte: String
-
-  """All values greater than the given value."""
-  role_gt: String
-
-  """All values greater than or equal the given value."""
-  role_gte: String
-
-  """All values containing the given string."""
-  role_contains: String
-
-  """All values not containing the given string."""
-  role_not_contains: String
-
-  """All values starting with the given string."""
-  role_starts_with: String
-
-  """All values not starting with the given string."""
-  role_not_starts_with: String
-
-  """All values ending with the given string."""
-  role_ends_with: String
-
-  """All values not ending with the given string."""
-  role_not_ends_with: String
-  responsibilities: String
-
-  """All values that are not equal to given value."""
-  responsibilities_not: String
-
-  """All values that are contained in given list."""
-  responsibilities_in: [String!]
-
-  """All values that are not contained in given list."""
-  responsibilities_not_in: [String!]
-
-  """All values less than the given value."""
-  responsibilities_lt: String
-
-  """All values less than or equal the given value."""
-  responsibilities_lte: String
-
-  """All values greater than the given value."""
-  responsibilities_gt: String
-
-  """All values greater than or equal the given value."""
-  responsibilities_gte: String
-
-  """All values containing the given string."""
-  responsibilities_contains: String
-
-  """All values not containing the given string."""
-  responsibilities_not_contains: String
-
-  """All values starting with the given string."""
-  responsibilities_starts_with: String
-
-  """All values not starting with the given string."""
-  responsibilities_not_starts_with: String
-
-  """All values ending with the given string."""
-  responsibilities_ends_with: String
-
-  """All values not ending with the given string."""
-  responsibilities_not_ends_with: String
-  permissions: Permission
-
-  """All values that are not equal to given value."""
-  permissions_not: Permission
-
-  """All values that are contained in given list."""
-  permissions_in: [Permission!]
-
-  """All values that are not contained in given list."""
-  permissions_not_in: [Permission!]
-}
-
-type UserProjectSubscriptionPayload {
-  mutation: MutationType!
-  node: UserProject
-  updatedFields: [String!]
-  previousValues: UserProjectPreviousValues
-}
-
-input UserProjectSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserProjectSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserProjectSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserProjectSubscriptionWhereInput!]
-
-  """The subscription event gets dispatched when it's listed in mutation_in"""
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: UserProjectWhereInput
-}
-
-input UserProjectUpdateInput {
-  role: String
-  responsibilities: String
-  permissions: Permission
-  user: UserUpdateOneRequiredWithoutProjectsInput
-  project: ProjectUpdateOneRequiredInput
-}
-
-input UserProjectUpdateManyDataInput {
-  role: String
-  responsibilities: String
-  permissions: Permission
-}
-
-input UserProjectUpdateManyMutationInput {
-  role: String
-  responsibilities: String
-  permissions: Permission
-}
-
-input UserProjectUpdateManyWithoutUserInput {
-  create: [UserProjectCreateWithoutUserInput!]
-  connect: [UserProjectWhereUniqueInput!]
-  set: [UserProjectWhereUniqueInput!]
-  disconnect: [UserProjectWhereUniqueInput!]
-  delete: [UserProjectWhereUniqueInput!]
-  update: [UserProjectUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [UserProjectUpdateManyWithWhereNestedInput!]
-  deleteMany: [UserProjectScalarWhereInput!]
-  upsert: [UserProjectUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input UserProjectUpdateManyWithWhereNestedInput {
-  where: UserProjectScalarWhereInput!
-  data: UserProjectUpdateManyDataInput!
-}
-
-input UserProjectUpdateWithoutUserDataInput {
-  role: String
-  responsibilities: String
-  permissions: Permission
-  project: ProjectUpdateOneRequiredInput
-}
-
-input UserProjectUpdateWithWhereUniqueWithoutUserInput {
-  where: UserProjectWhereUniqueInput!
-  data: UserProjectUpdateWithoutUserDataInput!
-}
-
-input UserProjectUpsertWithWhereUniqueWithoutUserInput {
-  where: UserProjectWhereUniqueInput!
-  update: UserProjectUpdateWithoutUserDataInput!
-  create: UserProjectCreateWithoutUserInput!
-}
-
-input UserProjectWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserProjectWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserProjectWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserProjectWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  role: String
-
-  """All values that are not equal to given value."""
-  role_not: String
-
-  """All values that are contained in given list."""
-  role_in: [String!]
-
-  """All values that are not contained in given list."""
-  role_not_in: [String!]
-
-  """All values less than the given value."""
-  role_lt: String
-
-  """All values less than or equal the given value."""
-  role_lte: String
-
-  """All values greater than the given value."""
-  role_gt: String
-
-  """All values greater than or equal the given value."""
-  role_gte: String
-
-  """All values containing the given string."""
-  role_contains: String
-
-  """All values not containing the given string."""
-  role_not_contains: String
-
-  """All values starting with the given string."""
-  role_starts_with: String
-
-  """All values not starting with the given string."""
-  role_not_starts_with: String
-
-  """All values ending with the given string."""
-  role_ends_with: String
-
-  """All values not ending with the given string."""
-  role_not_ends_with: String
-  responsibilities: String
-
-  """All values that are not equal to given value."""
-  responsibilities_not: String
-
-  """All values that are contained in given list."""
-  responsibilities_in: [String!]
-
-  """All values that are not contained in given list."""
-  responsibilities_not_in: [String!]
-
-  """All values less than the given value."""
-  responsibilities_lt: String
-
-  """All values less than or equal the given value."""
-  responsibilities_lte: String
-
-  """All values greater than the given value."""
-  responsibilities_gt: String
-
-  """All values greater than or equal the given value."""
-  responsibilities_gte: String
-
-  """All values containing the given string."""
-  responsibilities_contains: String
-
-  """All values not containing the given string."""
-  responsibilities_not_contains: String
-
-  """All values starting with the given string."""
-  responsibilities_starts_with: String
-
-  """All values not starting with the given string."""
-  responsibilities_not_starts_with: String
-
-  """All values ending with the given string."""
-  responsibilities_ends_with: String
-
-  """All values not ending with the given string."""
-  responsibilities_not_ends_with: String
-  permissions: Permission
-
-  """All values that are not equal to given value."""
-  permissions_not: Permission
-
-  """All values that are contained in given list."""
-  permissions_in: [Permission!]
-
-  """All values that are not contained in given list."""
-  permissions_not_in: [Permission!]
-  user: UserWhereInput
-  project: ProjectWhereInput
-}
-
-input UserProjectWhereUniqueInput {
-  id: ID
 }
 
 input UserScalarWhereInput {
@@ -8041,9 +8199,9 @@ input UserUpdateDataInput {
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   special: UserUpdatespecialInput
-  areas: UserAreaUpdateManyWithoutUserInput
+  areas: AreaMemberUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
-  projects: UserProjectUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
@@ -8066,9 +8224,9 @@ input UserUpdateInput {
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   special: UserUpdatespecialInput
-  areas: UserAreaUpdateManyWithoutUserInput
+  areas: AreaMemberUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
-  projects: UserProjectUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
@@ -8232,7 +8390,7 @@ input UserUpdateWithoutAreasDataInput {
   institution: UserUpdateinstitutionInput
   special: UserUpdatespecialInput
   skills: UserSkillUpdateManyWithoutUserInput
-  projects: UserProjectUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
@@ -8255,9 +8413,9 @@ input UserUpdateWithoutCredentialsDataInput {
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   special: UserUpdatespecialInput
-  areas: UserAreaUpdateManyWithoutUserInput
+  areas: AreaMemberUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
-  projects: UserProjectUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
 }
@@ -8279,7 +8437,7 @@ input UserUpdateWithoutProjectsDataInput {
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   special: UserUpdatespecialInput
-  areas: UserAreaUpdateManyWithoutUserInput
+  areas: AreaMemberUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
@@ -8303,8 +8461,8 @@ input UserUpdateWithoutSkillsDataInput {
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   special: UserUpdatespecialInput
-  areas: UserAreaUpdateManyWithoutUserInput
-  projects: UserProjectUpdateManyWithoutUserInput
+  areas: AreaMemberUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
@@ -8327,9 +8485,9 @@ input UserUpdateWithoutSlackChannelsDataInput {
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   special: UserUpdatespecialInput
-  areas: UserAreaUpdateManyWithoutUserInput
+  areas: AreaMemberUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
-  projects: UserProjectUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
 }
@@ -8351,9 +8509,9 @@ input UserUpdateWithoutUniversityDataInput {
   permissions: UserUpdatepermissionsInput
   institution: UserUpdateinstitutionInput
   special: UserUpdatespecialInput
-  areas: UserAreaUpdateManyWithoutUserInput
+  areas: AreaMemberUpdateManyWithoutUserInput
   skills: UserSkillUpdateManyWithoutUserInput
-  projects: UserProjectUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
 }
@@ -8999,15 +9157,15 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  areas_every: UserAreaWhereInput
-  areas_some: UserAreaWhereInput
-  areas_none: UserAreaWhereInput
+  areas_every: AreaMemberWhereInput
+  areas_some: AreaMemberWhereInput
+  areas_none: AreaMemberWhereInput
   skills_every: UserSkillWhereInput
   skills_some: UserSkillWhereInput
   skills_none: UserSkillWhereInput
-  projects_every: UserProjectWhereInput
-  projects_some: UserProjectWhereInput
-  projects_none: UserProjectWhereInput
+  projects_every: ProjectMemberWhereInput
+  projects_some: ProjectMemberWhereInput
+  projects_none: ProjectMemberWhereInput
   university: UniversityWhereInput
   slackChannels_every: SlackChannelWhereInput
   slackChannels_some: SlackChannelWhereInput

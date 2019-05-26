@@ -6,7 +6,6 @@ const areas = async (parent, args, ctx, info) => {
 };
 
 const area = async (parent, args, ctx, info) => {
-  console.log(args);
   await validate(ctx).userExist();
   return ctx.prisma.query.area(args, info);
 };

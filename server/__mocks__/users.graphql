@@ -85,7 +85,7 @@ query users {
     role
     areas {
       area {
-        name
+        id
       }
     }
     projects {
