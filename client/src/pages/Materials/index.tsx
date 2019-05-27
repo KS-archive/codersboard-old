@@ -13,6 +13,7 @@ class Materials extends Component<IProps, IState> {
   state = {
     modal: false,
     searchedMaterials: this.props.materials,
+    // filteredMaterials: [];
   };
 
   componentDidUpdate(prevProps: IProps, prevState: IState) {
@@ -57,7 +58,7 @@ class Materials extends Component<IProps, IState> {
     return (
       <MaterialsContainer>
         <Header>
-          <SearchBar search={(e: any) => this.handleSearch(e)} />
+          <SearchBar search={(e: any) => this.handleSearch(e)} materials={this.props.materials} />
           <Wrapper>
             <Title level={2}>Materiały</Title>
             <AddButton type="primary" onClick={(): void => this.setState({ modal: true })}>
@@ -89,6 +90,7 @@ interface IProps {
 interface IState {
   modal: boolean;
   searchedMaterials: any;
+  // filteredMaterials: any;
 }
 
 export default withMaterials(Materials);

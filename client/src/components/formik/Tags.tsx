@@ -3,7 +3,7 @@ import { Select, Form } from 'antd';
 import { FieldProps } from 'formik/dist/Field';
 import { FormItemProps } from 'antd/es/form';
 import { SelectProps } from 'antd/es/select';
-import withMaterialTags, { MaterialTag as Tag } from 'pages/Materials/store/withTags';
+import withMaterialTags, { MaterialTag as Tag } from 'pages/Materials/store/withMaterialTags';
 
 type Props = { autoComplete?: string; materialTags: Tag[] } & FormItemProps & SelectProps & FieldProps;
 

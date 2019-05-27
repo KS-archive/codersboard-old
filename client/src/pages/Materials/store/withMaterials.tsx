@@ -12,6 +12,7 @@ export const MATERIALS = gql`
       image
       url
       tags {
+        id
         name
         color
       }
@@ -24,6 +25,7 @@ export const MATERIALS = gql`
 `;
 
 interface Tag {
+  id: string
   name: string;
   color: string;
 };
