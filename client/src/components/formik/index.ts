@@ -6,6 +6,7 @@ import ImageUpload from './ImageUpload';
 import DatePicker from './DatePicker';
 import UserSelect from './UserSelect';
 import ProjectSelect from './ProjectSelect';
+import Tags from './Tags';
 
 export { Input };
 export { Select };
@@ -15,3 +16,4 @@ export { ImageUpload };
 export { DatePicker };
 export { UserSelect };
 export { ProjectSelect };
+export { Tags };

@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 
-const MATERIALS = gql`
+export const MATERIALS = gql`
   query materails($areaURL: String) {
     materials(where: { area: { areaURL: $areaURL } }) {
       id

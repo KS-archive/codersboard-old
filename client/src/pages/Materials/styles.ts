@@ -8,7 +8,15 @@ export const MaterialsContainer = styled.div`
 
 export const Header = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+`;
+
+export const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const AddButton = styled(Button)`
