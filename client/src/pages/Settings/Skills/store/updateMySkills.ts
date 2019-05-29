@@ -45,8 +45,10 @@ interface IUpdateMySkillsResponse {
 export default async (variables: IMySkill[]) => {
   variables.forEach(variable => {
     delete variable.skill.__typename;
+    delete variable.__typename;
     return variable;
   });
+
   const data: IUpdateMySkillsResponse = await apollo.mutate({
     mutation: UPDATE_MY_SKILLS,
     variables: { data: variables },

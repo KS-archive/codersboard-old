@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Sun May 26 2019 21:26:37 GMT+0200 (Central European Summer Time)
+# timestamp: Wed May 29 2019 02:53:36 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -3367,6 +3367,7 @@ input MaterialWhereUniqueInput {
 
 type Mutation {
   createUniversity(data: UniversityCreateInput!): University!
+  createSkill(data: SkillCreateInput!): Skill!
   createUserSkill(data: UserSkillCreateInput!): UserSkill!
   createSlackChannel(data: SlackChannelCreateInput!): SlackChannel!
   createSuccess(data: SuccessCreateInput!): Success!
@@ -3378,13 +3379,13 @@ type Mutation {
   createPostTag(data: PostTagCreateInput!): PostTag!
   createProject(data: ProjectCreateInput!): Project!
   createTimeZoneDate(data: TimeZoneDateCreateInput!): TimeZoneDate!
-  createSkill(data: SkillCreateInput!): Skill!
   createAttendee(data: AttendeeCreateInput!): Attendee!
   createCredential(data: CredentialCreateInput!): Credential!
   createArea(data: AreaCreateInput!): Area!
   createMaterialTag(data: MaterialTagCreateInput!): MaterialTag!
   createUser(data: UserCreateInput!): User!
   updateUniversity(data: UniversityUpdateInput!, where: UniversityWhereUniqueInput!): University
+  updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
   updateUserSkill(data: UserSkillUpdateInput!, where: UserSkillWhereUniqueInput!): UserSkill
   updateSlackChannel(data: SlackChannelUpdateInput!, where: SlackChannelWhereUniqueInput!): SlackChannel
   updateSuccess(data: SuccessUpdateInput!, where: SuccessWhereUniqueInput!): Success
@@ -3396,13 +3397,13 @@ type Mutation {
   updatePostTag(data: PostTagUpdateInput!, where: PostTagWhereUniqueInput!): PostTag
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateTimeZoneDate(data: TimeZoneDateUpdateInput!, where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
-  updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
   updateAttendee(data: AttendeeUpdateInput!, where: AttendeeWhereUniqueInput!): Attendee
   updateCredential(data: CredentialUpdateInput!, where: CredentialWhereUniqueInput!): Credential
   updateArea(data: AreaUpdateInput!, where: AreaWhereUniqueInput!): Area
   updateMaterialTag(data: MaterialTagUpdateInput!, where: MaterialTagWhereUniqueInput!): MaterialTag
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteUniversity(where: UniversityWhereUniqueInput!): University
+  deleteSkill(where: SkillWhereUniqueInput!): Skill
   deleteUserSkill(where: UserSkillWhereUniqueInput!): UserSkill
   deleteSlackChannel(where: SlackChannelWhereUniqueInput!): SlackChannel
   deleteSuccess(where: SuccessWhereUniqueInput!): Success
@@ -3414,13 +3415,13 @@ type Mutation {
   deletePostTag(where: PostTagWhereUniqueInput!): PostTag
   deleteProject(where: ProjectWhereUniqueInput!): Project
   deleteTimeZoneDate(where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
-  deleteSkill(where: SkillWhereUniqueInput!): Skill
   deleteAttendee(where: AttendeeWhereUniqueInput!): Attendee
   deleteCredential(where: CredentialWhereUniqueInput!): Credential
   deleteArea(where: AreaWhereUniqueInput!): Area
   deleteMaterialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
   deleteUser(where: UserWhereUniqueInput!): User
   upsertUniversity(where: UniversityWhereUniqueInput!, create: UniversityCreateInput!, update: UniversityUpdateInput!): University!
+  upsertSkill(where: SkillWhereUniqueInput!, create: SkillCreateInput!, update: SkillUpdateInput!): Skill!
   upsertUserSkill(where: UserSkillWhereUniqueInput!, create: UserSkillCreateInput!, update: UserSkillUpdateInput!): UserSkill!
   upsertSlackChannel(where: SlackChannelWhereUniqueInput!, create: SlackChannelCreateInput!, update: SlackChannelUpdateInput!): SlackChannel!
   upsertSuccess(where: SuccessWhereUniqueInput!, create: SuccessCreateInput!, update: SuccessUpdateInput!): Success!
@@ -3432,13 +3433,13 @@ type Mutation {
   upsertPostTag(where: PostTagWhereUniqueInput!, create: PostTagCreateInput!, update: PostTagUpdateInput!): PostTag!
   upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
   upsertTimeZoneDate(where: TimeZoneDateWhereUniqueInput!, create: TimeZoneDateCreateInput!, update: TimeZoneDateUpdateInput!): TimeZoneDate!
-  upsertSkill(where: SkillWhereUniqueInput!, create: SkillCreateInput!, update: SkillUpdateInput!): Skill!
   upsertAttendee(where: AttendeeWhereUniqueInput!, create: AttendeeCreateInput!, update: AttendeeUpdateInput!): Attendee!
   upsertCredential(where: CredentialWhereUniqueInput!, create: CredentialCreateInput!, update: CredentialUpdateInput!): Credential!
   upsertArea(where: AreaWhereUniqueInput!, create: AreaCreateInput!, update: AreaUpdateInput!): Area!
   upsertMaterialTag(where: MaterialTagWhereUniqueInput!, create: MaterialTagCreateInput!, update: MaterialTagUpdateInput!): MaterialTag!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyUniversities(data: UniversityUpdateManyMutationInput!, where: UniversityWhereInput): BatchPayload!
+  updateManySkills(data: SkillUpdateManyMutationInput!, where: SkillWhereInput): BatchPayload!
   updateManyUserSkills(data: UserSkillUpdateManyMutationInput!, where: UserSkillWhereInput): BatchPayload!
   updateManySlackChannels(data: SlackChannelUpdateManyMutationInput!, where: SlackChannelWhereInput): BatchPayload!
   updateManySuccesses(data: SuccessUpdateManyMutationInput!, where: SuccessWhereInput): BatchPayload!
@@ -3450,13 +3451,13 @@ type Mutation {
   updateManyPostTags(data: PostTagUpdateManyMutationInput!, where: PostTagWhereInput): BatchPayload!
   updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
   updateManyTimeZoneDates(data: TimeZoneDateUpdateManyMutationInput!, where: TimeZoneDateWhereInput): BatchPayload!
-  updateManySkills(data: SkillUpdateManyMutationInput!, where: SkillWhereInput): BatchPayload!
   updateManyAttendees(data: AttendeeUpdateManyMutationInput!, where: AttendeeWhereInput): BatchPayload!
   updateManyCredentials(data: CredentialUpdateManyMutationInput!, where: CredentialWhereInput): BatchPayload!
   updateManyAreas(data: AreaUpdateManyMutationInput!, where: AreaWhereInput): BatchPayload!
   updateManyMaterialTags(data: MaterialTagUpdateManyMutationInput!, where: MaterialTagWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyUniversities(where: UniversityWhereInput): BatchPayload!
+  deleteManySkills(where: SkillWhereInput): BatchPayload!
   deleteManyUserSkills(where: UserSkillWhereInput): BatchPayload!
   deleteManySlackChannels(where: SlackChannelWhereInput): BatchPayload!
   deleteManySuccesses(where: SuccessWhereInput): BatchPayload!
@@ -3468,7 +3469,6 @@ type Mutation {
   deleteManyPostTags(where: PostTagWhereInput): BatchPayload!
   deleteManyProjects(where: ProjectWhereInput): BatchPayload!
   deleteManyTimeZoneDates(where: TimeZoneDateWhereInput): BatchPayload!
-  deleteManySkills(where: SkillWhereInput): BatchPayload!
   deleteManyAttendees(where: AttendeeWhereInput): BatchPayload!
   deleteManyCredentials(where: CredentialWhereInput): BatchPayload!
   deleteManyAreas(where: AreaWhereInput): BatchPayload!
@@ -5281,6 +5281,7 @@ input ProjectWhereUniqueInput {
 
 type Query {
   universities(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University]!
+  skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   userSkills(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserSkill]!
   slackChannels(where: SlackChannelWhereInput, orderBy: SlackChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SlackChannel]!
   successes(where: SuccessWhereInput, orderBy: SuccessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Success]!
@@ -5292,13 +5293,13 @@ type Query {
   postTags(where: PostTagWhereInput, orderBy: PostTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PostTag]!
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   timeZoneDates(where: TimeZoneDateWhereInput, orderBy: TimeZoneDateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeZoneDate]!
-  skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   attendees(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee]!
   credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential]!
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   materialTags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   university(where: UniversityWhereUniqueInput!): University
+  skill(where: SkillWhereUniqueInput!): Skill
   userSkill(where: UserSkillWhereUniqueInput!): UserSkill
   slackChannel(where: SlackChannelWhereUniqueInput!): SlackChannel
   success(where: SuccessWhereUniqueInput!): Success
@@ -5310,13 +5311,13 @@ type Query {
   postTag(where: PostTagWhereUniqueInput!): PostTag
   project(where: ProjectWhereUniqueInput!): Project
   timeZoneDate(where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
-  skill(where: SkillWhereUniqueInput!): Skill
   attendee(where: AttendeeWhereUniqueInput!): Attendee
   credential(where: CredentialWhereUniqueInput!): Credential
   area(where: AreaWhereUniqueInput!): Area
   materialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
   user(where: UserWhereUniqueInput!): User
   universitiesConnection(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UniversityConnection!
+  skillsConnection(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SkillConnection!
   userSkillsConnection(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserSkillConnection!
   slackChannelsConnection(where: SlackChannelWhereInput, orderBy: SlackChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SlackChannelConnection!
   successesConnection(where: SuccessWhereInput, orderBy: SuccessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SuccessConnection!
@@ -5328,7 +5329,6 @@ type Query {
   postTagsConnection(where: PostTagWhereInput, orderBy: PostTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostTagConnection!
   projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
   timeZoneDatesConnection(where: TimeZoneDateWhereInput, orderBy: TimeZoneDateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeZoneDateConnection!
-  skillsConnection(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SkillConnection!
   attendeesConnection(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendeeConnection!
   credentialsConnection(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CredentialConnection!
   areasConnection(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AreaConnection!
@@ -5346,7 +5346,7 @@ type Skill implements Node {
   id: ID!
   name: String!
   icon: String
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  users(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserSkill!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -5365,12 +5365,18 @@ input SkillCreateInput {
   id: ID
   name: String!
   icon: String
-  users: UserCreateManyInput
+  users: UserSkillCreateManyWithoutSkillInput
 }
 
-input SkillCreateOneInput {
-  create: SkillCreateInput
+input SkillCreateOneWithoutUsersInput {
+  create: SkillCreateWithoutUsersInput
   connect: SkillWhereUniqueInput
+}
+
+input SkillCreateWithoutUsersInput {
+  id: ID
+  name: String!
+  icon: String
 }
 
 """An edge in a connection."""
@@ -5440,16 +5446,10 @@ input SkillSubscriptionWhereInput {
   node: SkillWhereInput
 }
 
-input SkillUpdateDataInput {
-  name: String
-  icon: String
-  users: UserUpdateManyInput
-}
-
 input SkillUpdateInput {
   name: String
   icon: String
-  users: UserUpdateManyInput
+  users: UserSkillUpdateManyWithoutSkillInput
 }
 
 input SkillUpdateManyMutationInput {
@@ -5457,16 +5457,21 @@ input SkillUpdateManyMutationInput {
   icon: String
 }
 
-input SkillUpdateOneRequiredInput {
-  create: SkillCreateInput
+input SkillUpdateOneRequiredWithoutUsersInput {
+  create: SkillCreateWithoutUsersInput
   connect: SkillWhereUniqueInput
-  update: SkillUpdateDataInput
-  upsert: SkillUpsertNestedInput
+  update: SkillUpdateWithoutUsersDataInput
+  upsert: SkillUpsertWithoutUsersInput
 }
 
-input SkillUpsertNestedInput {
-  update: SkillUpdateDataInput!
-  create: SkillCreateInput!
+input SkillUpdateWithoutUsersDataInput {
+  name: String
+  icon: String
+}
+
+input SkillUpsertWithoutUsersInput {
+  update: SkillUpdateWithoutUsersDataInput!
+  create: SkillCreateWithoutUsersInput!
 }
 
 input SkillWhereInput {
@@ -5642,9 +5647,9 @@ input SkillWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  users_every: UserWhereInput
-  users_some: UserWhereInput
-  users_none: UserWhereInput
+  users_every: UserSkillWhereInput
+  users_some: UserSkillWhereInput
+  users_none: UserSkillWhereInput
 }
 
 input SkillWhereUniqueInput {
@@ -5978,6 +5983,7 @@ input SlackChannelWhereUniqueInput {
 
 type Subscription {
   university(where: UniversitySubscriptionWhereInput): UniversitySubscriptionPayload
+  skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
   userSkill(where: UserSkillSubscriptionWhereInput): UserSkillSubscriptionPayload
   slackChannel(where: SlackChannelSubscriptionWhereInput): SlackChannelSubscriptionPayload
   success(where: SuccessSubscriptionWhereInput): SuccessSubscriptionPayload
@@ -5989,7 +5995,6 @@ type Subscription {
   postTag(where: PostTagSubscriptionWhereInput): PostTagSubscriptionPayload
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   timeZoneDate(where: TimeZoneDateSubscriptionWhereInput): TimeZoneDateSubscriptionPayload
-  skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
   attendee(where: AttendeeSubscriptionWhereInput): AttendeeSubscriptionPayload
   credential(where: CredentialSubscriptionWhereInput): CredentialSubscriptionPayload
   area(where: AreaSubscriptionWhereInput): AreaSubscriptionPayload
@@ -7826,8 +7831,13 @@ type UserSkillConnection {
 input UserSkillCreateInput {
   id: ID
   level: Int
-  skill: SkillCreateOneInput!
+  skill: SkillCreateOneWithoutUsersInput!
   user: UserCreateOneWithoutSkillsInput!
+}
+
+input UserSkillCreateManyWithoutSkillInput {
+  create: [UserSkillCreateWithoutSkillInput!]
+  connect: [UserSkillWhereUniqueInput!]
 }
 
 input UserSkillCreateManyWithoutUserInput {
@@ -7835,10 +7845,16 @@ input UserSkillCreateManyWithoutUserInput {
   connect: [UserSkillWhereUniqueInput!]
 }
 
+input UserSkillCreateWithoutSkillInput {
+  id: ID
+  level: Int
+  user: UserCreateOneWithoutSkillsInput!
+}
+
 input UserSkillCreateWithoutUserInput {
   id: ID
   level: Int
-  skill: SkillCreateOneInput!
+  skill: SkillCreateOneWithoutUsersInput!
 }
 
 """An edge in a connection."""
@@ -7999,7 +8015,7 @@ input UserSkillSubscriptionWhereInput {
 
 input UserSkillUpdateInput {
   level: Int
-  skill: SkillUpdateOneRequiredInput
+  skill: SkillUpdateOneRequiredWithoutUsersInput
   user: UserUpdateOneRequiredWithoutSkillsInput
 }
 
@@ -8009,6 +8025,18 @@ input UserSkillUpdateManyDataInput {
 
 input UserSkillUpdateManyMutationInput {
   level: Int
+}
+
+input UserSkillUpdateManyWithoutSkillInput {
+  create: [UserSkillCreateWithoutSkillInput!]
+  connect: [UserSkillWhereUniqueInput!]
+  set: [UserSkillWhereUniqueInput!]
+  disconnect: [UserSkillWhereUniqueInput!]
+  delete: [UserSkillWhereUniqueInput!]
+  update: [UserSkillUpdateWithWhereUniqueWithoutSkillInput!]
+  updateMany: [UserSkillUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserSkillScalarWhereInput!]
+  upsert: [UserSkillUpsertWithWhereUniqueWithoutSkillInput!]
 }
 
 input UserSkillUpdateManyWithoutUserInput {
@@ -8028,14 +8056,30 @@ input UserSkillUpdateManyWithWhereNestedInput {
   data: UserSkillUpdateManyDataInput!
 }
 
+input UserSkillUpdateWithoutSkillDataInput {
+  level: Int
+  user: UserUpdateOneRequiredWithoutSkillsInput
+}
+
 input UserSkillUpdateWithoutUserDataInput {
   level: Int
-  skill: SkillUpdateOneRequiredInput
+  skill: SkillUpdateOneRequiredWithoutUsersInput
+}
+
+input UserSkillUpdateWithWhereUniqueWithoutSkillInput {
+  where: UserSkillWhereUniqueInput!
+  data: UserSkillUpdateWithoutSkillDataInput!
 }
 
 input UserSkillUpdateWithWhereUniqueWithoutUserInput {
   where: UserSkillWhereUniqueInput!
   data: UserSkillUpdateWithoutUserDataInput!
+}
+
+input UserSkillUpsertWithWhereUniqueWithoutSkillInput {
+  where: UserSkillWhereUniqueInput!
+  update: UserSkillUpdateWithoutSkillDataInput!
+  create: UserSkillCreateWithoutSkillInput!
 }
 
 input UserSkillUpsertWithWhereUniqueWithoutUserInput {
