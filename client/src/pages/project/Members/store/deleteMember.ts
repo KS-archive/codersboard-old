@@ -17,13 +17,13 @@ interface IDeleteMemberResponse {
 }
 
 export default async (memberId: string) => {
-  const projectURL = /\/projects\/(.*)\//.exec(window.location.pathname)[1];
+  const url = /\/projects\/(.*)\//.exec(window.location.pathname)[1];
   const where = { id: memberId };
 
   const response: IDeleteMemberResponse = await apollo.mutate({
     mutation: DELETE_MEMBER,
     variables: { where },
-    refetchQueries: [{ query: MEMBERS, variables: { projectURL } }],
+    refetchQueries: [{ query: MEMBERS, variables: { url } }],
   });
 
   return response;

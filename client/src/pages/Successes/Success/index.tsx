@@ -32,7 +32,7 @@ const Success: React.FC<IProps> = ({ name, description, date, type, users, proje
         {project && (
           <Project>
             <h4>Sukces osiągnięty w ramach projektu:</h4>
-            <Link to={`/projects/${project.projectURL}`}>
+            <Link to={`/projects/${project.url}`}>
               <Tooltip title={project.name} placement="right">
                 <img src={project.image} alt={project.name} />
               </Tooltip>

@@ -4,8 +4,8 @@ import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 
 const PROJECT = gql`
-  query project($projectURL: String!) {
-    project(where: { projectURL: $projectURL }) {
+  query project($url: String!) {
+    project(where: { url: $url }) {
       id
       name
       image
@@ -28,11 +28,11 @@ export interface IWithProject extends IData {
 }
 
 interface IQueryVaraibles {
-  projectURL: string;
+  url: string;
 }
 
 export default (WrapperComponent: any) => (props: RouteComponentProps<{ projectURL: string }>) => (
-  <Query<IData, IQueryVaraibles> query={PROJECT} variables={{ projectURL: props.match.params.projectURL }}>
+  <Query<IData, IQueryVaraibles> query={PROJECT} variables={{ url: props.match.params.projectURL }}>
     {({ data, loading }) => <WrapperComponent {...props} project={data.project} projectLoading={loading} />}
   </Query>
 );

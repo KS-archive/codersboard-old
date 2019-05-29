@@ -2,7 +2,7 @@ mutation createArea {
   createArea(
     data: {
       name: "UX/UI Design"
-      areaURL: "ux-ui-design"
+      url: "ux-ui-design"
       description: "UX/UI design area description"
     }
   ) {

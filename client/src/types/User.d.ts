@@ -19,7 +19,7 @@ export interface UserArea {
     id: string;
     name: string;
     icon: string;
-    areaURL: string;
+    url: string;
   }
   role: string;
   responsibilities: string;
@@ -32,7 +32,7 @@ export interface UserProject {
     id: string;
     name: string;
     image: string;
-    projectURL: string;
+    url: string;
   }
   role: string;
   responsibilities: string;

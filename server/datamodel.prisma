@@ -1,4 +1,11 @@
-enum Permission {
+enum ProjectPermission {
+  OWNER
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+enum AreaPermission {
   OWNER
   ADMIN
   MEMBER
@@ -127,7 +134,7 @@ enum ProjectStatus {
 
 type Project {
   id: ID! @id
-  projectURL: String! @unique
+  url: String @unique
   name: String! @unique
   description: String!
   image: String!
@@ -150,12 +157,12 @@ type ProjectMember {
   project: Project!
   role: String @default(value: "Członek projektu")
   responsibilities: String
-  permissions: Permission!
+  permissions: ProjectPermission!
 }
 
 type Area {
   id: ID! @id
-  areaURL: String! @unique
+  url: String @unique
   name: String! @unique
   image: String
   description: String!
@@ -173,7 +180,7 @@ type AreaMember {
   area: Area!
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: AreaPermission!
 }
 
 enum EventType {

@@ -29,7 +29,7 @@ const AddPost = (props: Props) => {
         },
         area: {
           connect: {
-            areaURL: props.area,
+            url: props.area,
           },
         },
       },

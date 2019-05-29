@@ -4,8 +4,8 @@ import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 
 export const MEMBERS = gql`
-  query project($projectURL: String!) {
-    project(where: { projectURL: $projectURL }) {
+  query project($url: String!) {
+    project(where: { url: $url }) {
       id
       members {
         id
@@ -51,11 +51,11 @@ export interface IWithMembers {
 }
 
 interface IQueryVaraibles {
-  projectURL: string;
+  url: string;
 }
 
 export default (WrapperComponent: any) => (props: RouteComponentProps<{ projectURL: string }>) => (
-  <Query<IData, IQueryVaraibles> query={MEMBERS} variables={{ projectURL: props.match.params.projectURL }}>
+  <Query<IData, IQueryVaraibles> query={MEMBERS} variables={{ url: props.match.params.projectURL }}>
     {({ data, loading }) => (
       <WrapperComponent {...props} members={data.project && data.project.members} membersLoading={loading} />
     )}

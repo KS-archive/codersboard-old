@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Wed May 29 2019 02:53:36 GMT+0200 (Central European Summer Time)
+# timestamp: Wed May 29 2019 13:35:24 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -75,7 +75,7 @@ type AggregateUserSkill {
 
 type Area implements Node {
   id: ID!
-  areaURL: String!
+  url: String
   name: String!
   image: String
   description: String!
@@ -99,7 +99,7 @@ type AreaConnection {
 
 input AreaCreateInput {
   id: ID
-  areaURL: String!
+  url: String
   name: String!
   image: String
   description: String!
@@ -125,7 +125,7 @@ input AreaCreateslackChannelsInput {
 
 input AreaCreateWithoutMembersInput {
   id: ID
-  areaURL: String!
+  url: String
   name: String!
   image: String
   description: String!
@@ -149,7 +149,7 @@ type AreaMember implements Node {
   area: Area!
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: AreaPermission!
 }
 
 """A connection to a list of items."""
@@ -166,7 +166,7 @@ input AreaMemberCreateInput {
   id: ID
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: AreaPermission!
   user: UserCreateOneWithoutAreasInput!
   area: AreaCreateOneWithoutMembersInput!
 }
@@ -185,7 +185,7 @@ input AreaMemberCreateWithoutAreaInput {
   id: ID
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: AreaPermission!
   user: UserCreateOneWithoutAreasInput!
 }
 
@@ -193,7 +193,7 @@ input AreaMemberCreateWithoutUserInput {
   id: ID
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: AreaPermission!
   area: AreaCreateOneWithoutMembersInput!
 }
 
@@ -221,7 +221,7 @@ type AreaMemberPreviousValues {
   id: ID!
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: AreaPermission!
 }
 
 input AreaMemberScalarWhereInput {
@@ -353,16 +353,16 @@ input AreaMemberScalarWhereInput {
 
   """All values not ending with the given string."""
   responsibilities_not_ends_with: String
-  permissions: Permission
+  permissions: AreaPermission
 
   """All values that are not equal to given value."""
-  permissions_not: Permission
+  permissions_not: AreaPermission
 
   """All values that are contained in given list."""
-  permissions_in: [Permission!]
+  permissions_in: [AreaPermission!]
 
   """All values that are not contained in given list."""
-  permissions_not_in: [Permission!]
+  permissions_not_in: [AreaPermission!]
 }
 
 type AreaMemberSubscriptionPayload {
@@ -405,7 +405,7 @@ input AreaMemberSubscriptionWhereInput {
 input AreaMemberUpdateInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: AreaPermission
   user: UserUpdateOneRequiredWithoutAreasInput
   area: AreaUpdateOneRequiredWithoutMembersInput
 }
@@ -413,13 +413,13 @@ input AreaMemberUpdateInput {
 input AreaMemberUpdateManyDataInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: AreaPermission
 }
 
 input AreaMemberUpdateManyMutationInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: AreaPermission
 }
 
 input AreaMemberUpdateManyWithoutAreaInput {
@@ -454,14 +454,14 @@ input AreaMemberUpdateManyWithWhereNestedInput {
 input AreaMemberUpdateWithoutAreaDataInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: AreaPermission
   user: UserUpdateOneRequiredWithoutAreasInput
 }
 
 input AreaMemberUpdateWithoutUserDataInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: AreaPermission
   area: AreaUpdateOneRequiredWithoutMembersInput
 }
 
@@ -616,16 +616,16 @@ input AreaMemberWhereInput {
 
   """All values not ending with the given string."""
   responsibilities_not_ends_with: String
-  permissions: Permission
+  permissions: AreaPermission
 
   """All values that are not equal to given value."""
-  permissions_not: Permission
+  permissions_not: AreaPermission
 
   """All values that are contained in given list."""
-  permissions_in: [Permission!]
+  permissions_in: [AreaPermission!]
 
   """All values that are not contained in given list."""
-  permissions_not_in: [Permission!]
+  permissions_not_in: [AreaPermission!]
   user: UserWhereInput
   area: AreaWhereInput
 }
@@ -637,8 +637,8 @@ input AreaMemberWhereUniqueInput {
 enum AreaOrderByInput {
   id_ASC
   id_DESC
-  areaURL_ASC
-  areaURL_DESC
+  url_ASC
+  url_DESC
   name_ASC
   name_DESC
   image_ASC
@@ -655,9 +655,16 @@ enum AreaOrderByInput {
   updatedAt_DESC
 }
 
+enum AreaPermission {
+  OWNER
+  ADMIN
+  MEMBER
+  GUEST
+}
+
 type AreaPreviousValues {
   id: ID!
-  areaURL: String!
+  url: String
   name: String!
   image: String
   description: String!
@@ -706,7 +713,7 @@ input AreaSubscriptionWhereInput {
 }
 
 input AreaUpdateDataInput {
-  areaURL: String
+  url: String
   name: String
   image: String
   description: String
@@ -717,7 +724,7 @@ input AreaUpdateDataInput {
 }
 
 input AreaUpdateInput {
-  areaURL: String
+  url: String
   name: String
   image: String
   description: String
@@ -728,7 +735,7 @@ input AreaUpdateInput {
 }
 
 input AreaUpdateManyMutationInput {
-  areaURL: String
+  url: String
   name: String
   image: String
   description: String
@@ -758,7 +765,7 @@ input AreaUpdateslackChannelsInput {
 }
 
 input AreaUpdateWithoutMembersDataInput {
-  areaURL: String
+  url: String
   name: String
   image: String
   description: String
@@ -826,46 +833,46 @@ input AreaWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  areaURL: String
+  url: String
 
   """All values that are not equal to given value."""
-  areaURL_not: String
+  url_not: String
 
   """All values that are contained in given list."""
-  areaURL_in: [String!]
+  url_in: [String!]
 
   """All values that are not contained in given list."""
-  areaURL_not_in: [String!]
+  url_not_in: [String!]
 
   """All values less than the given value."""
-  areaURL_lt: String
+  url_lt: String
 
   """All values less than or equal the given value."""
-  areaURL_lte: String
+  url_lte: String
 
   """All values greater than the given value."""
-  areaURL_gt: String
+  url_gt: String
 
   """All values greater than or equal the given value."""
-  areaURL_gte: String
+  url_gte: String
 
   """All values containing the given string."""
-  areaURL_contains: String
+  url_contains: String
 
   """All values not containing the given string."""
-  areaURL_not_contains: String
+  url_not_contains: String
 
   """All values starting with the given string."""
-  areaURL_starts_with: String
+  url_starts_with: String
 
   """All values not starting with the given string."""
-  areaURL_not_starts_with: String
+  url_not_starts_with: String
 
   """All values ending with the given string."""
-  areaURL_ends_with: String
+  url_ends_with: String
 
   """All values not ending with the given string."""
-  areaURL_not_ends_with: String
+  url_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -1117,7 +1124,7 @@ input AreaWhereInput {
 
 input AreaWhereUniqueInput {
   id: ID
-  areaURL: String
+  url: String
   name: String
 }
 
@@ -3503,13 +3510,6 @@ type PageInfo {
   endCursor: String
 }
 
-enum Permission {
-  OWNER
-  ADMIN
-  MEMBER
-  GUEST
-}
-
 type Post implements Node {
   id: ID!
   title: String!
@@ -4097,7 +4097,7 @@ input PostWhereUniqueInput {
 
 type Project implements Node {
   id: ID!
-  projectURL: String!
+  url: String
   name: String!
   description: String!
   image: String!
@@ -4130,7 +4130,7 @@ input ProjectCreategalleryInput {
 
 input ProjectCreateInput {
   id: ID
-  projectURL: String!
+  url: String
   name: String!
   description: String!
   image: String!
@@ -4161,7 +4161,7 @@ input ProjectCreateslackChannelsInput {
 
 input ProjectCreateWithoutMembersInput {
   id: ID
-  projectURL: String!
+  url: String
   name: String!
   description: String!
   image: String!
@@ -4190,7 +4190,7 @@ type ProjectMember implements Node {
   project: Project!
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: ProjectPermission!
 }
 
 """A connection to a list of items."""
@@ -4207,7 +4207,7 @@ input ProjectMemberCreateInput {
   id: ID
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: ProjectPermission!
   user: UserCreateOneWithoutProjectsInput!
   project: ProjectCreateOneWithoutMembersInput!
 }
@@ -4226,7 +4226,7 @@ input ProjectMemberCreateWithoutProjectInput {
   id: ID
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: ProjectPermission!
   user: UserCreateOneWithoutProjectsInput!
 }
 
@@ -4234,7 +4234,7 @@ input ProjectMemberCreateWithoutUserInput {
   id: ID
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: ProjectPermission!
   project: ProjectCreateOneWithoutMembersInput!
 }
 
@@ -4262,7 +4262,7 @@ type ProjectMemberPreviousValues {
   id: ID!
   role: String
   responsibilities: String
-  permissions: Permission!
+  permissions: ProjectPermission!
 }
 
 input ProjectMemberScalarWhereInput {
@@ -4394,16 +4394,16 @@ input ProjectMemberScalarWhereInput {
 
   """All values not ending with the given string."""
   responsibilities_not_ends_with: String
-  permissions: Permission
+  permissions: ProjectPermission
 
   """All values that are not equal to given value."""
-  permissions_not: Permission
+  permissions_not: ProjectPermission
 
   """All values that are contained in given list."""
-  permissions_in: [Permission!]
+  permissions_in: [ProjectPermission!]
 
   """All values that are not contained in given list."""
-  permissions_not_in: [Permission!]
+  permissions_not_in: [ProjectPermission!]
 }
 
 type ProjectMemberSubscriptionPayload {
@@ -4446,7 +4446,7 @@ input ProjectMemberSubscriptionWhereInput {
 input ProjectMemberUpdateInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: ProjectPermission
   user: UserUpdateOneRequiredWithoutProjectsInput
   project: ProjectUpdateOneRequiredWithoutMembersInput
 }
@@ -4454,13 +4454,13 @@ input ProjectMemberUpdateInput {
 input ProjectMemberUpdateManyDataInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: ProjectPermission
 }
 
 input ProjectMemberUpdateManyMutationInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: ProjectPermission
 }
 
 input ProjectMemberUpdateManyWithoutProjectInput {
@@ -4495,14 +4495,14 @@ input ProjectMemberUpdateManyWithWhereNestedInput {
 input ProjectMemberUpdateWithoutProjectDataInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: ProjectPermission
   user: UserUpdateOneRequiredWithoutProjectsInput
 }
 
 input ProjectMemberUpdateWithoutUserDataInput {
   role: String
   responsibilities: String
-  permissions: Permission
+  permissions: ProjectPermission
   project: ProjectUpdateOneRequiredWithoutMembersInput
 }
 
@@ -4657,16 +4657,16 @@ input ProjectMemberWhereInput {
 
   """All values not ending with the given string."""
   responsibilities_not_ends_with: String
-  permissions: Permission
+  permissions: ProjectPermission
 
   """All values that are not equal to given value."""
-  permissions_not: Permission
+  permissions_not: ProjectPermission
 
   """All values that are contained in given list."""
-  permissions_in: [Permission!]
+  permissions_in: [ProjectPermission!]
 
   """All values that are not contained in given list."""
-  permissions_not_in: [Permission!]
+  permissions_not_in: [ProjectPermission!]
   user: UserWhereInput
   project: ProjectWhereInput
 }
@@ -4678,8 +4678,8 @@ input ProjectMemberWhereUniqueInput {
 enum ProjectOrderByInput {
   id_ASC
   id_DESC
-  projectURL_ASC
-  projectURL_DESC
+  url_ASC
+  url_DESC
   name_ASC
   name_DESC
   description_ASC
@@ -4704,9 +4704,16 @@ enum ProjectOrderByInput {
   updatedAt_DESC
 }
 
+enum ProjectPermission {
+  OWNER
+  ADMIN
+  MEMBER
+  GUEST
+}
+
 type ProjectPreviousValues {
   id: ID!
-  projectURL: String!
+  url: String
   name: String!
   description: String!
   image: String!
@@ -4776,7 +4783,7 @@ enum ProjectType {
 }
 
 input ProjectUpdateDataInput {
-  projectURL: String
+  url: String
   name: String
   description: String
   image: String
@@ -4796,7 +4803,7 @@ input ProjectUpdategalleryInput {
 }
 
 input ProjectUpdateInput {
-  projectURL: String
+  url: String
   name: String
   description: String
   image: String
@@ -4812,7 +4819,7 @@ input ProjectUpdateInput {
 }
 
 input ProjectUpdateManyMutationInput {
-  projectURL: String
+  url: String
   name: String
   description: String
   image: String
@@ -4847,7 +4854,7 @@ input ProjectUpdateslackChannelsInput {
 }
 
 input ProjectUpdateWithoutMembersDataInput {
-  projectURL: String
+  url: String
   name: String
   description: String
   image: String
@@ -4920,46 +4927,46 @@ input ProjectWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  projectURL: String
+  url: String
 
   """All values that are not equal to given value."""
-  projectURL_not: String
+  url_not: String
 
   """All values that are contained in given list."""
-  projectURL_in: [String!]
+  url_in: [String!]
 
   """All values that are not contained in given list."""
-  projectURL_not_in: [String!]
+  url_not_in: [String!]
 
   """All values less than the given value."""
-  projectURL_lt: String
+  url_lt: String
 
   """All values less than or equal the given value."""
-  projectURL_lte: String
+  url_lte: String
 
   """All values greater than the given value."""
-  projectURL_gt: String
+  url_gt: String
 
   """All values greater than or equal the given value."""
-  projectURL_gte: String
+  url_gte: String
 
   """All values containing the given string."""
-  projectURL_contains: String
+  url_contains: String
 
   """All values not containing the given string."""
-  projectURL_not_contains: String
+  url_not_contains: String
 
   """All values starting with the given string."""
-  projectURL_starts_with: String
+  url_starts_with: String
 
   """All values not starting with the given string."""
-  projectURL_not_starts_with: String
+  url_not_starts_with: String
 
   """All values ending with the given string."""
-  projectURL_ends_with: String
+  url_ends_with: String
 
   """All values not ending with the given string."""
-  projectURL_not_ends_with: String
+  url_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -5275,7 +5282,7 @@ input ProjectWhereInput {
 
 input ProjectWhereUniqueInput {
   id: ID
-  projectURL: String
+  url: String
   name: String
 }
 

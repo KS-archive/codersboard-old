@@ -18,18 +18,18 @@ interface ICreateMemberResponse {
 }
 
 export default async (variables: IMemberValues) => {
-  const projectURL = /\/projects\/(.*)\//.exec(window.location.pathname)[1];
+  const url = /\/projects\/(.*)\//.exec(window.location.pathname)[1];
 
   const data = {
     ...variables,
     user: { connect: { id: variables.user } },
-    project: { connect: { projectURL } },
+    project: { connect: { url } },
   };
 
   const response: ICreateMemberResponse = await apollo.mutate({
     mutation: CREATE_MEMBER,
     variables: { data },
-    refetchQueries: [{ query: MEMBERS, variables: { projectURL } }],
+    refetchQueries: [{ query: MEMBERS, variables: { url } }],
   });
 
   return response;
