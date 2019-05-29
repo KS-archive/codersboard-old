@@ -71,7 +71,7 @@ type Skill {
   id: ID! @id
   name: String! @unique
   icon: String
-  users: [User!]!
+  users: [UserSkill!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

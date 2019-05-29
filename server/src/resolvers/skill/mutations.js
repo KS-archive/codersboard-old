@@ -33,11 +33,6 @@ const updateMySkills = async (parent, args, ctx, info) => {
   );
 
   for (const userSkill of toDelete) {
-    await ctx.prisma.mutation.updateSkill({
-      where: { id: userSkill.skill.id },
-      data: { users: { disconnect: { id: ctx.request.userId } } },
-    });
-
     await ctx.prisma.mutation.deleteUserSkill({
       where: { id: userSkill.id },
     });
@@ -51,11 +46,6 @@ const updateMySkills = async (parent, args, ctx, info) => {
   }
 
   for (const userSkill of toCreate.reverse()) {
-    await ctx.prisma.mutation.updateSkill({
-      where: { id: userSkill.skill.id },
-      data: { users: { connect: { id: ctx.request.userId } } },
-    });
-
     await ctx.prisma.mutation.createUserSkill({
       data: {
         level: userSkill.level,

@@ -25,6 +25,7 @@ export interface IMySkill {
     __typename: string;
   };
   level: number;
+  __typename: string;
 }
 
 interface IData {
