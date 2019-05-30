@@ -6,7 +6,7 @@ export const AREAS = gql`
   {
     areas {
       id
-      areaURL
+      url
       name
       image
       description
@@ -17,7 +17,7 @@ export const AREAS = gql`
 
 export interface IArea {
   id: string;
-  areaURL: string;
+  url: string;
   name: string;
   image: string;
   description: string;

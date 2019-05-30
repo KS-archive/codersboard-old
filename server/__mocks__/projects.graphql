@@ -2,7 +2,7 @@ mutation createProject {
   createProject(
     data: {
       name: "CodersBoard"
-      projectURL: "codersboard"
+      url: "codersboard"
       description: "Opis projektu"
       image: "https://www.ittoolkit.com/assets/img/articles/600x300/project-definition.jpg"
       type: SOFTWARE
@@ -39,7 +39,7 @@ query projects {
     id
     name
     description
-    projectURL
+    url
     image
     type
     status

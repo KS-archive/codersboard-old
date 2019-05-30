@@ -8,7 +8,7 @@ export const PROJECTS = gql`
       id
       name
       description
-      projectURL
+      url
       image
       type
       status
@@ -21,7 +21,7 @@ export interface IProject {
   id: string;
   name: string;
   description: string;
-  projectURL: string;
+  url: string;
   image: string;
   type: string;
   status: string;

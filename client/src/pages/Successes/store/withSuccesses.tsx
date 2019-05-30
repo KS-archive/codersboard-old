@@ -19,7 +19,7 @@ export const SUCCESSES = gql`
       project {
         id
         name
-        projectURL
+        url
         image
       }
     }
@@ -43,7 +43,7 @@ export interface ISuccess {
   project: {
     id: string;
     name: string;
-    projectURL: string;
+    url: string;
     image: string;
   };
 }

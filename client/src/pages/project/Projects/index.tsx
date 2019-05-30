@@ -62,7 +62,7 @@ const Projects: React.FC<IProps> = ({ projects = [], projectsLoading }) => (
     <Spin tip="Wczytywanie projektów" spinning={projectsLoading}>
       <Grid>
         {projects.map(project => (
-          <Link key={project.id} to={`/projects/${project.projectURL}`}>
+          <Link key={project.id} to={`/projects/${project.url}`}>
             <ProjectCard hoverable cover={<CoverImage src={project.image} />}>
               <Meta title={project.name} description={renderDescription(project)} />
             </ProjectCard>

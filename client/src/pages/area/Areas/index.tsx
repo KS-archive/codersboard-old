@@ -18,7 +18,7 @@ const Areas: React.FC<IProps> = ({ areas = [], areasLoading }) => (
     <Spin tip="Wczytywanie obszarów..." spinning={areasLoading}>
       <Grid>
         {areas.map(area => (
-          <Link key={area.id} to={`/areas/${area.areaURL}/news`}>
+          <Link key={area.id} to={`/areas/${area.url}/news`}>
             <AreaCard hoverable cover={<CoverImage src={area.image} />}>
               <Meta title={area.name} description={shorten(area.description, 120)} />
             </AreaCard>

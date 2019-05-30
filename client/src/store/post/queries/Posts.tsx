@@ -4,14 +4,14 @@ import { Query, QueryResult } from 'react-apollo';
 
 export const POSTS = gql`
   query POSTS($area: String!) {
-    posts(orderBy: date_DESC, where: { area: { areaURL: $area } }) {
+    posts(orderBy: date_DESC, where: { area: { url: $area } }) {
       id
       title
       content
       date
       area {
         name
-        areaURL
+        url
       }
       user {
         id

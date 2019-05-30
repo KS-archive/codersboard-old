@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 
-export const MATERIALS = gql`
-  query materails($areaURL: String) {
-    materials(where: { area: { areaURL: $areaURL } }) {
+const MATERIALS = gql`
+  query materails($url: String) {
+    materials(where: { area: { url: $url } }) {
       id
       title
       description
@@ -52,11 +52,11 @@ export interface IWithMaterials extends IData {
 }
 
 interface IQueryVaraibles {
-  areaURL?: string;
+  url?: string;
 }
 
 export default (WrapperComponent: any) => (props: RouteComponentProps<{ areaURL: string }>) => (
-  <Query<IData, IQueryVaraibles> query={MATERIALS} variables={{ areaURL: props.match.params.areaURL }}>
+  <Query<IData, IQueryVaraibles> query={MATERIALS} variables={{ url: props.match.params.areaURL }}>
     {({ data, loading }) => <WrapperComponent {...props} materials={data.materials} materialsLoading={loading} />}
   </Query>
 );

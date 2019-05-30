@@ -18,19 +18,19 @@ interface IUpdateMemberResponse {
 }
 
 export default async (variables: IMemberValues) => {
-  const projectURL = /\/projects\/(.*)\//.exec(window.location.pathname)[1];
+  const url = /\/projects\/(.*)\//.exec(window.location.pathname)[1];
 
   const data = {
     ...omit(variables, ['id', '__typename']),
     user: { connect: { id: variables.user } },
-    project: { connect: { projectURL } },
+    project: { connect: { url } },
   };
   const where = { id: variables.id };
 
   const response: IUpdateMemberResponse = await apollo.mutate({
     mutation: UPDATE_MEMBER,
     variables: { data, where },
-    refetchQueries: [{ query: MEMBERS, variables: { projectURL } }],
+    refetchQueries: [{ query: MEMBERS, variables: { url } }],
   });
 
   return response;
