@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Wed May 29 2019 13:35:24 GMT+0200 (Central European Summer Time)
+# timestamp: Wed May 29 2019 14:24:41 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -75,7 +75,7 @@ type AggregateUserSkill {
 
 type Area implements Node {
   id: ID!
-  url: String
+  url: String!
   name: String!
   image: String
   description: String!
@@ -99,7 +99,7 @@ type AreaConnection {
 
 input AreaCreateInput {
   id: ID
-  url: String
+  url: String!
   name: String!
   image: String
   description: String!
@@ -125,7 +125,7 @@ input AreaCreateslackChannelsInput {
 
 input AreaCreateWithoutMembersInput {
   id: ID
-  url: String
+  url: String!
   name: String!
   image: String
   description: String!
@@ -664,7 +664,7 @@ enum AreaPermission {
 
 type AreaPreviousValues {
   id: ID!
-  url: String
+  url: String!
   name: String!
   image: String
   description: String!
@@ -2566,7 +2566,7 @@ enum MainPermission {
   OWNER
   ADMIN
   MEMBER
-  TRAINEE
+  GUEST
   HR
   FINANCE
   DATA
@@ -4097,7 +4097,7 @@ input PostWhereUniqueInput {
 
 type Project implements Node {
   id: ID!
-  url: String
+  url: String!
   name: String!
   description: String!
   image: String!
@@ -4130,7 +4130,7 @@ input ProjectCreategalleryInput {
 
 input ProjectCreateInput {
   id: ID
-  url: String
+  url: String!
   name: String!
   description: String!
   image: String!
@@ -4161,7 +4161,7 @@ input ProjectCreateslackChannelsInput {
 
 input ProjectCreateWithoutMembersInput {
   id: ID
-  url: String
+  url: String!
   name: String!
   description: String!
   image: String!
@@ -4713,7 +4713,7 @@ enum ProjectPermission {
 
 type ProjectPreviousValues {
   id: ID!
-  url: String
+  url: String!
   name: String!
   description: String!
   image: String!

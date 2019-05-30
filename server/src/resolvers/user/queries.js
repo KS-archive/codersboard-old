@@ -18,7 +18,13 @@ const users = async (parent, args, ctx, info) => {
   return ctx.prisma.query.users(args, info);
 };
 
+const user = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+  return ctx.prisma.query.user(args, info);
+};
+
 module.exports = {
   me,
   users,
+  user,
 }

@@ -8,7 +8,6 @@ import { Spin } from 'antd';
 import { apollo } from 'utils';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
-import Members from 'pages/Members';
 import Successes from 'pages/Successes';
 import Materials from 'pages/Materials';
 import Settings from 'pages/Settings';
@@ -16,6 +15,9 @@ import Settings from 'pages/Settings';
 import Projects from 'pages/project/Projects';
 import ProjectWrapper from 'pages/project/Wrapper';
 import ProjectMembers from 'pages/project/Members';
+
+import Members from 'pages/member/Members';
+import Member from 'pages/member/Member';
 
 import Areas from 'pages/area/Areas';
 import AreaWrapper from 'pages/area/Wrapper';
@@ -58,6 +60,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                   <AppWrapper>
                     <Switch>
                       <Route exact path="/members" component={Members} />
+                      <Route exact path="/members/:profileURL" component={Member} />
                       <Route exact path="/areas" component={Areas} />
                       <Route path="/areas/:areaURL">
                         <AreaWrapper>

@@ -16,7 +16,7 @@ enum MainPermission {
   OWNER
   ADMIN
   MEMBER
-  TRAINEE
+  GUEST
   HR
   FINANCE
   DATA
@@ -134,7 +134,7 @@ enum ProjectStatus {
 
 type Project {
   id: ID! @id
-  url: String @unique
+  url: String! @unique
   name: String! @unique
   description: String!
   image: String!
@@ -162,7 +162,7 @@ type ProjectMember {
 
 type Area {
   id: ID! @id
-  url: String @unique
+  url: String! @unique
   name: String! @unique
   image: String
   description: String!

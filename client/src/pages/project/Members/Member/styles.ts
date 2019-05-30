@@ -4,6 +4,8 @@ import get from 'styles/getStyle';
 
 export const MemberContainer = styled(List.Item)`
   #root & {
+    display: flex;
+    flex-direction: column;
     padding: ${get('space-16')};
     border: ${get('border-light')};
     background-color: ${get('color-grayscale-white')};
@@ -23,7 +25,8 @@ export const MemberContainer = styled(List.Item)`
     .ant-list-item-action {
       display: flex;
       justify-content: flex-end;
-      margin: ${get('space-16')} 0 0 auto;
+      padding-top: ${get('space-16')};
+      margin: auto 0 0 auto;
 
       li {
         transition: color 0.3s;
