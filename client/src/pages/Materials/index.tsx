@@ -10,42 +10,52 @@ import { MaterialsContainer, Header, AddButton, Grid, Wrapper } from './styles';
 const { Title } = Typography;
 
 class Materials extends Component<IProps, IState> {
-  state = {
-    modal: false,
-    searchedMaterials: this.props.materials,
-    // filteredMaterials: [];
-  };
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      modal: false,
+      filteredMaterials: [],
+      searchedMaterials: [],
+      displayed: [],
+    };
+  }
 
   componentDidUpdate(prevProps: IProps, prevState: IState) {
     if (this.props.materials !== prevProps.materials) {
-      this.setState({ searchedMaterials: this.props.materials });
+      this.setState({
+        searchedMaterials: this.props.materials,
+        filteredMaterials: this.props.materials,
+        displayed: this.props.materials,
+      });
     }
   }
 
-  handleSearch(e: any) {
-    console.log(this.props);
-    const { materials } = this.props;
-    let currentMaterials = [];
-    let filteredMaterials = [];
-    if (e.target.value !== '') {
-      currentMaterials = materials;
-      filteredMaterials = currentMaterials.filter(material => {
-        const lc = material.title.toLowerCase();
-        const filter = e.target.value.toLowerCase();
-        return lc.includes(filter);
-      });
-    } else {
-      filteredMaterials = materials;
-    }
-    this.setState({ searchedMaterials: filteredMaterials });
-  }
+  setSearched = (newMaterials: IMaterial[]) => {
+    this.setState({ searchedMaterials: newMaterials });
+    this.setState({ displayed: newMaterials });
+  };
+
+  setFiltered = (newMaterials: IMaterial[]) => {
+    this.setState({ filteredMaterials: newMaterials });
+    this.setState({ displayed: newMaterials });
+  };
 
   renderMaterials() {
-    if (this.state.searchedMaterials && this.state.searchedMaterials.length === 0) {
+    const { searchedMaterials, filteredMaterials } = this.state;
+    console.log('searched: ', searchedMaterials);
+    console.log('filtered: ', filteredMaterials);
+    if ((searchedMaterials.length === 0 || filteredMaterials.length === 0) && !this.props.materialsLoading) {
       return <Empty description="Brak wyników wyszukiwania" />;
     }
-    if (this.state.searchedMaterials) {
-      const materials = this.state.searchedMaterials.map((material: IMaterial) => (
+    if (searchedMaterials.length !== 0 && searchedMaterials.length < filteredMaterials.length) {
+      const materials = searchedMaterials.map((material: IMaterial) => (
+        <MaterialCard key={material.id} {...material} />
+      ));
+      return <Grid>{materials}</Grid>;
+    }
+    if (filteredMaterials) {
+      const materials = filteredMaterials.map((material: IMaterial) => (
         <MaterialCard key={material.id} {...material} />
       ));
       return <Grid>{materials}</Grid>;
@@ -54,11 +64,15 @@ class Materials extends Component<IProps, IState> {
   }
 
   render() {
-    console.log(this.state.searchedMaterials ? this.state.searchedMaterials.length : '');
     return (
       <MaterialsContainer>
         <Header>
-          <SearchBar search={(e: any) => this.handleSearch(e)} materials={this.props.materials} />
+          <SearchBar
+            setSearched={this.setSearched}
+            setFiltered={this.setFiltered}
+            materials={this.props.materials}
+            filteredMaterials={this.state.filteredMaterials}
+          />
           <Wrapper>
             <Title level={2}>Materiały</Title>
             <AddButton type="primary" onClick={(): void => this.setState({ modal: true })}>
@@ -89,8 +103,9 @@ interface IProps {
 
 interface IState {
   modal: boolean;
+  filteredMaterials: any;
   searchedMaterials: any;
-  // filteredMaterials: any;
+  displayed: any;
 }
 
 export default withMaterials(Materials);

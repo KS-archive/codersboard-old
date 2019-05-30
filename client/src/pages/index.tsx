@@ -19,6 +19,7 @@ import ProjectMembers from 'pages/project/Members';
 
 import Areas from 'pages/area/Areas';
 import AreaWrapper from 'pages/area/Wrapper';
+import Posts from 'components/Posts';
 
 import AdminWrapper from 'pages/admin/Wrapper';
 import AdminMembers from 'pages/admin/Members';
@@ -62,7 +63,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                       <Route path="/areas/:areaURL">
                         <AreaWrapper>
                           <Switch>
-                            <Route exact path="/areas/:areaURL/news" component={() => <div>Aktualności</div>} />
+                            <Route exact path="/areas/:areaURL/news" component={Posts} />
                             <Route exact path="/areas/:areaURL/members" component={() => <div>Członkowie</div>} />
                             <Route exact path="/areas/:areaURL/materials" component={Materials} />
                           </Switch>
@@ -74,7 +75,11 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                           <Switch>
                             <Route exact path="/projects/:projectURL/news" component={() => <div>Aktualności</div>} />
                             <Route exact path="/projects/:projectURL/members" component={ProjectMembers} />
-                            <Route exact path="/projects/:projectURL/materials" component={() => <div>Materiały</div>} />
+                            <Route
+                              exact
+                              path="/projects/:projectURL/materials"
+                              component={() => <div>Materiały</div>}
+                            />
                           </Switch>
                         </ProjectWrapper>
                       </Route>
