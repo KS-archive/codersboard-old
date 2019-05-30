@@ -5,7 +5,7 @@ import { FormItemProps } from 'antd/es/form';
 import { SelectProps } from 'antd/es/select';
 import withMaterialTags, { MaterialTag as Tag } from 'pages/Materials/store/withMaterialTags';
 
-type Props = { autoComplete?: string; materialTags: Tag[] } & FormItemProps & SelectProps & FieldProps;
+type Props = { name: string; options: IOption[]; materialTags: Tag[] } & FormItemProps & SelectProps & FieldProps;
 
 const { Option } = Select;
 const { Item } = Form;
@@ -36,24 +36,22 @@ const Tags = ({ materialTags, form, field, ...props }: Props) => {
     <Item label={props.label} required={props.required} validateStatus={validateStatus} help={help} colon={props.colon}>
       <Select
         mode="tags"
-        style={props.style}
-        placeholder={props.placeholder}
-        allowClear={props.allowClear}
-        autoFocus={props.autoFocus}
-        defaultActiveFirstOption={props.defaultActiveFirstOption}
-        disabled={props.disabled}
-        filterOption={props.filterOption}
-        notFoundContent={props.notFoundContent}
-        showSearch={props.showSearch}
-        size={props.size}
-        onSelect={props.onChange}
+        name={field.name}
+        value={field.value}
         onChange={value => form.setFieldValue(field.name, value)}
         onBlur={field.onBlur}
+        loading={validateStatus === 'validating'}
+        {...props}
       >
         {materialTags ? renderTags(materialTags) : <Option key="1">''</Option>}
       </Select>
     </Item>
   );
 };
+
+export interface IOption {
+  value: string;
+  label?: string;
+}
 
 export default withMaterialTags(Tags);

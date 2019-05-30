@@ -25,16 +25,6 @@ export default async (variables: Variables) => {
   }
 };
 
-interface Props {
-  children: (data: any) => React.ReactElement;
-  variables: any;
-}
-
-interface Data {
-  ADD_POST: {
-    id: string;
-  };
-}
 interface Tag {
   id: string;
 }

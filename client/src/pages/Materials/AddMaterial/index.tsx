@@ -30,7 +30,7 @@ const AddMaterial = (props: Props) => {
     const { title, url, tags, description, image } = values;
 
     try {
-      const imageUrl = await uploadToCloudinary(image, 'profile-image');
+      const imageUrl = await uploadToCloudinary(image, 'material-image');
 
       const materialValues = {
         data: {

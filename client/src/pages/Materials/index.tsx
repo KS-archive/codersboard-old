@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Typography, Spin, Modal, Empty } from 'antd';
+import _ from 'lodash';
 import withMaterials, { IMaterial } from './store/withMaterials';
 import MaterialCard from './MaterialCard';
 import AddMaterial from './AddMaterial';
 import SearchBar from './SearchBar';
+import Filters from './Filters';
 import Loader from 'components/Loader';
 import { MaterialsContainer, Header, AddButton, Grid, Wrapper } from './styles';
 
@@ -17,8 +19,18 @@ class Materials extends Component<IProps, IState> {
       modal: false,
       filteredMaterials: [],
       searchedMaterials: [],
-      displayed: [],
+      displayedMaterials: [],
     };
+  }
+
+  componentDidMount() {
+    if (this.props.materials) {
+      this.setState({
+        searchedMaterials: this.props.materials,
+        filteredMaterials: this.props.materials,
+        displayedMaterials: this.props.materials,
+      });
+    }
   }
 
   componentDidUpdate(prevProps: IProps, prevState: IState) {
@@ -26,53 +38,44 @@ class Materials extends Component<IProps, IState> {
       this.setState({
         searchedMaterials: this.props.materials,
         filteredMaterials: this.props.materials,
-        displayed: this.props.materials,
+        displayedMaterials: this.props.materials,
       });
+    }
+    if (
+      prevState.filteredMaterials.length !== this.state.filteredMaterials.length ||
+      prevState.searchedMaterials.length !== this.state.searchedMaterials.length
+    ) {
+      this.setState({ displayedMaterials: _.intersection(this.state.searchedMaterials, this.state.filteredMaterials) });
     }
   }
 
   setSearched = (newMaterials: IMaterial[]) => {
     this.setState({ searchedMaterials: newMaterials });
-    this.setState({ displayed: newMaterials });
   };
 
   setFiltered = (newMaterials: IMaterial[]) => {
     this.setState({ filteredMaterials: newMaterials });
-    this.setState({ displayed: newMaterials });
   };
 
   renderMaterials() {
-    const { searchedMaterials, filteredMaterials } = this.state;
-    console.log('searched: ', searchedMaterials);
-    console.log('filtered: ', filteredMaterials);
-    if ((searchedMaterials.length === 0 || filteredMaterials.length === 0) && !this.props.materialsLoading) {
+    const { displayedMaterials: displayed } = this.state;
+    if (displayed.length === 0 && !this.props.materialsLoading) {
       return <Empty description="Brak wyników wyszukiwania" />;
     }
-    if (searchedMaterials.length !== 0 && searchedMaterials.length < filteredMaterials.length) {
-      const materials = searchedMaterials.map((material: IMaterial) => (
-        <MaterialCard key={material.id} {...material} />
-      ));
-      return <Grid>{materials}</Grid>;
+    if (this.props.materialsLoading) {
+      return Loader;
     }
-    if (filteredMaterials) {
-      const materials = filteredMaterials.map((material: IMaterial) => (
-        <MaterialCard key={material.id} {...material} />
-      ));
-      return <Grid>{materials}</Grid>;
-    }
-    return Loader;
+    const materials = displayed.map((material: IMaterial) => <MaterialCard key={material.id} {...material} />);
+    return <Grid>{materials}</Grid>;
   }
 
   render() {
+    console.log(this.props);
     return (
       <MaterialsContainer>
         <Header>
-          <SearchBar
-            setSearched={this.setSearched}
-            setFiltered={this.setFiltered}
-            materials={this.props.materials}
-            filteredMaterials={this.state.filteredMaterials}
-          />
+          <SearchBar setSearched={this.setSearched} materials={this.props.materials} />
+          <Filters setFiltered={this.setFiltered} materials={this.props.materials} url={this.props.match.url} />
           <Wrapper>
             <Title level={2}>Materiały</Title>
             <AddButton type="primary" onClick={(): void => this.setState({ modal: true })}>
@@ -99,13 +102,16 @@ class Materials extends Component<IProps, IState> {
 interface IProps {
   materials: IMaterial[];
   materialsLoading: boolean;
+  match: {
+    url: string;
+  };
 }
 
 interface IState {
   modal: boolean;
-  filteredMaterials: any;
-  searchedMaterials: any;
-  displayed: any;
+  filteredMaterials: IMaterial[];
+  searchedMaterials: IMaterial[];
+  displayedMaterials: IMaterial[];
 }
 
 export default withMaterials(Materials);
