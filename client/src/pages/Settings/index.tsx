@@ -36,7 +36,7 @@ const renderContent = (hash: string, me: MeProps) => {
       return <Account me={me} />;
 
     case '#integrations':
-      return <Integrations me={me} />;
+      return <Integrations />;
 
     case `#skills`:
       return <Skills />;

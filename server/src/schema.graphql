@@ -65,6 +65,9 @@ type Mutation {
   createCredential(data: CredentialCreateInput!): Credential!
   updateCredential(data: CredentialUpdateInput!, where: CredentialWhereUniqueInput!): Credential
   deleteCredential(where: CredentialWhereUniqueInput!): Credential
+
+  integrateCodewars(name: String!): Message
+  detachCodewars: Message
 }
 
 type Query {

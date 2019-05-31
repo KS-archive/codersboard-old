@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const validate = require('utils/validate');
 
@@ -68,6 +69,43 @@ const updateProfile = async (parent, args, ctx, info) => {
   return ctx.prisma.mutation.updateUser(args, info);
 };
 
+const parseCodewarsData = data => ({
+  name: data.username,
+  honor: data.honor,
+  leaderboardPosition: data.leaderboardPosition,
+  score: data.ranks.overall.score,
+  kyu: Math.abs(data.ranks.overall.rank),
+  completedChallenges: data.codeChallenges.totalCompleted,
+  languages: Object.keys(data.ranks.languages)
+    .map(key => ({ lang: key, ...data.ranks.languages[key] }))
+    .map(({ rank, score, lang }) => ({ name: lang, kyu: Math.abs(rank), score })),
+});
+
+const integrateCodewars = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+
+  const { data } = await axios.get(
+    `https://www.codewars.com/api/v1/users/${args.name}?access_key=${process.env.CODEWARS_TOKEN}`,
+  );
+
+  await ctx.prisma.mutation.createCodewars({ data: {
+    user: { connect: { id: ctx.request.userId } },
+    name: args.name,
+    data: parseCodewarsData(data),
+  }});
+
+  return { message: 'SUCCESS' }
+};
+
+const detachCodewars = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+
+  const user = await ctx.prisma.query.user({ where: { id: ctx.request.userId } }, '{ codewars { id } }');
+  await ctx.prisma.mutation.deleteCodewars({ where: { id: user.codewars.id } });
+
+  return { message: 'SUCCESS' }
+};
+
 module.exports = {
   createUser,
   updateUser,
@@ -75,4 +113,6 @@ module.exports = {
   signIn,
   signOut,
   updateProfile,
+  integrateCodewars,
+  detachCodewars,
 };

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Wed May 29 2019 14:24:41 GMT+0200 (Central European Summer Time)
+# timestamp: Fri May 31 2019 00:50:02 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -10,6 +10,10 @@ type AggregateAreaMember {
 }
 
 type AggregateAttendee {
+  count: Int!
+}
+
+type AggregateCodewars {
   count: Int!
 }
 
@@ -26,6 +30,10 @@ type AggregateMaterial {
 }
 
 type AggregateMaterialTag {
+  count: Int!
+}
+
+type AggregatePluralsight {
   count: Int!
 }
 
@@ -1535,6 +1543,229 @@ type BatchPayload {
   count: Long!
 }
 
+type Codewars implements Node {
+  id: ID!
+  user: User!
+  name: String!
+  data: Json
+}
+
+"""A connection to a list of items."""
+type CodewarsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CodewarsEdge]!
+  aggregate: AggregateCodewars!
+}
+
+input CodewarsCreateInput {
+  id: ID
+  name: String!
+  data: Json
+  user: UserCreateOneWithoutCodewarsInput!
+}
+
+input CodewarsCreateOneWithoutUserInput {
+  create: CodewarsCreateWithoutUserInput
+  connect: CodewarsWhereUniqueInput
+}
+
+input CodewarsCreateWithoutUserInput {
+  id: ID
+  name: String!
+  data: Json
+}
+
+"""An edge in a connection."""
+type CodewarsEdge {
+  """The item at the end of the edge."""
+  node: Codewars!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CodewarsOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  data_ASC
+  data_DESC
+}
+
+type CodewarsPreviousValues {
+  id: ID!
+  name: String!
+  data: Json
+}
+
+type CodewarsSubscriptionPayload {
+  mutation: MutationType!
+  node: Codewars
+  updatedFields: [String!]
+  previousValues: CodewarsPreviousValues
+}
+
+input CodewarsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CodewarsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CodewarsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CodewarsSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CodewarsWhereInput
+}
+
+input CodewarsUpdateInput {
+  name: String
+  data: Json
+  user: UserUpdateOneRequiredWithoutCodewarsInput
+}
+
+input CodewarsUpdateManyMutationInput {
+  name: String
+  data: Json
+}
+
+input CodewarsUpdateOneWithoutUserInput {
+  create: CodewarsCreateWithoutUserInput
+  connect: CodewarsWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: CodewarsUpdateWithoutUserDataInput
+  upsert: CodewarsUpsertWithoutUserInput
+}
+
+input CodewarsUpdateWithoutUserDataInput {
+  name: String
+  data: Json
+}
+
+input CodewarsUpsertWithoutUserInput {
+  update: CodewarsUpdateWithoutUserDataInput!
+  create: CodewarsCreateWithoutUserInput!
+}
+
+input CodewarsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CodewarsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CodewarsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CodewarsWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  user: UserWhereInput
+}
+
+input CodewarsWhereUniqueInput {
+  id: ID
+  name: String
+}
+
 type Credential implements Node {
   id: ID!
   name: String!
@@ -2556,6 +2787,9 @@ enum Institution {
   ASSOCIATION
 }
 
+"""Raw JSON value"""
+scalar Json
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -3373,6 +3607,8 @@ input MaterialWhereUniqueInput {
 }
 
 type Mutation {
+  createPluralsight(data: PluralsightCreateInput!): Pluralsight!
+  createCodewars(data: CodewarsCreateInput!): Codewars!
   createUniversity(data: UniversityCreateInput!): University!
   createSkill(data: SkillCreateInput!): Skill!
   createUserSkill(data: UserSkillCreateInput!): UserSkill!
@@ -3391,6 +3627,8 @@ type Mutation {
   createArea(data: AreaCreateInput!): Area!
   createMaterialTag(data: MaterialTagCreateInput!): MaterialTag!
   createUser(data: UserCreateInput!): User!
+  updatePluralsight(data: PluralsightUpdateInput!, where: PluralsightWhereUniqueInput!): Pluralsight
+  updateCodewars(data: CodewarsUpdateInput!, where: CodewarsWhereUniqueInput!): Codewars
   updateUniversity(data: UniversityUpdateInput!, where: UniversityWhereUniqueInput!): University
   updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
   updateUserSkill(data: UserSkillUpdateInput!, where: UserSkillWhereUniqueInput!): UserSkill
@@ -3409,6 +3647,8 @@ type Mutation {
   updateArea(data: AreaUpdateInput!, where: AreaWhereUniqueInput!): Area
   updateMaterialTag(data: MaterialTagUpdateInput!, where: MaterialTagWhereUniqueInput!): MaterialTag
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deletePluralsight(where: PluralsightWhereUniqueInput!): Pluralsight
+  deleteCodewars(where: CodewarsWhereUniqueInput!): Codewars
   deleteUniversity(where: UniversityWhereUniqueInput!): University
   deleteSkill(where: SkillWhereUniqueInput!): Skill
   deleteUserSkill(where: UserSkillWhereUniqueInput!): UserSkill
@@ -3427,6 +3667,8 @@ type Mutation {
   deleteArea(where: AreaWhereUniqueInput!): Area
   deleteMaterialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertPluralsight(where: PluralsightWhereUniqueInput!, create: PluralsightCreateInput!, update: PluralsightUpdateInput!): Pluralsight!
+  upsertCodewars(where: CodewarsWhereUniqueInput!, create: CodewarsCreateInput!, update: CodewarsUpdateInput!): Codewars!
   upsertUniversity(where: UniversityWhereUniqueInput!, create: UniversityCreateInput!, update: UniversityUpdateInput!): University!
   upsertSkill(where: SkillWhereUniqueInput!, create: SkillCreateInput!, update: SkillUpdateInput!): Skill!
   upsertUserSkill(where: UserSkillWhereUniqueInput!, create: UserSkillCreateInput!, update: UserSkillUpdateInput!): UserSkill!
@@ -3445,6 +3687,8 @@ type Mutation {
   upsertArea(where: AreaWhereUniqueInput!, create: AreaCreateInput!, update: AreaUpdateInput!): Area!
   upsertMaterialTag(where: MaterialTagWhereUniqueInput!, create: MaterialTagCreateInput!, update: MaterialTagUpdateInput!): MaterialTag!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyPluralsights(data: PluralsightUpdateManyMutationInput!, where: PluralsightWhereInput): BatchPayload!
+  updateManyCodewarses(data: CodewarsUpdateManyMutationInput!, where: CodewarsWhereInput): BatchPayload!
   updateManyUniversities(data: UniversityUpdateManyMutationInput!, where: UniversityWhereInput): BatchPayload!
   updateManySkills(data: SkillUpdateManyMutationInput!, where: SkillWhereInput): BatchPayload!
   updateManyUserSkills(data: UserSkillUpdateManyMutationInput!, where: UserSkillWhereInput): BatchPayload!
@@ -3463,6 +3707,8 @@ type Mutation {
   updateManyAreas(data: AreaUpdateManyMutationInput!, where: AreaWhereInput): BatchPayload!
   updateManyMaterialTags(data: MaterialTagUpdateManyMutationInput!, where: MaterialTagWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyPluralsights(where: PluralsightWhereInput): BatchPayload!
+  deleteManyCodewarses(where: CodewarsWhereInput): BatchPayload!
   deleteManyUniversities(where: UniversityWhereInput): BatchPayload!
   deleteManySkills(where: SkillWhereInput): BatchPayload!
   deleteManyUserSkills(where: UserSkillWhereInput): BatchPayload!
@@ -3508,6 +3754,229 @@ type PageInfo {
 
   """When paginating forwards, the cursor to continue."""
   endCursor: String
+}
+
+type Pluralsight implements Node {
+  id: ID!
+  user: User!
+  pluralsightId: String!
+  data: Json
+}
+
+"""A connection to a list of items."""
+type PluralsightConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PluralsightEdge]!
+  aggregate: AggregatePluralsight!
+}
+
+input PluralsightCreateInput {
+  id: ID
+  pluralsightId: String!
+  data: Json
+  user: UserCreateOneWithoutPluralsightInput!
+}
+
+input PluralsightCreateOneWithoutUserInput {
+  create: PluralsightCreateWithoutUserInput
+  connect: PluralsightWhereUniqueInput
+}
+
+input PluralsightCreateWithoutUserInput {
+  id: ID
+  pluralsightId: String!
+  data: Json
+}
+
+"""An edge in a connection."""
+type PluralsightEdge {
+  """The item at the end of the edge."""
+  node: Pluralsight!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PluralsightOrderByInput {
+  id_ASC
+  id_DESC
+  pluralsightId_ASC
+  pluralsightId_DESC
+  data_ASC
+  data_DESC
+}
+
+type PluralsightPreviousValues {
+  id: ID!
+  pluralsightId: String!
+  data: Json
+}
+
+type PluralsightSubscriptionPayload {
+  mutation: MutationType!
+  node: Pluralsight
+  updatedFields: [String!]
+  previousValues: PluralsightPreviousValues
+}
+
+input PluralsightSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PluralsightSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PluralsightSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PluralsightSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PluralsightWhereInput
+}
+
+input PluralsightUpdateInput {
+  pluralsightId: String
+  data: Json
+  user: UserUpdateOneRequiredWithoutPluralsightInput
+}
+
+input PluralsightUpdateManyMutationInput {
+  pluralsightId: String
+  data: Json
+}
+
+input PluralsightUpdateOneWithoutUserInput {
+  create: PluralsightCreateWithoutUserInput
+  connect: PluralsightWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PluralsightUpdateWithoutUserDataInput
+  upsert: PluralsightUpsertWithoutUserInput
+}
+
+input PluralsightUpdateWithoutUserDataInput {
+  pluralsightId: String
+  data: Json
+}
+
+input PluralsightUpsertWithoutUserInput {
+  update: PluralsightUpdateWithoutUserDataInput!
+  create: PluralsightCreateWithoutUserInput!
+}
+
+input PluralsightWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PluralsightWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PluralsightWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PluralsightWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  pluralsightId: String
+
+  """All values that are not equal to given value."""
+  pluralsightId_not: String
+
+  """All values that are contained in given list."""
+  pluralsightId_in: [String!]
+
+  """All values that are not contained in given list."""
+  pluralsightId_not_in: [String!]
+
+  """All values less than the given value."""
+  pluralsightId_lt: String
+
+  """All values less than or equal the given value."""
+  pluralsightId_lte: String
+
+  """All values greater than the given value."""
+  pluralsightId_gt: String
+
+  """All values greater than or equal the given value."""
+  pluralsightId_gte: String
+
+  """All values containing the given string."""
+  pluralsightId_contains: String
+
+  """All values not containing the given string."""
+  pluralsightId_not_contains: String
+
+  """All values starting with the given string."""
+  pluralsightId_starts_with: String
+
+  """All values not starting with the given string."""
+  pluralsightId_not_starts_with: String
+
+  """All values ending with the given string."""
+  pluralsightId_ends_with: String
+
+  """All values not ending with the given string."""
+  pluralsightId_not_ends_with: String
+  user: UserWhereInput
+}
+
+input PluralsightWhereUniqueInput {
+  id: ID
+  pluralsightId: String
 }
 
 type Post implements Node {
@@ -5287,6 +5756,8 @@ input ProjectWhereUniqueInput {
 }
 
 type Query {
+  pluralsights(where: PluralsightWhereInput, orderBy: PluralsightOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pluralsight]!
+  codewarses(where: CodewarsWhereInput, orderBy: CodewarsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Codewars]!
   universities(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University]!
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   userSkills(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserSkill]!
@@ -5305,6 +5776,8 @@ type Query {
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   materialTags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  pluralsight(where: PluralsightWhereUniqueInput!): Pluralsight
+  codewars(where: CodewarsWhereUniqueInput!): Codewars
   university(where: UniversityWhereUniqueInput!): University
   skill(where: SkillWhereUniqueInput!): Skill
   userSkill(where: UserSkillWhereUniqueInput!): UserSkill
@@ -5323,6 +5796,8 @@ type Query {
   area(where: AreaWhereUniqueInput!): Area
   materialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
   user(where: UserWhereUniqueInput!): User
+  pluralsightsConnection(where: PluralsightWhereInput, orderBy: PluralsightOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PluralsightConnection!
+  codewarsesConnection(where: CodewarsWhereInput, orderBy: CodewarsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CodewarsConnection!
   universitiesConnection(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UniversityConnection!
   skillsConnection(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SkillConnection!
   userSkillsConnection(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserSkillConnection!
@@ -5989,6 +6464,8 @@ input SlackChannelWhereUniqueInput {
 }
 
 type Subscription {
+  pluralsight(where: PluralsightSubscriptionWhereInput): PluralsightSubscriptionPayload
+  codewars(where: CodewarsSubscriptionWhereInput): CodewarsSubscriptionPayload
   university(where: UniversitySubscriptionWhereInput): UniversitySubscriptionPayload
   skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
   userSkill(where: UserSkillSubscriptionWhereInput): UserSkillSubscriptionPayload
@@ -6930,6 +7407,8 @@ type User implements Node {
   slackChannels(where: SlackChannelWhereInput, orderBy: SlackChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SlackChannel!]
   credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential!]
   special: [String!]!
+  pluralsight: Pluralsight
+  codewars: Codewars
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -6968,6 +7447,8 @@ input UserCreateInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  pluralsight: PluralsightCreateOneWithoutUserInput
+  codewars: CodewarsCreateOneWithoutUserInput
 }
 
 input UserCreateinstitutionInput {
@@ -7001,6 +7482,16 @@ input UserCreateOneInput {
 
 input UserCreateOneWithoutAreasInput {
   create: UserCreateWithoutAreasInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutCodewarsInput {
+  create: UserCreateWithoutCodewarsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutPluralsightInput {
+  create: UserCreateWithoutPluralsightInput
   connect: UserWhereUniqueInput
 }
 
@@ -7045,6 +7536,35 @@ input UserCreateWithoutAreasInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  pluralsight: PluralsightCreateOneWithoutUserInput
+  codewars: CodewarsCreateOneWithoutUserInput
+}
+
+input UserCreateWithoutCodewarsInput {
+  id: ID
+  fullName: String!
+  profileURL: String!
+  image: String!
+  email: String!
+  companyEmail: String
+  phone: String
+  password: String!
+  role: String
+  universityDepartment: String
+  fieldOfStudy: String
+  year: Int
+  indexNumber: Int
+  slackId: String
+  permissions: UserCreatepermissionsInput
+  institution: UserCreateinstitutionInput
+  special: UserCreatespecialInput
+  areas: AreaMemberCreateManyWithoutUserInput
+  skills: UserSkillCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
+  university: UniversityCreateOneWithoutUsersInput
+  slackChannels: SlackChannelCreateManyWithoutUsersInput
+  credentials: CredentialCreateManyWithoutUsersInput
+  pluralsight: PluralsightCreateOneWithoutUserInput
 }
 
 input UserCreateWithoutCredentialsInput {
@@ -7070,6 +7590,35 @@ input UserCreateWithoutCredentialsInput {
   projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
+  pluralsight: PluralsightCreateOneWithoutUserInput
+  codewars: CodewarsCreateOneWithoutUserInput
+}
+
+input UserCreateWithoutPluralsightInput {
+  id: ID
+  fullName: String!
+  profileURL: String!
+  image: String!
+  email: String!
+  companyEmail: String
+  phone: String
+  password: String!
+  role: String
+  universityDepartment: String
+  fieldOfStudy: String
+  year: Int
+  indexNumber: Int
+  slackId: String
+  permissions: UserCreatepermissionsInput
+  institution: UserCreateinstitutionInput
+  special: UserCreatespecialInput
+  areas: AreaMemberCreateManyWithoutUserInput
+  skills: UserSkillCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
+  university: UniversityCreateOneWithoutUsersInput
+  slackChannels: SlackChannelCreateManyWithoutUsersInput
+  credentials: CredentialCreateManyWithoutUsersInput
+  codewars: CodewarsCreateOneWithoutUserInput
 }
 
 input UserCreateWithoutProjectsInput {
@@ -7095,6 +7644,8 @@ input UserCreateWithoutProjectsInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  pluralsight: PluralsightCreateOneWithoutUserInput
+  codewars: CodewarsCreateOneWithoutUserInput
 }
 
 input UserCreateWithoutSkillsInput {
@@ -7120,6 +7671,8 @@ input UserCreateWithoutSkillsInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  pluralsight: PluralsightCreateOneWithoutUserInput
+  codewars: CodewarsCreateOneWithoutUserInput
 }
 
 input UserCreateWithoutSlackChannelsInput {
@@ -7145,6 +7698,8 @@ input UserCreateWithoutSlackChannelsInput {
   projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  pluralsight: PluralsightCreateOneWithoutUserInput
+  codewars: CodewarsCreateOneWithoutUserInput
 }
 
 input UserCreateWithoutUniversityInput {
@@ -7170,6 +7725,8 @@ input UserCreateWithoutUniversityInput {
   projects: ProjectMemberCreateManyWithoutUserInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  pluralsight: PluralsightCreateOneWithoutUserInput
+  codewars: CodewarsCreateOneWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -8256,6 +8813,8 @@ input UserUpdateDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
+  codewars: CodewarsUpdateOneWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -8281,6 +8840,8 @@ input UserUpdateInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
+  codewars: CodewarsUpdateOneWithoutUserInput
 }
 
 input UserUpdateinstitutionInput {
@@ -8401,6 +8962,20 @@ input UserUpdateOneRequiredWithoutAreasInput {
   upsert: UserUpsertWithoutAreasInput
 }
 
+input UserUpdateOneRequiredWithoutCodewarsInput {
+  create: UserCreateWithoutCodewarsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutCodewarsDataInput
+  upsert: UserUpsertWithoutCodewarsInput
+}
+
+input UserUpdateOneRequiredWithoutPluralsightInput {
+  create: UserCreateWithoutPluralsightInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutPluralsightDataInput
+  upsert: UserUpsertWithoutPluralsightInput
+}
+
 input UserUpdateOneRequiredWithoutProjectsInput {
   create: UserCreateWithoutProjectsInput
   connect: UserWhereUniqueInput
@@ -8445,6 +9020,34 @@ input UserUpdateWithoutAreasDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
+  codewars: CodewarsUpdateOneWithoutUserInput
+}
+
+input UserUpdateWithoutCodewarsDataInput {
+  fullName: String
+  profileURL: String
+  image: String
+  email: String
+  companyEmail: String
+  phone: String
+  password: String
+  role: String
+  universityDepartment: String
+  fieldOfStudy: String
+  year: Int
+  indexNumber: Int
+  slackId: String
+  permissions: UserUpdatepermissionsInput
+  institution: UserUpdateinstitutionInput
+  special: UserUpdatespecialInput
+  areas: AreaMemberUpdateManyWithoutUserInput
+  skills: UserSkillUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
+  university: UniversityUpdateOneWithoutUsersInput
+  slackChannels: SlackChannelUpdateManyWithoutUsersInput
+  credentials: CredentialUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
 }
 
 input UserUpdateWithoutCredentialsDataInput {
@@ -8469,6 +9072,34 @@ input UserUpdateWithoutCredentialsDataInput {
   projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
+  codewars: CodewarsUpdateOneWithoutUserInput
+}
+
+input UserUpdateWithoutPluralsightDataInput {
+  fullName: String
+  profileURL: String
+  image: String
+  email: String
+  companyEmail: String
+  phone: String
+  password: String
+  role: String
+  universityDepartment: String
+  fieldOfStudy: String
+  year: Int
+  indexNumber: Int
+  slackId: String
+  permissions: UserUpdatepermissionsInput
+  institution: UserUpdateinstitutionInput
+  special: UserUpdatespecialInput
+  areas: AreaMemberUpdateManyWithoutUserInput
+  skills: UserSkillUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
+  university: UniversityUpdateOneWithoutUsersInput
+  slackChannels: SlackChannelUpdateManyWithoutUsersInput
+  credentials: CredentialUpdateManyWithoutUsersInput
+  codewars: CodewarsUpdateOneWithoutUserInput
 }
 
 input UserUpdateWithoutProjectsDataInput {
@@ -8493,6 +9124,8 @@ input UserUpdateWithoutProjectsDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
+  codewars: CodewarsUpdateOneWithoutUserInput
 }
 
 input UserUpdateWithoutSkillsDataInput {
@@ -8517,6 +9150,8 @@ input UserUpdateWithoutSkillsDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
+  codewars: CodewarsUpdateOneWithoutUserInput
 }
 
 input UserUpdateWithoutSlackChannelsDataInput {
@@ -8541,6 +9176,8 @@ input UserUpdateWithoutSlackChannelsDataInput {
   projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
+  codewars: CodewarsUpdateOneWithoutUserInput
 }
 
 input UserUpdateWithoutUniversityDataInput {
@@ -8565,6 +9202,8 @@ input UserUpdateWithoutUniversityDataInput {
   projects: ProjectMemberUpdateManyWithoutUserInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  pluralsight: PluralsightUpdateOneWithoutUserInput
+  codewars: CodewarsUpdateOneWithoutUserInput
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -8595,6 +9234,16 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutAreasInput {
   update: UserUpdateWithoutAreasDataInput!
   create: UserCreateWithoutAreasInput!
+}
+
+input UserUpsertWithoutCodewarsInput {
+  update: UserUpdateWithoutCodewarsDataInput!
+  create: UserCreateWithoutCodewarsInput!
+}
+
+input UserUpsertWithoutPluralsightInput {
+  update: UserUpdateWithoutPluralsightDataInput!
+  create: UserCreateWithoutPluralsightInput!
 }
 
 input UserUpsertWithoutProjectsInput {
@@ -9224,6 +9873,8 @@ input UserWhereInput {
   credentials_every: CredentialWhereInput
   credentials_some: CredentialWhereInput
   credentials_none: CredentialWhereInput
+  pluralsight: PluralsightWhereInput
+  codewars: CodewarsWhereInput
 }
 
 input UserWhereUniqueInput {
