@@ -1,18 +1,6 @@
 import gql from 'graphql-tag';
 import { apollo } from 'utils';
-
-const ME = gql`
-  {
-    me {
-      id
-      codewars {
-        id
-        name
-        data
-      }
-    }
-  }
-`;
+import { ME } from './withIntegrations';
 
 export const INTEGRATE_CODEWARS = gql`
   mutation integrateCodewars($name: String!) {

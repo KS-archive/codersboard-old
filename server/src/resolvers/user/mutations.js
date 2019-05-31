@@ -83,14 +83,16 @@ const parseCodewarsData = data => ({
 
 const integrateCodewars = async (parent, args, ctx, info) => {
   await validate(ctx).userExist();
+  console.log(args);
 
   const { data } = await axios.get(
     `https://www.codewars.com/api/v1/users/${args.name}?access_key=${process.env.CODEWARS_TOKEN}`,
   );
 
-  await ctx.prisma.mutation.createCodewars({ data: {
+  await ctx.prisma.mutation.createIntegration({ data: {
     user: { connect: { id: ctx.request.userId } },
-    name: args.name,
+    key: 'codewars',
+    connector: { name: args.name },
     data: parseCodewarsData(data),
   }});
 
@@ -100,8 +102,8 @@ const integrateCodewars = async (parent, args, ctx, info) => {
 const detachCodewars = async (parent, args, ctx, info) => {
   await validate(ctx).userExist();
 
-  const user = await ctx.prisma.query.user({ where: { id: ctx.request.userId } }, '{ codewars { id } }');
-  await ctx.prisma.mutation.deleteCodewars({ where: { id: user.codewars.id } });
+  const user = await ctx.prisma.query.user({ where: { id: ctx.request.userId } }, '{ integrations( where: { key: "codewars" } ) { id } }');
+  await ctx.prisma.mutation.deleteIntegration({ where: { id: user.integrations[0].id } });
 
   return { message: 'SUCCESS' }
 };

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { List } from 'antd';
-import { IntegrationItem } from './ListItem';
 
-export const StyledList = styled(List)<IntegrationItem>`
+export const List = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
 `;

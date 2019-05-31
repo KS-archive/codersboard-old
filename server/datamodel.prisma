@@ -53,24 +53,17 @@ type User {
   slackChannels: [SlackChannel!]!
   credentials: [Credential!]!
   special: [String!]! @scalarList(strategy: RELATION)
-  pluralsight: Pluralsight
-  codewars: Codewars
+  integrations: [Integration!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
 
-type Pluralsight {
+type Integration {
   id: ID! @id
-  user: User! @relation(link: INLINE)
-  pluralsightId: String! @unique
-  data: Json
-}
-
-type Codewars {
-  id: ID! @id
-  user: User! @relation(link: INLINE)
-  name: String! @unique
-  data: Json
+  key: String!
+  connector: Json!
+  data: Json!
+  user: User! @relation(link: TABLE)
 }
 
 type Credential {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, message } from 'antd';
 import { Formik, Field, FormikActions } from 'formik';
 import * as Yup from 'yup';
@@ -27,13 +27,22 @@ const handleSubmit = async (values: IIntegrateCodewarsValues, actions: FormikAct
   }
 };
 
-const CodewarsIntegrate: React.FC<IProps> = ({ visible, handleClose }) => {
+const CodewarsIntegrate: React.FC<IProps> = ({ handleClose }) => {
+  const [visible, setVisible] = useState(true);
+
+  const closeModal = () => {
+    setVisible(false);
+    setTimeout(() => {
+      handleClose();
+    }, 300);
+  }
+
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={integrateCodewarsSchema}>
       {({ submitForm, status, setStatus }) => {
         if (status === 'submitted') {
           setStatus('initial');
-          handleClose();
+          closeModal();
         }
 
         return (
@@ -48,7 +57,6 @@ const CodewarsIntegrate: React.FC<IProps> = ({ visible, handleClose }) => {
 
 interface IProps {
   handleClose: () => void;
-  visible: boolean;
 }
 
 export default CodewarsIntegrate;

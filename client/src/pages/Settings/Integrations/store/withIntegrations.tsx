@@ -6,62 +6,39 @@ export const ME = gql`
   {
     me {
       id
-      codewars {
+      integrations {
         id
-        name
+        key
+        connector
         data
       }
     }
   }
 `;
 
-export interface CodewarsData {
-  name: string;
-  honor: number;
-  kyu: number;
-  completedChallenges: number;
-  leaderboardPosition: number;
-  score: number;
-  languages: {
-    kyu: number;
-    name: string;
-    score: number;
-  }[];
+export interface IIntegration {
+  id: string;
+  key: string;
+  connector: any;
+  data: any;
 }
 
 interface IData {
   me: {
     id: string;
-    codewars?: {
-      id: string;
-      name: string;
-      data: CodewarsData;
-      __typename: 'CodeWars';
-    };
+    integrations: IIntegration[],
   };
-}
-
-interface IIntegrations {
-  codewars?: {
-    name: string;
-    data: any;
-  };
-  loading: boolean;
-  [key: string]: any;
 }
 
 export interface IWithIntegrations {
-  integrations: IIntegrations;
+  integrations: IIntegration[];
+  integrationsLoading: boolean;
 }
 
 export default (WrapperComponent: any) => (props: any) => (
   <Query<IData, {}> query={ME}>
     {({ data, loading }) => {
-      const integrations: IIntegrations = { loading };
-      if (data.me) {
-        if (data.me.codewars) integrations.codewars = data.me.codewars;
-      }
-      return <WrapperComponent {...props} integrations={integrations} />;
+      return <WrapperComponent {...props} integrations={data.me ? data.me.integrations : []} integrationsLoading={loading} />;
     }}
   </Query>
 );
