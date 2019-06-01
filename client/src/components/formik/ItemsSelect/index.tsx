@@ -65,8 +65,9 @@ export interface IItemsSelectOption {
 }
 
 interface IProps extends FormItemProps, FieldProps, Props<any> {
-  isMulti: boolean;
   options: IItemsSelectOption[];
+  optionImageWidth: number;
+  optionImageHeight: number;
 };
 
 export default ItemsSelect;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'antd';
 import { Field, FormikProps } from 'formik';
-import { Input, TextArea, Select, DatePicker, ItemsSelect, ProjectSelect } from 'components/formik';
+import { Input, TextArea, Select, DatePicker, ItemsSelect } from 'components/formik';
 import { ISuccessValues } from '..';
 import { SuccessFormContainer, Footer } from './styles';
 import withUsers, { IWithUsers } from '../../store/withUsers';
+import withProjects, { IWithProjects } from '../../store/withProjects';
 
 const typeOptions = [
   {
@@ -21,9 +22,10 @@ const typeOptions = [
   },
 ];
 
-const SuccessForm: React.FC<IProps> = ({ status, values, users }) => {
+const SuccessForm: React.FC<IProps> = ({ status, values, users, projects }) => {
   const confirmButtonLabel = values.id ? 'Zapisz zmiany' : 'Dodaj sukces';
-  const options = users ? users.map(({ id, fullName, image }) => ({ label: fullName, value: id, image })) : [];
+  const usersOptions = users ? users.map(({ id, fullName, image }) => ({ label: fullName, value: id, image })) : [];
+  const projectsOptions = projects ? projects.map(({ id, name, image }) => ({ label: name, value: id, image })) : [];
 
   return (
     <SuccessFormContainer>
@@ -31,16 +33,32 @@ const SuccessForm: React.FC<IProps> = ({ status, values, users }) => {
       <Field name="description" component={TextArea} label="Opis" />
       <Field name="date" component={DatePicker} label="Data osiągnięcia" placeholder={null} />
       <Field name="type" component={Select} label="Typ" options={typeOptions} />
-      <Field name="users" component={ItemsSelect} label="Do sukcesu przyczynili się" options={options} isMulti placeholder="Wybierz osoby" />
-      <Field name="project" component={ProjectSelect} label="Sukces osiągnięty w ramach projektu" />
+      <Field
+        name="users"
+        component={ItemsSelect}
+        label="Do sukcesu przyczynili się"
+        options={usersOptions}
+        isMulti
+        placeholder="Wybierz osoby"
+      />
+      <Field
+        name="project"
+        component={ItemsSelect}
+        label="Sukces osiągnięty w ramach projektu"
+        options={projectsOptions}
+        optionImageWidth={42}
+        placeholder="Wybierz projekt"
+      />
       <Footer>
         <Button onClick={status.closeModal}>Anuluj</Button>
-        <Button htmlType="submit" type="primary">{confirmButtonLabel}</Button>
+        <Button htmlType="submit" type="primary">
+          {confirmButtonLabel}
+        </Button>
       </Footer>
     </SuccessFormContainer>
   );
 };
 
-interface IProps extends FormikProps<ISuccessValues>, IWithUsers {}
+interface IProps extends FormikProps<ISuccessValues>, IWithUsers, IWithProjects {}
 
-export default withUsers(SuccessForm);
+export default withProjects(withUsers(SuccessForm));

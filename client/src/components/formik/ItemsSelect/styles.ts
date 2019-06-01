@@ -51,20 +51,22 @@ export default {
     },
   }),
   option: (provided: any, state: any) => {
+    const width = state.selectProps.optionImageWidth || 24;
+    const height = state.selectProps.optionImageHeight || 24;
     return {
       ...provided,
       position: 'relative',
-      height: 40,
+      height: height <= 32 ? 40 : height + 8,
       display: 'flex',
       alignItems: 'center',
-      paddingLeft: get('space-48'),
+      paddingLeft: width + 24,
       '&::before': {
         content: "''",
         position: 'absolute',
         top: get('space-8'),
         left: get('space-12'),
-        width: 24,
-        height: 24,
+        width,
+        height,
         borderRadius: get('radius-4'),
         background: `url('${state.data.image}') no-repeat center/cover`,
       },
@@ -102,41 +104,45 @@ export default {
     display: 'none',
   }),
   multiValueLabel: (provided: any, state: any) => {
+    const width = state.selectProps.optionImageWidth || 24;
+    const height = state.selectProps.optionImageHeight || 24;
     return {
       ...provided,
-      height: 24,
+      height,
       display: 'flex',
       alignItems: 'center',
       position: 'relative',
-      paddingLeft: get('space-32'),
+      paddingLeft: width + 8,
       '&::before': {
         content: "''",
         position: 'absolute',
         top: 0,
         left: 0,
-        width: 24,
-        height: 24,
+        width,
+        height,
         borderRadius: `${get('radius-4')} 0 0 ${get('radius-4')}`,
         background: `url('${state.data.image}') no-repeat center/cover`,
       },
     };
   },
   singleValue: (provided: any, state: any) => {
+    const width = state.selectProps.optionImageWidth || 24;
+    const height = state.selectProps.optionImageHeight || 24;
     return {
       ...provided,
-      height: 24,
+      height,
       display: 'flex',
       alignItems: 'center',
       position: 'relative',
-      paddingLeft: get('space-32'),
+      paddingLeft: width + 8,
       transform: 'none',
       '&::before': {
         content: "''",
         position: 'absolute',
         top: 0,
         left: 0,
-        width: 24,
-        height: 24,
+        width,
+        height,
         borderRadius: get('radius-4'),
         background: `url('${state.data.image}') no-repeat center/cover`,
       },
