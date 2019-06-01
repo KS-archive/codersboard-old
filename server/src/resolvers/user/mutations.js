@@ -114,6 +114,7 @@ const integratePluralsight = async (parent, args, ctx, info) => {
   const { data } = await axios.get(
     `https://app.pluralsight.com/profile/data/skillmeasurements/${args.key}`
   );
+  if (!data || !data.length) throw new Error('USER_NOT_FOUND');
 
   await ctx.prisma.mutation.createIntegration({ data: {
     user: { connect: { id: ctx.request.userId } },
@@ -121,6 +122,15 @@ const integratePluralsight = async (parent, args, ctx, info) => {
     connector: { pluralsightId: args.key },
     data,
   }});
+
+  return { message: 'SUCCESS' }
+};
+
+const detachPluralsight = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+
+  const user = await ctx.prisma.query.user({ where: { id: ctx.request.userId } }, '{ integrations( where: { key: "pluralsight" } ) { id } }');
+  await ctx.prisma.mutation.deleteIntegration({ where: { id: user.integrations[0].id } });
 
   return { message: 'SUCCESS' }
 };
@@ -135,4 +145,5 @@ module.exports = {
   integrateCodewars,
   detachCodewars,
   integratePluralsight,
+  detachPluralsight,
 };

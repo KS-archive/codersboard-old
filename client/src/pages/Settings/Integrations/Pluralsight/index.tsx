@@ -3,25 +3,25 @@ import { Button, Modal, message, Spin } from 'antd';
 
 import IntegrateModal from './IntegrateModal';
 import DetailsModal from './DetailsModal';
-import detachCodewars from '../store/detachCodewars';
+import detachPluralsight from '../store/detachPluralsight';
 import { PluralsightContainer, Content, Image, Text, Title, Description, Buttons } from './styles';
 
 const detach = () => {
   Modal.confirm({
-    title: `Czy jesteś pewien, że chcesz odłączyć integrację z Codewars?`,
+    title: `Czy jesteś pewien, że chcesz odłączyć integrację z Pluralsight?`,
     content: 'Tej operacji nie będziesz mógł cofnąć.',
     okText: 'Tak, odłącz',
     okType: 'danger',
     icon: null,
     cancelText: 'Nie, pozostaw',
     onOk: async () => {
-      await detachCodewars();
-      message.success('Konto na Codewars zostało odłączone od Twojego profilu');
+      await detachPluralsight();
+      message.success('Konto na Pluralsight zostało odłączone od Twojego profilu');
     },
   });
 };
 
-const Codewars: React.FC<IProps> = ({ data, loading }) => {
+const Pluralsight: React.FC<IProps> = ({ data, loading }) => {
   const [modal, setModal] = useState('');
   const closeModal = () => setModal('');
 
@@ -72,4 +72,4 @@ interface IProps {
   loading: boolean;
 }
 
-export default Codewars;
+export default Pluralsight;

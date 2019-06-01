@@ -10,14 +10,14 @@ export const DETACH_PLURALSIGHT = gql`
   }
 `;
 
-interface IDetachCodewarsResponse {
+interface IDetachPluralsightResponse {
   detachPluralsight: {
     message?: string;
   };
 }
 
 export default async () => {
-  const data: IDetachCodewarsResponse = await apollo.mutate({
+  const data: IDetachPluralsightResponse = await apollo.mutate({
     mutation: DETACH_PLURALSIGHT,
     refetchQueries: [{ query: ME }],
   });

@@ -20,7 +20,8 @@ const handleSubmit = async (values: IIntegratePluralsightValues, actions: Formik
     message.success('Portal Pluralsight został zintegrowany');
     actions.setStatus('submitted');
   } catch (ex) {
-    if (ex.message.includes('404')) {
+    console.log(ex.message);
+    if (ex.message.includes('USER_NOT_FOUND')) {
       message.error('Podczas integracji wystąpił błąd');
       actions.setFieldError('key', 'Użytkownik o podanym kluczu nie istnieje');
     }
