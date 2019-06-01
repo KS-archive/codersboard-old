@@ -4,7 +4,7 @@ import TextArea from './TextArea';
 import NumberInput from './NumberInput';
 import ImageUpload from './ImageUpload';
 import DatePicker from './DatePicker';
-import UserSelect from './UserSelect';
+import ItemsSelect from './ItemsSelect';
 import ProjectSelect from './ProjectSelect';
 
 export { Input };
@@ -13,5 +13,5 @@ export { TextArea };
 export { NumberInput };
 export { ImageUpload };
 export { DatePicker };
-export { UserSelect };
+export { ItemsSelect };
 export { ProjectSelect };

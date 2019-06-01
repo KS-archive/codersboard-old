@@ -32,7 +32,7 @@ const MemberForm: React.FC<IProps> = ({ status, values, users }) => {
   return (
     <MemberFormContainer>
       {!values.id && <Field name="user" component={ItemsSelect} label="Osoba do dodania" options={options} placeholder="Wybierz osobę" />}
-      <Field name="role" component={Input} label="Rola w projekcie" />
+      <Field name="role" component={Input} label="Rola w obszarze" />
       <Field name="permissions" component={Select} label="Uprawnienia" options={permissionsOptions} />
       <Field name="responsibilities" component={TextArea} label="Obowiązki" />
       <Footer>

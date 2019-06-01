@@ -21,6 +21,7 @@ import Member from 'pages/member/Member';
 
 import Areas from 'pages/area/Areas';
 import AreaWrapper from 'pages/area/Wrapper';
+import AreaMembers from 'pages/area/Members';
 
 import AdminWrapper from 'pages/admin/Wrapper';
 import AdminMembers from 'pages/admin/Members';
@@ -66,7 +67,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                         <AreaWrapper>
                           <Switch>
                             <Route exact path="/areas/:areaURL/news" component={() => <div>Aktualności</div>} />
-                            <Route exact path="/areas/:areaURL/members" component={() => <div>Członkowie</div>} />
+                            <Route exact path="/areas/:areaURL/members" component={AreaMembers} />
                             <Route exact path="/areas/:areaURL/materials" component={Materials} />
                           </Switch>
                         </AreaWrapper>
