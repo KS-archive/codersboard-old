@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { Modal } from 'antd';
+import React, { useState } from 'react';
+import { Modal, Button } from 'antd';
 import { CodewarsData } from '.';
 
 const CodewarsDetails: React.FC<IProps> = ({
@@ -17,11 +17,20 @@ const CodewarsDetails: React.FC<IProps> = ({
     setVisible(false);
     setTimeout(() => {
       handleClose();
-    }, 500);
-  }
+    }, 300);
+  };
 
   return (
-    <Modal title="Dane pobrane z Twojego konta Codewars" visible={visible} onOk={closeModal} onCancel={closeModal}>
+    <Modal
+      title="Dane pobrane z Twojego konta Codewars"
+      visible={visible}
+      onCancel={closeModal}
+      footer={[
+        <Button key="close" onClick={closeModal} type="primary">
+          Zamknij
+        </Button>,
+      ]}
+    >
       <div>
         <p>{`Nazwa użytkownika: ${name}`}</p>
         <p>{`Kyu: ${kyu}`}</p>

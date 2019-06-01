@@ -67,6 +67,7 @@ type Mutation {
   deleteCredential(where: CredentialWhereUniqueInput!): Credential
 
   integrateCodewars(name: String!): Message
+  integratePluralsight(key: String!): Message
   detachCodewars: Message
 }
 

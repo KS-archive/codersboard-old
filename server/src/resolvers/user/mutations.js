@@ -108,6 +108,23 @@ const detachCodewars = async (parent, args, ctx, info) => {
   return { message: 'SUCCESS' }
 };
 
+const integratePluralsight = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+
+  const { data } = await axios.get(
+    `https://app.pluralsight.com/profile/data/skillmeasurements/${args.key}`
+  );
+
+  await ctx.prisma.mutation.createIntegration({ data: {
+    user: { connect: { id: ctx.request.userId } },
+    key: 'pluralsight',
+    connector: { pluralsightId: args.key },
+    data,
+  }});
+
+  return { message: 'SUCCESS' }
+};
+
 module.exports = {
   createUser,
   updateUser,
@@ -117,4 +134,5 @@ module.exports = {
   updateProfile,
   integrateCodewars,
   detachCodewars,
+  integratePluralsight,
 };

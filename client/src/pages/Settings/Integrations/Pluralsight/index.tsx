@@ -3,8 +3,8 @@ import { Button, Modal, message, Spin } from 'antd';
 
 import IntegrateModal from './IntegrateModal';
 import DetailsModal from './DetailsModal';
-import { CodewarsContainer, Content, Image, Text, Title, Description, Buttons } from './styles';
 import detachCodewars from '../store/detachCodewars';
+import { PluralsightContainer, Content, Image, Text, Title, Description, Buttons } from './styles';
 
 const detach = () => {
   Modal.confirm({
@@ -26,13 +26,13 @@ const Codewars: React.FC<IProps> = ({ data, loading }) => {
   const closeModal = () => setModal('');
 
   return (
-    <Spin spinning={loading} tip="Wczytywanie danych z Codewars">
-      <CodewarsContainer>
+    <Spin spinning={loading} tip="Wczytywanie danych z Pluralsight">
+      <PluralsightContainer>
         <Content>
-          <Image src="/codewars_logo.png" />
+          <Image src="/pluralsight_logo.png" />
           <Text>
-            <Title integrated={!!data}>Codewars</Title>
-            <Description>Portal z wyzwaniami dla programistów.</Description>
+            <Title integrated={!!data}>Pluralsight</Title>
+            <Description>Kursy progranistyczne oraz Skill IQ.</Description>
           </Text>
         </Content>
         <Buttons>
@@ -50,28 +50,25 @@ const Codewars: React.FC<IProps> = ({ data, loading }) => {
         </Buttons>
 
         {modal === 'integrate' && <IntegrateModal handleClose={closeModal} />}
-        {modal === 'details' && <DetailsModal handleClose={closeModal} {...data} />}
-      </CodewarsContainer>
+        {modal === 'details' && <DetailsModal handleClose={closeModal} skills={data} />}
+      </PluralsightContainer>
     </Spin>
   );
 };
 
-export interface CodewarsData {
-  name: string;
-  honor: number;
-  kyu: number;
-  completedChallenges: number;
-  leaderboardPosition: number;
+export interface PluralsightSkill {
+  id: string;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
   score: number;
-  languages: {
-    kyu: number;
-    name: string;
-    score: number;
-  }[];
+  percentile: number;
+  level: string;
+  dateCompleted: string;
 }
 
 interface IProps {
-  data?: CodewarsData;
+  data?: PluralsightSkill[];
   loading: boolean;
 }
 

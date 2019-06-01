@@ -13,7 +13,7 @@ const integrateCodewarsSchema = Yup.object().shape({
   name: Yup.string().required('Nazwa użytkownika na Codewars jest wymagana'),
 });
 
-const handleSubmit = async (values: IIntegrateCodewarsValues, actions: FormikActions<any>) => {
+const handleSubmit = async (values: IIntegrateCodewarsValues, actions: FormikActions<IIntegrateCodewarsValues>) => {
   try {
     await integrateCodeWars(values);
     actions.setSubmitting(false);

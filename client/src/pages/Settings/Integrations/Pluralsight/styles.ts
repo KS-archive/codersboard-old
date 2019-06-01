@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import get from 'styles/getStyle';
 
-export const CodewarsContainer = styled.div`
+export const PluralsightContainer = styled.div`
   display: flex;
   align-items: center;
   padding: ${get('space-12')} 0;
