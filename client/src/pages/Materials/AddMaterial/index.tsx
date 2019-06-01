@@ -3,9 +3,10 @@ import { Button, message } from 'antd';
 import { Formik, Field, Form, FormikActions } from 'formik';
 import * as Yup from 'yup';
 import { withMe, MeProps } from 'store/user/queries/Me';
+import withAreas, { IArea } from 'pages/area/Areas/store/withAreas';
 import uploadMaterial from '../store/AddMaterial';
 import { uploadToCloudinary } from 'utils';
-import { Input, TextArea, Tags, ImageUpload } from 'components/formik';
+import { Input, TextArea, Tags, ImageUpload, Select } from 'components/formik';
 
 const initialValues: IFormValues = {
   title: '',
@@ -13,6 +14,14 @@ const initialValues: IFormValues = {
   url: '',
   tags: [],
   image: null,
+  area: '',
+};
+
+const areasOptions = (areas: IArea[]) => {
+  return areas.map(area => ({
+    value: area.id,
+    label: area.name,
+  }));
 };
 
 const addPostSchema = Yup.object().shape({
@@ -27,11 +36,9 @@ const addPostSchema = Yup.object().shape({
 
 const AddMaterial = (props: Props) => {
   const handleSubmit = async (values: IFormValues, actions: FormikActions<IFormValues>) => {
-    const { title, url, tags, description, image } = values;
-
+    const { title, url, tags, description, image, area } = values;
     try {
       const imageUrl = await uploadToCloudinary(image, 'material-image');
-
       const materialValues = {
         data: {
           title,
@@ -47,12 +54,16 @@ const AddMaterial = (props: Props) => {
             connect: tags.map(tag => ({ id: tag })),
           },
           credential: {},
+          area: {
+            connect: {
+              id: area,
+            },
+          },
         },
       };
 
       actions.resetForm();
       await uploadMaterial(materialValues);
-      console.log(materialValues);
       message.success('Materiał został dodany');
     } catch (ex) {
       console.log(ex);
@@ -68,6 +79,7 @@ const AddMaterial = (props: Props) => {
         <Form>
           <Field type="text" name="title" label="Tytuł" size="large" component={Input} />
           <Field type="text" name="url" label="Link" size="large" component={Input} />
+          <Field name="area" label="Obszar" size="large" component={Select} options={areasOptions(props.areas)} />
           <Field name="tags" label="Tagi" size="large" component={Tags} />
           <Field type="text" name="description" label="Opis" component={TextArea} />
           <Field type="file" name="image" label="Dodaj miniaturkę" component={ImageUpload} />
@@ -83,6 +95,7 @@ const AddMaterial = (props: Props) => {
 interface Props {
   hideModal: Function;
   me: MeProps;
+  areas: IArea[];
 }
 
 interface IFormValues {
@@ -91,6 +104,7 @@ interface IFormValues {
   url: string;
   tags: string[];
   image: any;
+  area: string;
 }
 
-export default withMe(AddMaterial);
+export default withAreas(withMe(AddMaterial));
