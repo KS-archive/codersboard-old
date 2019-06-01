@@ -14,11 +14,11 @@ const { HeaderContainer, Right, Name, Menu, MenuItem } = styles;
 const adminPermissions = ['OWNER', 'ADMIN', 'HR', 'FINANCE'];
 const hasAdminPermission = (permission: MainPermission) => adminPermissions.includes(permission);
 
-const Header: React.FC<IProps> = ({ isSidebarCollapsed, toggleCollapsed, me }) => {
+const Header: React.FC<IProps> = ({ isSidebarCollapsed, toggleCollapsed, me, appWidth }) => {
   const isAdmin = me && me.permissions.some(hasAdminPermission);
 
   return (
-    <HeaderContainer>
+    <HeaderContainer style={{ left: appWidth }}>
       <Icon icon={isSidebarCollapsed ? Indent : Outdent} size={24} onClick={toggleCollapsed} />
       <Right>
         {isAdmin && (
@@ -51,6 +51,7 @@ const Header: React.FC<IProps> = ({ isSidebarCollapsed, toggleCollapsed, me }) =
 interface IProps extends IWithMe {
   isSidebarCollapsed: boolean;
   toggleCollapsed: () => void;
+  appWidth?: number;
 }
 
 export default withMe(Header);
