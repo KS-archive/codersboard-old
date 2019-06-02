@@ -24,7 +24,6 @@ import AreaWrapper from 'pages/area/Wrapper';
 import AreaMembers from 'pages/area/Members';
 
 import AdminWrapper from 'pages/admin/Wrapper';
-import AdminMembers from 'pages/admin/Members';
 import AdminUniversities from 'pages/admin/Universities';
 import AdminSkills from 'pages/admin/Skills';
 
@@ -90,7 +89,6 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                       <Route path="/admin">
                         <AdminWrapper>
                           <Switch>
-                            <Route exact path="/admin/members" component={AdminMembers} />
                             <Route exact path="/admin/universities" component={AdminUniversities} />
                             <Route exact path="/admin/skills" component={AdminSkills} />
                           </Switch>

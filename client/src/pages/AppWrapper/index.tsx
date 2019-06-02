@@ -8,7 +8,7 @@ import * as styles from './styles';
 const { Container, RightColumn, Content } = styles;
 
 function useClientRectObserver() {
-  const ref = useRef();
+  const ref = useRef<any>();
   const [rect, setRect] = useState(null);
 
   useEffect(() => {
@@ -22,7 +22,9 @@ function useClientRectObserver() {
 
     resizeObserver.observe(ref.current);
 
-    return () => resizeObserver.unobserve(ref.current);
+    const current = ref.current ? { ...ref.current } : null;
+
+    return () => resizeObserver.unobserve(current);
   }, []);
 
   return [rect, ref];

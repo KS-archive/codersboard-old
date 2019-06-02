@@ -4,7 +4,6 @@ import moment from 'moment';
 import { H4, HeaderWrapper } from './styles';
 
 const Header = (props: Props) => {
-  console.log(props.avatar);
   return (
     <HeaderWrapper>
       <Avatar src={props.avatar || null} icon={props.avatar ? null : 'user'} />

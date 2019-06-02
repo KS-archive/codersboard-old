@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query, QueryResult } from 'react-apollo';
+import { Query } from 'react-apollo';
 
 export const USERS = gql`
   {
@@ -18,6 +18,7 @@ export const USERS = gql`
         area {
           id
           name
+          image
         }
       }
       projects {
@@ -25,6 +26,7 @@ export const USERS = gql`
         project {
           id
           name
+          image
         }
       }
       university {
@@ -50,26 +52,50 @@ export interface IUser {
   companyEmail: string;
   phone: string;
   role: string;
-  areas: any;
-  projects: any;
+  areas: {
+    id: string;
+    area: {
+      id: string;
+      name: string;
+      image: string;
+      __typename: 'Area';
+    },
+    __typename: 'AreaMember';
+  }[];
+  projects: {
+    id: string;
+    project: {
+      id: string;
+      name: string;
+      image: string;
+      __typename: 'Project';
+    },
+    __typename: 'ProjectMember';
+  }[];
   university: {
     id: string;
     name: string;
     image: string;
+    __typename: 'University';
   };
   universityDepartment: string;
   fieldOfStudy: string;
   year: number;
   indexNumber: number;
   institution: string[];
+  __typename: 'User';
 }
 
-export interface IData {
+export interface IWithUsers {
   users: IUser[];
 }
 
-interface IProps {
-  children: (data: QueryResult<IData>) => React.ReactElement;
+interface IData {
+  users: IUser[];
 }
 
-export default (props: IProps) => <Query<IData, {}> query={USERS}>{props.children}</Query>;
+export default (WrapperComponent: any) => (props: any) => (
+  <Query<IData, {}> query={USERS}>
+    {({ data }) => <WrapperComponent {...props} users={data.users} />}
+  </Query>
+);
