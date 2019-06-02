@@ -3,10 +3,15 @@ import { Layout, Menu as AntdMenu } from 'antd';
 import get from 'styles/getStyle';
 
 export const HeaderContainer = styled(Layout.Header)`
+  position: fixed;
+  top: 0;
+  right: 0;
   display: flex;
   align-items: center;
   background-color: ${get('color-grayscale-white')};
+  border-bottom: ${get('border-light')};
   padding: 0 ${get('space-24')};
+  z-index: 1;
 
   svg {
     cursor: pointer;

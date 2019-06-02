@@ -30,7 +30,6 @@ const handleSubmit = async (values: ISignInVariables, actions: FormikActions<ISi
     actions.setStatus('submitted');
   } catch (ex) {
     message.error('Błąd podczas próby zalogowania do panelu');
-    console.log(ex.message);
     if (ex.message.includes('EMAIL_DOESNT_EXIST')) {
       actions.setFieldError('email', 'Użytkownik o podanym adresie nie istnieje');
     }

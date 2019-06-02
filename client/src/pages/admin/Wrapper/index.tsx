@@ -7,10 +7,6 @@ import { AdminWrapperContainer, AdminContent, Text } from './styles';
 
 const navItems = [
   {
-    key: 'members',
-    label: 'Członkowie',
-  },
-  {
     key: 'universities',
     label: 'Uczelnie',
   },
@@ -24,7 +20,7 @@ const AdminWrapper: React.FC<IProps> = ({ children, history, location }) => {
   const pathnameArr = location.pathname.split('/');
 
   if (pathnameArr.length === 2) {
-    history.replace(location.pathname + '/members');
+    history.replace(location.pathname + '/skills');
     return null;
   }
 

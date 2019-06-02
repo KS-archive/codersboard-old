@@ -8,7 +8,6 @@ import { Spin } from 'antd';
 import { apollo } from 'utils';
 import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
-import Members from 'pages/Members';
 import Successes from 'pages/Successes';
 import Materials from 'pages/Materials';
 import Settings from 'pages/Settings';
@@ -17,11 +16,14 @@ import Projects from 'pages/project/Projects';
 import ProjectWrapper from 'pages/project/Wrapper';
 import ProjectMembers from 'pages/project/Members';
 
+import Members from 'pages/member/Members';
+import Member from 'pages/member/Member';
+
 import Areas from 'pages/area/Areas';
 import AreaWrapper from 'pages/area/Wrapper';
+import AreaMembers from 'pages/area/Members';
 
 import AdminWrapper from 'pages/admin/Wrapper';
-import AdminMembers from 'pages/admin/Members';
 import AdminUniversities from 'pages/admin/Universities';
 import AdminSkills from 'pages/admin/Skills';
 
@@ -58,12 +60,13 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                   <AppWrapper>
                     <Switch>
                       <Route exact path="/members" component={Members} />
+                      <Route exact path="/members/:profileURL" component={Member} />
                       <Route exact path="/areas" component={Areas} />
                       <Route path="/areas/:areaURL">
                         <AreaWrapper>
                           <Switch>
                             <Route exact path="/areas/:areaURL/news" component={() => <div>Aktualności</div>} />
-                            <Route exact path="/areas/:areaURL/members" component={() => <div>Członkowie</div>} />
+                            <Route exact path="/areas/:areaURL/members" component={AreaMembers} />
                             <Route exact path="/areas/:areaURL/materials" component={Materials} />
                           </Switch>
                         </AreaWrapper>
@@ -86,7 +89,6 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                       <Route path="/admin">
                         <AdminWrapper>
                           <Switch>
-                            <Route exact path="/admin/members" component={AdminMembers} />
                             <Route exact path="/admin/universities" component={AdminUniversities} />
                             <Route exact path="/admin/skills" component={AdminSkills} />
                           </Switch>
