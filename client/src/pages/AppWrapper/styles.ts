@@ -13,10 +13,9 @@ export const RightColumn = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  overflow-x: hodden;
+  overflow-x: hidden;
 `;
 
 export const Content = styled.div`
-  padding-top: ${get('space-64')};
-  margin: ${get('space-32')};
+  margin: ${get('space-32')} ${get('space-32')} 0;
 `;
