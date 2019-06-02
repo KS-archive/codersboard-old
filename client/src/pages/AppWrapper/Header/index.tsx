@@ -14,43 +14,47 @@ const { HeaderContainer, Right, Name, Menu, MenuItem } = styles;
 const adminPermissions = ['OWNER', 'ADMIN', 'HR', 'FINANCE'];
 const hasAdminPermission = (permission: MainPermission) => adminPermissions.includes(permission);
 
-const Header: React.FC<IProps> = ({ isSidebarCollapsed, toggleCollapsed, me }) => {
+const Header: React.FC<IProps> = ({ isSidebarCollapsed, toggleCollapsed, me, appWidth }) => {
   const isAdmin = me && me.permissions.some(hasAdminPermission);
 
   return (
-    <HeaderContainer>
-      <Icon icon={isSidebarCollapsed ? Indent : Outdent} size={24} onClick={toggleCollapsed} />
-      <Right>
-        {isAdmin && (
-          <Button>
-            <Link to="/admin" />
-            Admin panel
-          </Button>
-        )}
-        <Dropdown
-          overlay={
-            <Menu>
-              <MenuItem>
-                <Link to={`/settings/${me && me.profileURL}`}>Ustawienia</Link>
-              </MenuItem>
-              <MenuItem onClick={signOut}>Wyloguj się</MenuItem>
-            </Menu>
-          }
-          trigger={['click']}
-        >
-          <div>
-            <Avatar size={32} src={me && me.image} />
-            <Name>{me && me.fullName}</Name>
-          </div>
-        </Dropdown>
-      </Right>
-    </HeaderContainer>
+    <>
+      <HeaderContainer style={{ left: appWidth }}>
+        <Icon icon={isSidebarCollapsed ? Indent : Outdent} size={24} onClick={toggleCollapsed} />
+        <Right>
+          {isAdmin && (
+            <Button>
+              <Link to="/admin" />
+              Admin panel
+            </Button>
+          )}
+          <Dropdown
+            overlay={
+              <Menu>
+                <MenuItem>
+                  <Link to={`/settings/${me && me.profileURL}`}>Ustawienia</Link>
+                </MenuItem>
+                <MenuItem onClick={signOut}>Wyloguj się</MenuItem>
+              </Menu>
+            }
+            trigger={['click']}
+          >
+            <div>
+              <Avatar size={32} src={me && me.image} />
+              <Name>{me && me.fullName}</Name>
+            </div>
+          </Dropdown>
+        </Right>
+      </HeaderContainer>
+      <div style={{ width: '100%', marginLeft: appWidth, height: 64 }}></div>
+    </>
   );
 };
 
 interface IProps extends IWithMe {
   isSidebarCollapsed: boolean;
   toggleCollapsed: () => void;
+  appWidth?: number;
 }
 
 export default withMe(Header);

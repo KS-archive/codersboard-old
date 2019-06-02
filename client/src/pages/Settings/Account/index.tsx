@@ -20,7 +20,6 @@ const handleSubmit = async (values: IUpdateProfileValues, actions: FormikActions
     await updateProfile(values);
     message.success('Twój profil został zaktualizowany');
   } catch (ex) {
-    console.log(ex);
     message.error('Podczas aktualizacji profilu wystąpił błąd');
   }
   actions.setSubmitting(false);

@@ -4,6 +4,7 @@ import get from 'styles/getStyle';
 
 export const SidebarContainer = styled(Layout.Sider)`
   background-color: ${get('color-grayscale-black')};
+  height: 100vh;
 `;
 
 export const LogoWrapper = styled.div`

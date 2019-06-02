@@ -36,7 +36,6 @@ const handleSubmit = async (values: ISuccessValues, actions: FormikActions<ISucc
     actions.setSubmitting(false);
     closeModal();
   } catch (ex) {
-    console.log(ex);
     message.error('Podczas dodawania sukcesu wystąpił błąd');
   }
 };

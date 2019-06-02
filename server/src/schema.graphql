@@ -65,110 +65,37 @@ type Mutation {
   createCredential(data: CredentialCreateInput!): Credential!
   updateCredential(data: CredentialUpdateInput!, where: CredentialWhereUniqueInput!): Credential
   deleteCredential(where: CredentialWhereUniqueInput!): Credential
+
+  integrateCodewars(name: String!): Message
+  detachCodewars: Message
+  integratePluralsight(key: String!): Message
+  detachPluralsight: Message
 }
 
 type Query {
   me: User
-  users(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User]!
-  universities(
-    where: UniversityWhereInput
-    orderBy: UniversityOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [University]!
-  successes(
-    where: SuccessWhereInput
-    orderBy: SuccessOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Success]!
-  skills(
-    where: SkillWhereInput
-    orderBy: SkillOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Skill]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  user(where: UserWhereUniqueInput!): User
+
+  universities(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University]!
+
+  successes(where: SuccessWhereInput, orderBy: SuccessOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Success]!
+
+  skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   mySkills: [UserSkill]!
-  projects(
-    where: ProjectWhereInput
-    orderBy: ProjectOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Project]!
+
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   project(where: ProjectWhereUniqueInput!): Project
-  areas(
-    where: AreaWhereInput
-    orderBy: AreaOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Area]!
+
+  areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   area(where: AreaWhereUniqueInput!): Area
-  events(
-    where: EventWhereInput
-    orderBy: EventOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Event]!
-  posts(
-    where: PostWhereInput
-    orderBy: PostOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Post]!
-  materials(
-    where: MaterialWhereInput
-    orderBy: MaterialOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Material]!
-  materialTags(
-    where: MaterialTagWhereInput
-    orderBy: MaterialTagOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [MaterialTag]!
-  credentials(
-    where: CredentialWhereInput
-    orderBy: CredentialOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Credential]!
+
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+
+  materials(where: MaterialWhereInput, orderBy: MaterialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Material]!
+  materialTags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag]!
+
+  credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential]!
 }

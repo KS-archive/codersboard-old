@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const validate = require('utils/validate');
 
@@ -68,6 +69,72 @@ const updateProfile = async (parent, args, ctx, info) => {
   return ctx.prisma.mutation.updateUser(args, info);
 };
 
+const parseCodewarsData = data => ({
+  name: data.username,
+  honor: data.honor,
+  leaderboardPosition: data.leaderboardPosition,
+  score: data.ranks.overall.score,
+  kyu: Math.abs(data.ranks.overall.rank),
+  completedChallenges: data.codeChallenges.totalCompleted,
+  languages: Object.keys(data.ranks.languages)
+    .map(key => ({ lang: key, ...data.ranks.languages[key] }))
+    .map(({ rank, score, lang }) => ({ name: lang, kyu: Math.abs(rank), score })),
+});
+
+const integrateCodewars = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+  console.log(args);
+
+  const { data } = await axios.get(
+    `https://www.codewars.com/api/v1/users/${args.name}?access_key=${process.env.CODEWARS_TOKEN}`,
+  );
+
+  await ctx.prisma.mutation.createIntegration({ data: {
+    user: { connect: { id: ctx.request.userId } },
+    key: 'codewars',
+    connector: { name: args.name },
+    data: parseCodewarsData(data),
+  }});
+
+  return { message: 'SUCCESS' }
+};
+
+const detachCodewars = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+
+  const user = await ctx.prisma.query.user({ where: { id: ctx.request.userId } }, '{ integrations( where: { key: "codewars" } ) { id } }');
+  await ctx.prisma.mutation.deleteIntegration({ where: { id: user.integrations[0].id } });
+
+  return { message: 'SUCCESS' }
+};
+
+const integratePluralsight = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+
+  const { data } = await axios.get(
+    `https://app.pluralsight.com/profile/data/skillmeasurements/${args.key}`
+  );
+  if (!data || !data.length) throw new Error('USER_NOT_FOUND');
+
+  await ctx.prisma.mutation.createIntegration({ data: {
+    user: { connect: { id: ctx.request.userId } },
+    key: 'pluralsight',
+    connector: { pluralsightId: args.key },
+    data,
+  }});
+
+  return { message: 'SUCCESS' }
+};
+
+const detachPluralsight = async (parent, args, ctx, info) => {
+  await validate(ctx).userExist();
+
+  const user = await ctx.prisma.query.user({ where: { id: ctx.request.userId } }, '{ integrations( where: { key: "pluralsight" } ) { id } }');
+  await ctx.prisma.mutation.deleteIntegration({ where: { id: user.integrations[0].id } });
+
+  return { message: 'SUCCESS' }
+};
+
 module.exports = {
   createUser,
   updateUser,
@@ -75,4 +142,8 @@ module.exports = {
   signIn,
   signOut,
   updateProfile,
+  integrateCodewars,
+  detachCodewars,
+  integratePluralsight,
+  detachPluralsight,
 };

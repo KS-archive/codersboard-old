@@ -29,12 +29,10 @@ const handleSubmit = async (values: IMemberValues, actions: FormikActions<IMembe
       await createMember(values);
       message.success('Dodano nowego członka projektu');
     }
-    console.log(values);
 
     actions.setSubmitting(false);
     closeModal();
   } catch (ex) {
-    console.log(ex);
     message.error('Podczas dodawania członka wystąpił błąd');
   }
 };

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Wed May 29 2019 13:35:24 GMT+0200 (Central European Summer Time)
+# timestamp: Fri May 31 2019 17:17:15 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -18,6 +18,10 @@ type AggregateCredential {
 }
 
 type AggregateEvent {
+  count: Int!
+}
+
+type AggregateIntegration {
   count: Int!
 }
 
@@ -75,7 +79,7 @@ type AggregateUserSkill {
 
 type Area implements Node {
   id: ID!
-  url: String
+  url: String!
   name: String!
   image: String
   description: String!
@@ -99,7 +103,7 @@ type AreaConnection {
 
 input AreaCreateInput {
   id: ID
-  url: String
+  url: String!
   name: String!
   image: String
   description: String!
@@ -125,7 +129,7 @@ input AreaCreateslackChannelsInput {
 
 input AreaCreateWithoutMembersInput {
   id: ID
-  url: String
+  url: String!
   name: String!
   image: String
   description: String!
@@ -664,7 +668,7 @@ enum AreaPermission {
 
 type AreaPreviousValues {
   id: ID!
-  url: String
+  url: String!
   name: String!
   image: String
   description: String!
@@ -2556,6 +2560,351 @@ enum Institution {
   ASSOCIATION
 }
 
+type Integration implements Node {
+  id: ID!
+  key: String!
+  connector: Json!
+  data: Json!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type IntegrationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [IntegrationEdge]!
+  aggregate: AggregateIntegration!
+}
+
+input IntegrationCreateInput {
+  id: ID
+  key: String!
+  connector: Json!
+  data: Json!
+  user: UserCreateOneWithoutIntegrationsInput!
+}
+
+input IntegrationCreateManyWithoutUserInput {
+  create: [IntegrationCreateWithoutUserInput!]
+  connect: [IntegrationWhereUniqueInput!]
+}
+
+input IntegrationCreateWithoutUserInput {
+  id: ID
+  key: String!
+  connector: Json!
+  data: Json!
+}
+
+"""An edge in a connection."""
+type IntegrationEdge {
+  """The item at the end of the edge."""
+  node: Integration!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum IntegrationOrderByInput {
+  id_ASC
+  id_DESC
+  key_ASC
+  key_DESC
+  connector_ASC
+  connector_DESC
+  data_ASC
+  data_DESC
+}
+
+type IntegrationPreviousValues {
+  id: ID!
+  key: String!
+  connector: Json!
+  data: Json!
+}
+
+input IntegrationScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [IntegrationScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [IntegrationScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [IntegrationScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+}
+
+type IntegrationSubscriptionPayload {
+  mutation: MutationType!
+  node: Integration
+  updatedFields: [String!]
+  previousValues: IntegrationPreviousValues
+}
+
+input IntegrationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [IntegrationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [IntegrationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [IntegrationSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: IntegrationWhereInput
+}
+
+input IntegrationUpdateInput {
+  key: String
+  connector: Json
+  data: Json
+  user: UserUpdateOneRequiredWithoutIntegrationsInput
+}
+
+input IntegrationUpdateManyDataInput {
+  key: String
+  connector: Json
+  data: Json
+}
+
+input IntegrationUpdateManyMutationInput {
+  key: String
+  connector: Json
+  data: Json
+}
+
+input IntegrationUpdateManyWithoutUserInput {
+  create: [IntegrationCreateWithoutUserInput!]
+  connect: [IntegrationWhereUniqueInput!]
+  set: [IntegrationWhereUniqueInput!]
+  disconnect: [IntegrationWhereUniqueInput!]
+  delete: [IntegrationWhereUniqueInput!]
+  update: [IntegrationUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [IntegrationUpdateManyWithWhereNestedInput!]
+  deleteMany: [IntegrationScalarWhereInput!]
+  upsert: [IntegrationUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input IntegrationUpdateManyWithWhereNestedInput {
+  where: IntegrationScalarWhereInput!
+  data: IntegrationUpdateManyDataInput!
+}
+
+input IntegrationUpdateWithoutUserDataInput {
+  key: String
+  connector: Json
+  data: Json
+}
+
+input IntegrationUpdateWithWhereUniqueWithoutUserInput {
+  where: IntegrationWhereUniqueInput!
+  data: IntegrationUpdateWithoutUserDataInput!
+}
+
+input IntegrationUpsertWithWhereUniqueWithoutUserInput {
+  where: IntegrationWhereUniqueInput!
+  update: IntegrationUpdateWithoutUserDataInput!
+  create: IntegrationCreateWithoutUserInput!
+}
+
+input IntegrationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [IntegrationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [IntegrationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [IntegrationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  user: UserWhereInput
+}
+
+input IntegrationWhereUniqueInput {
+  id: ID
+}
+
+"""Raw JSON value"""
+scalar Json
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -2566,7 +2915,7 @@ enum MainPermission {
   OWNER
   ADMIN
   MEMBER
-  TRAINEE
+  GUEST
   HR
   FINANCE
   DATA
@@ -3373,6 +3722,7 @@ input MaterialWhereUniqueInput {
 }
 
 type Mutation {
+  createIntegration(data: IntegrationCreateInput!): Integration!
   createUniversity(data: UniversityCreateInput!): University!
   createSkill(data: SkillCreateInput!): Skill!
   createUserSkill(data: UserSkillCreateInput!): UserSkill!
@@ -3391,6 +3741,7 @@ type Mutation {
   createArea(data: AreaCreateInput!): Area!
   createMaterialTag(data: MaterialTagCreateInput!): MaterialTag!
   createUser(data: UserCreateInput!): User!
+  updateIntegration(data: IntegrationUpdateInput!, where: IntegrationWhereUniqueInput!): Integration
   updateUniversity(data: UniversityUpdateInput!, where: UniversityWhereUniqueInput!): University
   updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
   updateUserSkill(data: UserSkillUpdateInput!, where: UserSkillWhereUniqueInput!): UserSkill
@@ -3409,6 +3760,7 @@ type Mutation {
   updateArea(data: AreaUpdateInput!, where: AreaWhereUniqueInput!): Area
   updateMaterialTag(data: MaterialTagUpdateInput!, where: MaterialTagWhereUniqueInput!): MaterialTag
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteIntegration(where: IntegrationWhereUniqueInput!): Integration
   deleteUniversity(where: UniversityWhereUniqueInput!): University
   deleteSkill(where: SkillWhereUniqueInput!): Skill
   deleteUserSkill(where: UserSkillWhereUniqueInput!): UserSkill
@@ -3427,6 +3779,7 @@ type Mutation {
   deleteArea(where: AreaWhereUniqueInput!): Area
   deleteMaterialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertIntegration(where: IntegrationWhereUniqueInput!, create: IntegrationCreateInput!, update: IntegrationUpdateInput!): Integration!
   upsertUniversity(where: UniversityWhereUniqueInput!, create: UniversityCreateInput!, update: UniversityUpdateInput!): University!
   upsertSkill(where: SkillWhereUniqueInput!, create: SkillCreateInput!, update: SkillUpdateInput!): Skill!
   upsertUserSkill(where: UserSkillWhereUniqueInput!, create: UserSkillCreateInput!, update: UserSkillUpdateInput!): UserSkill!
@@ -3445,6 +3798,7 @@ type Mutation {
   upsertArea(where: AreaWhereUniqueInput!, create: AreaCreateInput!, update: AreaUpdateInput!): Area!
   upsertMaterialTag(where: MaterialTagWhereUniqueInput!, create: MaterialTagCreateInput!, update: MaterialTagUpdateInput!): MaterialTag!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyIntegrations(data: IntegrationUpdateManyMutationInput!, where: IntegrationWhereInput): BatchPayload!
   updateManyUniversities(data: UniversityUpdateManyMutationInput!, where: UniversityWhereInput): BatchPayload!
   updateManySkills(data: SkillUpdateManyMutationInput!, where: SkillWhereInput): BatchPayload!
   updateManyUserSkills(data: UserSkillUpdateManyMutationInput!, where: UserSkillWhereInput): BatchPayload!
@@ -3463,6 +3817,7 @@ type Mutation {
   updateManyAreas(data: AreaUpdateManyMutationInput!, where: AreaWhereInput): BatchPayload!
   updateManyMaterialTags(data: MaterialTagUpdateManyMutationInput!, where: MaterialTagWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyIntegrations(where: IntegrationWhereInput): BatchPayload!
   deleteManyUniversities(where: UniversityWhereInput): BatchPayload!
   deleteManySkills(where: SkillWhereInput): BatchPayload!
   deleteManyUserSkills(where: UserSkillWhereInput): BatchPayload!
@@ -4097,7 +4452,7 @@ input PostWhereUniqueInput {
 
 type Project implements Node {
   id: ID!
-  url: String
+  url: String!
   name: String!
   description: String!
   image: String!
@@ -4130,7 +4485,7 @@ input ProjectCreategalleryInput {
 
 input ProjectCreateInput {
   id: ID
-  url: String
+  url: String!
   name: String!
   description: String!
   image: String!
@@ -4161,7 +4516,7 @@ input ProjectCreateslackChannelsInput {
 
 input ProjectCreateWithoutMembersInput {
   id: ID
-  url: String
+  url: String!
   name: String!
   description: String!
   image: String!
@@ -4713,7 +5068,7 @@ enum ProjectPermission {
 
 type ProjectPreviousValues {
   id: ID!
-  url: String
+  url: String!
   name: String!
   description: String!
   image: String!
@@ -5287,6 +5642,7 @@ input ProjectWhereUniqueInput {
 }
 
 type Query {
+  integrations(where: IntegrationWhereInput, orderBy: IntegrationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Integration]!
   universities(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [University]!
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   userSkills(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserSkill]!
@@ -5305,6 +5661,7 @@ type Query {
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   materialTags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  integration(where: IntegrationWhereUniqueInput!): Integration
   university(where: UniversityWhereUniqueInput!): University
   skill(where: SkillWhereUniqueInput!): Skill
   userSkill(where: UserSkillWhereUniqueInput!): UserSkill
@@ -5323,6 +5680,7 @@ type Query {
   area(where: AreaWhereUniqueInput!): Area
   materialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
   user(where: UserWhereUniqueInput!): User
+  integrationsConnection(where: IntegrationWhereInput, orderBy: IntegrationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IntegrationConnection!
   universitiesConnection(where: UniversityWhereInput, orderBy: UniversityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UniversityConnection!
   skillsConnection(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SkillConnection!
   userSkillsConnection(where: UserSkillWhereInput, orderBy: UserSkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserSkillConnection!
@@ -5989,6 +6347,7 @@ input SlackChannelWhereUniqueInput {
 }
 
 type Subscription {
+  integration(where: IntegrationSubscriptionWhereInput): IntegrationSubscriptionPayload
   university(where: UniversitySubscriptionWhereInput): UniversitySubscriptionPayload
   skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
   userSkill(where: UserSkillSubscriptionWhereInput): UserSkillSubscriptionPayload
@@ -6930,6 +7289,7 @@ type User implements Node {
   slackChannels(where: SlackChannelWhereInput, orderBy: SlackChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SlackChannel!]
   credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential!]
   special: [String!]!
+  integrations(where: IntegrationWhereInput, orderBy: IntegrationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Integration!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -6968,6 +7328,7 @@ input UserCreateInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  integrations: IntegrationCreateManyWithoutUserInput
 }
 
 input UserCreateinstitutionInput {
@@ -7001,6 +7362,11 @@ input UserCreateOneInput {
 
 input UserCreateOneWithoutAreasInput {
   create: UserCreateWithoutAreasInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutIntegrationsInput {
+  create: UserCreateWithoutIntegrationsInput
   connect: UserWhereUniqueInput
 }
 
@@ -7045,6 +7411,7 @@ input UserCreateWithoutAreasInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  integrations: IntegrationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutCredentialsInput {
@@ -7070,6 +7437,33 @@ input UserCreateWithoutCredentialsInput {
   projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
+  integrations: IntegrationCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutIntegrationsInput {
+  id: ID
+  fullName: String!
+  profileURL: String!
+  image: String!
+  email: String!
+  companyEmail: String
+  phone: String
+  password: String!
+  role: String
+  universityDepartment: String
+  fieldOfStudy: String
+  year: Int
+  indexNumber: Int
+  slackId: String
+  permissions: UserCreatepermissionsInput
+  institution: UserCreateinstitutionInput
+  special: UserCreatespecialInput
+  areas: AreaMemberCreateManyWithoutUserInput
+  skills: UserSkillCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
+  university: UniversityCreateOneWithoutUsersInput
+  slackChannels: SlackChannelCreateManyWithoutUsersInput
+  credentials: CredentialCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutProjectsInput {
@@ -7095,6 +7489,7 @@ input UserCreateWithoutProjectsInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  integrations: IntegrationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutSkillsInput {
@@ -7120,6 +7515,7 @@ input UserCreateWithoutSkillsInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  integrations: IntegrationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutSlackChannelsInput {
@@ -7145,6 +7541,7 @@ input UserCreateWithoutSlackChannelsInput {
   projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  integrations: IntegrationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutUniversityInput {
@@ -7170,6 +7567,7 @@ input UserCreateWithoutUniversityInput {
   projects: ProjectMemberCreateManyWithoutUserInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  integrations: IntegrationCreateManyWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -8256,6 +8654,7 @@ input UserUpdateDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -8281,6 +8680,7 @@ input UserUpdateInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
 }
 
 input UserUpdateinstitutionInput {
@@ -8401,6 +8801,13 @@ input UserUpdateOneRequiredWithoutAreasInput {
   upsert: UserUpsertWithoutAreasInput
 }
 
+input UserUpdateOneRequiredWithoutIntegrationsInput {
+  create: UserCreateWithoutIntegrationsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutIntegrationsDataInput
+  upsert: UserUpsertWithoutIntegrationsInput
+}
+
 input UserUpdateOneRequiredWithoutProjectsInput {
   create: UserCreateWithoutProjectsInput
   connect: UserWhereUniqueInput
@@ -8445,6 +8852,7 @@ input UserUpdateWithoutAreasDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutCredentialsDataInput {
@@ -8469,6 +8877,32 @@ input UserUpdateWithoutCredentialsDataInput {
   projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutIntegrationsDataInput {
+  fullName: String
+  profileURL: String
+  image: String
+  email: String
+  companyEmail: String
+  phone: String
+  password: String
+  role: String
+  universityDepartment: String
+  fieldOfStudy: String
+  year: Int
+  indexNumber: Int
+  slackId: String
+  permissions: UserUpdatepermissionsInput
+  institution: UserUpdateinstitutionInput
+  special: UserUpdatespecialInput
+  areas: AreaMemberUpdateManyWithoutUserInput
+  skills: UserSkillUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
+  university: UniversityUpdateOneWithoutUsersInput
+  slackChannels: SlackChannelUpdateManyWithoutUsersInput
+  credentials: CredentialUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutProjectsDataInput {
@@ -8493,6 +8927,7 @@ input UserUpdateWithoutProjectsDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutSkillsDataInput {
@@ -8517,6 +8952,7 @@ input UserUpdateWithoutSkillsDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutSlackChannelsDataInput {
@@ -8541,6 +8977,7 @@ input UserUpdateWithoutSlackChannelsDataInput {
   projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutUniversityDataInput {
@@ -8565,6 +9002,7 @@ input UserUpdateWithoutUniversityDataInput {
   projects: ProjectMemberUpdateManyWithoutUserInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -8595,6 +9033,11 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutAreasInput {
   update: UserUpdateWithoutAreasDataInput!
   create: UserCreateWithoutAreasInput!
+}
+
+input UserUpsertWithoutIntegrationsInput {
+  update: UserUpdateWithoutIntegrationsDataInput!
+  create: UserCreateWithoutIntegrationsInput!
 }
 
 input UserUpsertWithoutProjectsInput {
@@ -9224,6 +9667,9 @@ input UserWhereInput {
   credentials_every: CredentialWhereInput
   credentials_some: CredentialWhereInput
   credentials_none: CredentialWhereInput
+  integrations_every: IntegrationWhereInput
+  integrations_some: IntegrationWhereInput
+  integrations_none: IntegrationWhereInput
 }
 
 input UserWhereUniqueInput {
