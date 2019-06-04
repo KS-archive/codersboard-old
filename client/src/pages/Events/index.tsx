@@ -49,6 +49,10 @@ class Events extends Component<IProps, IState> {
     this.setState({ openedModal: 'form', modalData: { start: new Date(start), end: new Date(end) } });
   };
 
+  openEditModal = (modalData: IEvent) => {
+    this.setState({ openedModal: 'form', modalData });
+  };
+
   // onEventResize = (resizeParams: IResizeParams) => {
   //   this.setState(changeEventDates(resizeParams));
   // };
@@ -81,12 +85,20 @@ class Events extends Component<IProps, IState> {
           events={events}
           views={['week', 'month', 'agenda']}
           defaultView={Calendar.Views.WEEK}
+          min={new Date(2019, 10, 0, 8, 0, 0)}
+          max={new Date(2019, 10, 0, 23, 59, 59)}
           // onEventDrop={this.onEventDrop}
           // onEventResize={this.onEventResize}
           onSelectEvent={this.openDetailsModal}
           onSelectSlot={this.handleSelect}
         />
-        {openedModal === 'details' && <DetailsModal data={events[modalDataIndex].resource} handleClose={this.closeModal} />}
+        {openedModal === 'details' && (
+          <DetailsModal
+            openEditModal={this.openEditModal}
+            data={events[modalDataIndex] && events[modalDataIndex].resource}
+            handleClose={this.closeModal}
+          />
+        )}
         {openedModal === 'form' && <FormModal data={modalData} handleClose={this.closeModal} />}
       </>
     );

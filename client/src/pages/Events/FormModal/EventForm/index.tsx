@@ -29,8 +29,26 @@ const EventForm: React.FC<IProps> = ({ status, values, users, projects }) => {
       <Field name="description" component={TextArea} label="Opis" />
       <Field name="location" component={Input} label="Lokalizacja" />
       <Field name="url" component={Input} label="Adres url wydarzenia" />
-      <Field name="start" component={DatePicker} label="Data rozpoczęcia" placeholder={null} />
-      <Field name="end" component={DatePicker} label="Data zakończenia" placeholder={null} />
+      <Field
+        name="start"
+        component={DatePicker}
+        label="Data rozpoczęcia"
+        placeholder={null}
+        showTime={{
+          minuteStep: 5,
+          format: 'HH:mm',
+        }}
+      />
+      <Field
+        name="end"
+        component={DatePicker}
+        label="Data zakończenia"
+        placeholder={null}
+        showTime={{
+          minuteStep: 5,
+          format: 'HH:mm',
+        }}
+      />
       <Field name="type" component={Select} label="Typ" options={typeOptions} />
       <Field
         name="attendees"

@@ -7,6 +7,15 @@ export const StyledModal = styled(Modal)`
     font-size: ${get('font-size-18')};
     color: ${get('color-text-primary')};
   }
+
+  .ant-modal-footer {
+    display: flex;
+    align-items: center;
+
+    > button:nth-child(3) {
+      margin-left: auto;
+    }
+  }
 `;
 
 export const BasicData = styled.div`
