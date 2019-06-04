@@ -5,7 +5,6 @@ export const pathKeys = [
   'successes',
   'events',
   'materials',
-  'stats',
   'admin',
   'settings',
 ];

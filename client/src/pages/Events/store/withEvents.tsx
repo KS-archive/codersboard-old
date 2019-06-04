@@ -47,8 +47,8 @@ export type AttendeeStatusType = 'YES' | 'NO';
 export type EventType = 'OPEN' | 'PRIVATE';
 
 export interface IEventAttendee {
-  id: string;
-  user: {
+  id?: string;
+  user?: {
     id: string;
     fullName: string;
     image: string;
@@ -84,14 +84,34 @@ export interface IEvent {
   updatedAt: string;
 }
 
+export interface ICalendarEvent {
+  start?: Date;
+  end?: Date;
+  title: string;
+  resource: IEvent;
+}
+
 interface IData {
   events: IEvent[];
 }
 
-export interface IWithEvents extends IData {
+export interface IWithEvents {
+  events: ICalendarEvent[];
   eventsLoading: boolean;
 }
 
 export default (WrapperComponent: any) => (props: any) => (
-  <Query<IData, {}> query={EVENTS}>{({ data, loading }) => <WrapperComponent {...props} events={data.events} eventsLoading={loading} />}</Query>
+  <Query<IData, {}> query={EVENTS}>{({ data, loading }) => {
+    let events: ICalendarEvent[] = [];
+    if (!loading) {
+      events = data.events.map(event => ({
+        start: event.start && new Date(event.start),
+        end: event.end && new Date(event.end),
+        title: event.title,
+        resource: event,
+      }));
+    }
+
+    return <WrapperComponent {...props} events={events} eventsLoading={loading} />
+  }}</Query>
 );

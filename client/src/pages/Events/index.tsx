@@ -28,62 +28,54 @@ const messages = {
   noEventsInRange: 'Brak wydarzeń',
 };
 
-const changeEventDates = (resizeParams: IResizeParams) => (state: IState) => {
-  const index = state.events.findIndex(
-    ({ title, start }) => title === resizeParams.event.title && start === resizeParams.event.start,
-  );
-  state.events[index].start = resizeParams.start as Date;
-  state.events[index].end = resizeParams.end as Date;
-  return { events: state.events };
-};
+// const changeEventDates = (resizeParams: IResizeParams) => (state: IState) => {
+//   const index = state.events.findIndex(
+//     ({ title, start }) => title === resizeParams.event.title && start === resizeParams.event.start,
+//   );
+//   state.events[index].start = resizeParams.start as Date;
+//   state.events[index].end = resizeParams.end as Date;
+//   return { events: state.events };
+// };
 
 class Events extends Component<IProps, IState> {
   state: IState = {
-    events: [],
     openedModal: '',
-    modalData: null,
+    modalDataIndex: -1,
   };
 
-  componentDidUpdate(prevProps: IProps, prevState: any) {
-    if (prevProps.eventsLoading && !this.props.eventsLoading) {
-      const events = this.props.events.map(event => ({
-        start: event.start && new Date(event.start),
-        end: event.end && new Date(event.end),
-        title: event.title,
-        resource: event,
-      }));
+  // handleSelect = ({ start, end, action }: ISlotInfo) => {
+  //   this.setState({
+  //     events: [
+  //       ...this.state.events,
+  //       {
+  //         start: start as Date,
+  //         end: end as Date,
+  //         title: 'Nowe wydarzenie',
+  //       },
+  //     ],
+  //   });
+  // };
 
-      this.setState({ events });
-    }
-  }
+  // onEventResize = (resizeParams: IResizeParams) => {
+  //   this.setState(changeEventDates(resizeParams));
+  // };
 
-  handleSelect = ({ start, end, action }: ISlotInfo) => {
+  // onEventDrop = (resizeParams: IResizeParams) => {
+  //   this.setState(changeEventDates(resizeParams));
+  // };
+
+  openDetailsModal = (event: Event) => {
     this.setState({
-      events: [
-        ...this.state.events,
-        {
-          start: start as Date,
-          end: end as Date,
-          title: 'Nowe wydarzenie',
-        },
-      ],
+      openedModal: 'details',
+      modalDataIndex: this.props.events.findIndex(({ resource: { id } }) => id === event.resource.id),
     });
   };
 
-  onEventResize = (resizeParams: IResizeParams) => {
-    this.setState(changeEventDates(resizeParams));
-  };
-
-  onEventDrop = (resizeParams: IResizeParams) => {
-    this.setState(changeEventDates(resizeParams));
-  };
-
-  openDetailsModal = (event: Event) => this.setState({ openedModal: 'details', modalData: event.resource });
-
-  closeModal = () => this.setState({ openedModal: '', modalData: null });
+  closeModal = () => this.setState({ openedModal: '', modalDataIndex: -1 });
 
   render() {
-    const { events, openedModal, modalData } = this.state;
+    const { openedModal, modalDataIndex } = this.state;
+    const { events } = this.props;
 
     return (
       <>
@@ -96,12 +88,12 @@ class Events extends Component<IProps, IState> {
           events={events}
           views={['week', 'month', 'agenda']}
           defaultView={Calendar.Views.WEEK}
-          onEventDrop={this.onEventDrop}
-          onEventResize={this.onEventResize}
+          // onEventDrop={this.onEventDrop}
+          // onEventResize={this.onEventResize}
           onSelectEvent={this.openDetailsModal}
-          onSelectSlot={this.handleSelect}
+          // onSelectSlot={this.handleSelect}
         />
-        {openedModal === 'details' && <DetailsModal data={modalData} handleClose={this.closeModal} />}
+        {openedModal === 'details' && <DetailsModal data={events[modalDataIndex].resource} handleClose={this.closeModal} />}
       </>
     );
   }
@@ -124,9 +116,8 @@ interface ISlotInfo {
 interface IProps extends IWithEvents {}
 
 interface IState {
-  events: Event[];
   openedModal: string;
-  modalData: IEvent;
+  modalDataIndex: number;
 }
 
 export default withEvents(Events);
