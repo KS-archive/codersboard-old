@@ -54,6 +54,7 @@ type User {
   credentials: [Credential!]!
   special: [String!]! @scalarList(strategy: RELATION)
   integrations: [Integration!]!
+  events: [Attendee!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -195,36 +196,35 @@ type AreaMember {
 enum EventType {
   OPEN
   PRIVATE
-  PROJECT_MEETING
-  AREA_MEETING
-  OTHER
 }
 
 type Event {
   id: ID! @id
-  summary: String!
+  title: String!
   description: String
-  start: TimeZoneDate @relation(name: "TimezoneRelationStart")
-  end: TimeZoneDate @relation(name: "TimezoneRelationEnd")
+  start: DateTime
+  end: DateTime
   image: String
+  attendees: [Attendee!]!
+  location: String
+  url: String
+  project: Project
+  area: Area
+  type: EventType
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  attendees: [Attendee!]! @scalarList(strategy: RELATION)
-  location: String
-  htmlLink: String
-  calendarEventId: String
 }
 
-type TimeZoneDate {
-  id: ID! @id
-  dateTime: DateTime!
-  timeZone: String
+enum AttendeeStatus {
+  YES
+  NO
 }
 
 type Attendee {
   id: ID! @id
-  email: String
-  responseStatus: String
+  user: User!
+  event: Event!
+  status: AttendeeStatus
 }
 
 type PostTag {
