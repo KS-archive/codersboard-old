@@ -32,7 +32,7 @@ export interface ISuccess {
   id?: string;
   name: string;
   description: string;
-  date: string;
+  date: Date;
   type: SuccessType;
   users: {
     id: string;

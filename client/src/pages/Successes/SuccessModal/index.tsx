@@ -9,7 +9,7 @@ import SuccessForm from './SuccessForm';
 const newSuccessInitialValues: ISuccessValues = {
   name: '',
   description: '',
-  date: '',
+  date: new Date(),
   type: 'SMALL',
   users: [],
   project: '',
@@ -74,7 +74,7 @@ export interface ISuccessValues {
   id?: string;
   name: string;
   description: string;
-  date: string;
+  date: Date;
   type: SuccessType;
   users: string[];
   project: string;
