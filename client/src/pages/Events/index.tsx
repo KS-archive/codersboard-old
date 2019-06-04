@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'moment/locale/pl';
 import withEvents, { IWithEvents, IEvent } from './store/withEvents';
 import DetailsModal from './DetailsModal';
+import FormModal from './FormModal';
 import { BigCalendar } from './styles';
 
 moment.locale('pl');
@@ -41,20 +42,12 @@ class Events extends Component<IProps, IState> {
   state: IState = {
     openedModal: '',
     modalDataIndex: -1,
+    modalData: {},
   };
 
-  // handleSelect = ({ start, end, action }: ISlotInfo) => {
-  //   this.setState({
-  //     events: [
-  //       ...this.state.events,
-  //       {
-  //         start: start as Date,
-  //         end: end as Date,
-  //         title: 'Nowe wydarzenie',
-  //       },
-  //     ],
-  //   });
-  // };
+  handleSelect = ({ start, end, action }: ISlotInfo) => {
+    this.setState({ openedModal: 'form', modalData: { start: new Date(start), end: new Date(end) } });
+  };
 
   // onEventResize = (resizeParams: IResizeParams) => {
   //   this.setState(changeEventDates(resizeParams));
@@ -74,7 +67,7 @@ class Events extends Component<IProps, IState> {
   closeModal = () => this.setState({ openedModal: '', modalDataIndex: -1 });
 
   render() {
-    const { openedModal, modalDataIndex } = this.state;
+    const { openedModal, modalDataIndex, modalData } = this.state;
     const { events } = this.props;
 
     return (
@@ -91,9 +84,10 @@ class Events extends Component<IProps, IState> {
           // onEventDrop={this.onEventDrop}
           // onEventResize={this.onEventResize}
           onSelectEvent={this.openDetailsModal}
-          // onSelectSlot={this.handleSelect}
+          onSelectSlot={this.handleSelect}
         />
         {openedModal === 'details' && <DetailsModal data={events[modalDataIndex].resource} handleClose={this.closeModal} />}
+        {openedModal === 'form' && <FormModal data={modalData} handleClose={this.closeModal} />}
       </>
     );
   }
@@ -118,6 +112,7 @@ interface IProps extends IWithEvents {}
 interface IState {
   openedModal: string;
   modalDataIndex: number;
+  modalData: IEvent;
 }
 
 export default withEvents(Events);

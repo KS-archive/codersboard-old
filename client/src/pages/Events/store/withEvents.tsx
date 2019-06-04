@@ -10,7 +10,7 @@ export const EVENTS = gql`
       description
       start
       end
-      image
+      allDay
       attendees {
         id
         user {
@@ -36,8 +36,6 @@ export const EVENTS = gql`
         url
       }
       type
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -58,13 +56,13 @@ export interface IEventAttendee {
 }
 
 export interface IEvent {
-  id: string;
-  title: string;
+  id?: string;
+  title?: string;
   description?: string;
-  start?: string;
-  end?: string;
-  image?: string;
-  attendees: IEventAttendee[];
+  start?: Date;
+  end?: Date;
+  allDay?: boolean;
+  attendees?: IEventAttendee[];
   location?: string;
   url?: string;
   project?: {
@@ -79,9 +77,7 @@ export interface IEvent {
     image: string;
     url: string;
   };
-  type: EventType;
-  createdAt: string;
-  updatedAt: string;
+  type?: EventType;
 }
 
 export interface ICalendarEvent {

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Tue Jun 04 2019 01:44:40 GMT+0200 (Central European Summer Time)
+# timestamp: Tue Jun 04 2019 18:36:36 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -1983,7 +1983,7 @@ type Event implements Node {
   description: String
   start: DateTime
   end: DateTime
-  image: String
+  allDay: Boolean
   attendees(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee!]
   location: String
   url: String
@@ -2010,7 +2010,7 @@ input EventCreateInput {
   description: String
   start: DateTime
   end: DateTime
-  image: String
+  allDay: Boolean
   location: String
   url: String
   type: EventType
@@ -2030,7 +2030,7 @@ input EventCreateWithoutAttendeesInput {
   description: String
   start: DateTime
   end: DateTime
-  image: String
+  allDay: Boolean
   location: String
   url: String
   type: EventType
@@ -2058,8 +2058,8 @@ enum EventOrderByInput {
   start_DESC
   end_ASC
   end_DESC
-  image_ASC
-  image_DESC
+  allDay_ASC
+  allDay_DESC
   location_ASC
   location_DESC
   url_ASC
@@ -2078,7 +2078,7 @@ type EventPreviousValues {
   description: String
   start: DateTime
   end: DateTime
-  image: String
+  allDay: Boolean
   location: String
   url: String
   type: EventType
@@ -2133,7 +2133,7 @@ input EventUpdateInput {
   description: String
   start: DateTime
   end: DateTime
-  image: String
+  allDay: Boolean
   location: String
   url: String
   type: EventType
@@ -2147,7 +2147,7 @@ input EventUpdateManyMutationInput {
   description: String
   start: DateTime
   end: DateTime
-  image: String
+  allDay: Boolean
   location: String
   url: String
   type: EventType
@@ -2165,7 +2165,7 @@ input EventUpdateWithoutAttendeesDataInput {
   description: String
   start: DateTime
   end: DateTime
-  image: String
+  allDay: Boolean
   location: String
   url: String
   type: EventType
@@ -2351,46 +2351,10 @@ input EventWhereInput {
 
   """All values greater than or equal the given value."""
   end_gte: DateTime
-  image: String
+  allDay: Boolean
 
   """All values that are not equal to given value."""
-  image_not: String
-
-  """All values that are contained in given list."""
-  image_in: [String!]
-
-  """All values that are not contained in given list."""
-  image_not_in: [String!]
-
-  """All values less than the given value."""
-  image_lt: String
-
-  """All values less than or equal the given value."""
-  image_lte: String
-
-  """All values greater than the given value."""
-  image_gt: String
-
-  """All values greater than or equal the given value."""
-  image_gte: String
-
-  """All values containing the given string."""
-  image_contains: String
-
-  """All values not containing the given string."""
-  image_not_contains: String
-
-  """All values starting with the given string."""
-  image_starts_with: String
-
-  """All values not starting with the given string."""
-  image_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_ends_with: String
-
-  """All values not ending with the given string."""
-  image_not_ends_with: String
+  allDay_not: Boolean
   location: String
 
   """All values that are not equal to given value."""

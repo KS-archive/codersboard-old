@@ -204,7 +204,7 @@ type Event {
   description: String
   start: DateTime
   end: DateTime
-  image: String
+  allDay: Boolean
   attendees: [Attendee!]!
   location: String
   url: String

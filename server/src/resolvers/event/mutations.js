@@ -17,35 +17,36 @@ const deleteEvent = async (parent, args, ctx, info) => {
 
 const attendEvent = async (parent, args, ctx, info) => {
   await validate(ctx).userExist();
-  await ctx.prisma.mutation.upsertAttendee({
-    where: {
-      id: args.attendeeId,
-    },
-    update: {
-      status: 'YES',
-    },
-    create: {
-      user: { connect: { id: ctx.request.userId } },
-      event: { connect: { id: args.eventId } },
-      status: 'YES',
-    },
-  });
+
+  if (args.attendeeId) {
+    await ctx.prisma.mutation.updateAttendee({
+      where: {
+        id: args.attendeeId,
+      },
+      data: {
+        status: 'YES',
+      },
+    });
+  } else {
+    await ctx.prisma.mutation.createAttendee({
+      data: {
+        user: { connect: { id: ctx.request.userId } },
+        event: { connect: { id: args.eventId } },
+        status: 'YES',
+      },
+    });
+  }
 
   return { message: 'ATTEND' };
 };
 
 const neglectEvent = async (parent, args, ctx, info) => {
   await validate(ctx).userExist();
-  await ctx.prisma.mutation.upsertAttendee({
+  await ctx.prisma.mutation.updateAttendee({
     where: {
       id: args.attendeeId,
     },
-    update: {
-      status: 'NO',
-    },
-    create: {
-      user: { connect: { id: ctx.request.userId } },
-      event: { connect: { id: args.eventId } },
+    data: {
       status: 'NO',
     },
   });
@@ -59,4 +60,4 @@ module.exports = {
   deleteEvent,
   attendEvent,
   neglectEvent,
-}
+};

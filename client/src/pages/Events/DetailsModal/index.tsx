@@ -36,7 +36,7 @@ const renderFooter = (myId: string, eventId: string, attendees: IEventAttendee[]
       <DeclineButton
         key="decline"
         type={myStatus === 'NO' ? 'primary' : 'default'}
-        onClick={() => neglectEvent(meInAttendees.id, eventId)}
+        onClick={() => neglectEvent(eventId, meInAttendees.id)}
       >
         Nie wezmę udziału
       </DeclineButton>,
@@ -47,7 +47,7 @@ const renderFooter = (myId: string, eventId: string, attendees: IEventAttendee[]
     <AcceptButton
       key="accept"
       type={myStatus === 'YES' ? 'primary' : 'default'}
-      onClick={() => attendEvent(meInAttendees.id, eventId)}
+      onClick={() => attendEvent(eventId, meInAttendees.id)}
     >
       Wezmę udział
     </AcceptButton>,

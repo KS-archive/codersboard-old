@@ -50,8 +50,8 @@ type Mutation {
   createEvent(data: EventCreateInput!): Event!
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   deleteEvent(where: EventWhereUniqueInput!): Event
-  attendEvent(attendeeId: String!, eventId: String!): Message
-  neglectEvent(attendeeId: String!, eventId: String!): Message
+  attendEvent(eventId: String!, attendeeId: String): Message
+  neglectEvent(eventId: String!, attendeeId: String!): Message
 
 
   createPost(data: PostCreateInput!): Post!

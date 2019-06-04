@@ -3,8 +3,8 @@ import { apollo } from 'utils';
 import { EVENTS } from './withEvents';
 
 const ATTEND_EVENT = gql`
-  mutation attendEvent($attendeeId: String!, $eventId: String!) {
-    attendEvent(attendeeId: $attendeeId, eventId: $eventId) {
+  mutation attendEvent($eventId: String!, $attendeeId: String) {
+    attendEvent(eventId: $eventId, attendeeId: $attendeeId) {
       message
     }
   }
@@ -16,7 +16,7 @@ interface IAttendEventResponse {
   };
 }
 
-export default async (attendeeId: string, eventId: string) => {
+export default async (eventId: string, attendeeId?: string) => {
   const data: IAttendEventResponse = await apollo.mutate({
     mutation: ATTEND_EVENT,
     variables: { attendeeId, eventId },

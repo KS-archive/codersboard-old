@@ -3,8 +3,8 @@ import { apollo } from 'utils';
 import { EVENTS } from './withEvents';
 
 const NEGLECT_EVENT = gql`
-  mutation neglectEvent($attendeeId: String!, $eventId: String!) {
-    neglectEvent(attendeeId: $attendeeId, eventId: $eventId) {
+  mutation neglectEvent($eventId: String!, $attendeeId: String!) {
+    neglectEvent(eventId: $eventId, attendeeId: $attendeeId) {
       message
     }
   }
@@ -16,7 +16,7 @@ interface INeglectEventResponse {
   };
 }
 
-export default async (attendeeId: string, eventId: string) => {
+export default async (eventId: string, attendeeId: string) => {
   const data: INeglectEventResponse = await apollo.mutate({
     mutation: NEGLECT_EVENT,
     variables: { attendeeId, eventId },
