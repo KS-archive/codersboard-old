@@ -8,57 +8,59 @@ import { SelectTags } from './styles';
 
 const { Option } = Select;
 
-const Filters: React.FC<IProps> = ({ materials, setFiltered, materialTags, url, areas }) => {
-  const renderTags = () => {
-    if (materialTags && areas) {
-      const areasArr: string[] = [];
-      areas.forEach((area: IArea) => areasArr.push(area.name));
-      console.log(url);
-      if (url === '/materials') {
-        return materialTags.map(tag => (
-          <Option key={tag.id} value={tag.id}>
-            {tag.name}
-          </Option>
-        ));
-      } else {
-        const materialTypes = materialTags.filter(tag => !areasArr.includes(tag.name));
-        return materialTypes.map(tag => (
-          <Option key={tag.id} value={tag.id}>
-            {tag.name}
-          </Option>
-        ));
-      }
-    }
-    return Loader;
-  };
-  const handleFilters = (chosenTags: any) => {
-    let currentMaterials = [];
-    let filteredMaterials: any = [];
-    if (chosenTags && chosenTags.length !== 0) {
-      currentMaterials = materials;
-      filteredMaterials = currentMaterials.filter((material: IMaterial) =>
-        material.tags.some((tag: MaterialTag) => chosenTags.includes(tag.id)),
-      );
-      setFiltered(filteredMaterials);
+const renderTags = (materialTags: MaterialTag[], areas: IArea[], url: string) => {
+  if (materialTags && areas) {
+    const areasArr: string[] = [];
+    areas.forEach((area) => areasArr.push(area.name));
+    if (url === '/materials') {
+      return materialTags.map(tag => (
+        <Option key={tag.id} value={tag.id}>
+          {tag.name}
+        </Option>
+      ));
     } else {
-      filteredMaterials = materials;
-      setFiltered(filteredMaterials);
+      const materialTypes = materialTags.filter(tag => !areasArr.includes(tag.name));
+      return materialTypes.map(tag => (
+        <Option key={tag.id} value={tag.id}>
+          {tag.name}
+        </Option>
+      ));
     }
-  };
+  }
+  return Loader;
+};
+
+const handleFilters = (chosenTags: any, setFiltered: (filteredMaterials: IMaterial[]) => void, materials: IMaterial[]) => {
+  let currentMaterials = [];
+  let filteredMaterials: any = [];
+  if (chosenTags && chosenTags.length !== 0) {
+    currentMaterials = materials;
+    filteredMaterials = currentMaterials.filter((material: IMaterial) =>
+      material.tags.some((tag: MaterialTag) => chosenTags.includes(tag.id)),
+    );
+    setFiltered(filteredMaterials);
+  } else {
+    filteredMaterials = materials;
+    setFiltered(filteredMaterials);
+  }
+};
+
+const Filters: React.FC<IProps> = ({ materials, setFiltered, materialTags, url, areas }) => {
 
   return (
-    <SelectTags mode="tags" placeholder="Filtruj..." onChange={value => handleFilters(value)}>
-      {renderTags()}
+    <SelectTags mode="tags" placeholder="Filtruj..." onChange={value => handleFilters(value, setFiltered, materials)}>
+      {renderTags(materialTags, areas, url)}
     </SelectTags>
   );
 };
 
+
 interface IProps {
   materials: IMaterial[];
-  setFiltered: any;
+  setFiltered: (filteredMaterials: IMaterial[]) => void;
   materialTags: MaterialTag[];
   url: string;
-  areas: any;
+  areas: IArea[];
 }
 
 export default withAreas(withMaterialTags(Filters));

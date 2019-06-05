@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Typography, Spin, Modal, Empty } from 'antd';
-import _ from 'lodash';
 import withMaterials, { IMaterial } from './store/withMaterials';
 import MaterialCard from './MaterialCard';
 import AddMaterial from './AddMaterial';
@@ -10,6 +9,14 @@ import Loader from 'components/Loader';
 import { MaterialsContainer, Header, AddButton, Grid, Wrapper } from './styles';
 
 const { Title } = Typography;
+
+const intersection = (a: any[], b: any[]) => {
+
+  const s = new Set(b);
+
+  return a.filter((x: string) => s.has(x));
+
+};
 
 class Materials extends Component<IProps, IState> {
   constructor(props: IProps) {
@@ -45,7 +52,7 @@ class Materials extends Component<IProps, IState> {
       prevState.filteredMaterials.length !== this.state.filteredMaterials.length ||
       prevState.searchedMaterials.length !== this.state.searchedMaterials.length
     ) {
-      this.setState({ displayedMaterials: _.intersection(this.state.searchedMaterials, this.state.filteredMaterials) });
+      this.setState({ displayedMaterials: intersection(this.state.searchedMaterials, this.state.filteredMaterials) });
     }
   }
 
@@ -70,7 +77,6 @@ class Materials extends Component<IProps, IState> {
   }
 
   render() {
-    console.log(this.props);
     return (
       <MaterialsContainer>
         <Header>

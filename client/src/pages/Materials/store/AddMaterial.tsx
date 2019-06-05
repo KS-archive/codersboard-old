@@ -38,11 +38,11 @@ interface Variables {
     tags: {
       connect: Tag[];
     };
-    user: {
-      connect: {
-        id: string;
-      };
-    };
+    // user: {
+    //   connect: {
+    //     id: string;
+    //   };
+    // };
     credential: object;
   };
 }

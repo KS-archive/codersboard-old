@@ -9,7 +9,6 @@ import AddPost from './AddPost';
 
 const Posts = (props: Props) => {
   const [modal, showModal] = useState(false);
-  console.log(props.match.params.areaURL);
 
   return (
     <>

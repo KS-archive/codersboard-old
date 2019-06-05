@@ -2,7 +2,8 @@ const validate = require('utils/validate');
 
 const createMaterial = async (parent, args, ctx, info) => {
   await validate(ctx).userHasPermission(['OWNER', 'ADMIN', 'MEMBER']);
-  return ctx.prisma.mutation.createMaterial(args, info);
+  const data = {data:{user: {connect: { id: ctx.request.userId}}, ...args.data}};
+  return ctx.prisma.mutation.createMaterial(data, info);
 };
 
 const updateMaterial = async (parent, args, ctx, info) => {

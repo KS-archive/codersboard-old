@@ -3,26 +3,31 @@ import { Input } from 'antd';
 import { IMaterial } from '../store/withMaterials';
 import { SearchBarContainer } from './styles';
 
-const SearchBar: React.FC<IProps> = ({ setSearched, materials }) => {
-  const handleSearch = (e: any) => {
-    let currentMaterials = [];
+const search = (e: any, materials: IMaterial[]) => {
+let currentMaterials = [];
     let search = [];
     if (e.target.value !== '') {
       currentMaterials = materials;
-      search = currentMaterials.filter((material: any) => {
-        const lc = material.title.toLowerCase();
+      search = currentMaterials.filter((material) => {
+        const lowerCase = material.title.toLowerCase();
         const filter = e.target.value.toLowerCase();
-        return lc.includes(filter);
+        return lowerCase.includes(filter);
       });
     } else {
       search = materials;
     }
-    setSearched(search);
+    return search;
+}
+
+const SearchBar: React.FC<IProps> = ({ setSearched, materials }) => {
+  const handleSearch = (e: any) => {
+    const searchResult = search(e, materials);
+    setSearched(searchResult);
   };
 
   return (
     <SearchBarContainer>
-      <Input placeholder="Szukaj..." onChange={e => handleSearch(e)} />
+      <Input placeholder="Szukaj..." onChange={handleSearch} />
     </SearchBarContainer>
   );
 };

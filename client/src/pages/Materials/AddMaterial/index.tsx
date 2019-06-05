@@ -4,16 +4,16 @@ import { Formik, Field, Form, FormikActions } from 'formik';
 import * as Yup from 'yup';
 import { withMe, MeProps } from 'store/user/queries/Me';
 import withAreas, { IArea } from 'pages/area/Areas/store/withAreas';
-import uploadMaterial from '../store/AddMaterial';
 import { uploadToCloudinary } from 'utils';
 import { Input, TextArea, Tags, ImageUpload, Select } from 'components/formik';
+import uploadMaterial from '../store/AddMaterial';
 
 const initialValues: IFormValues = {
   title: '',
   description: '',
   url: '',
   tags: [],
-  image: null,
+  image: '',
   area: '',
 };
 
@@ -36,20 +36,13 @@ const addPostSchema = Yup.object().shape({
 
 const AddMaterial = (props: Props) => {
   const handleSubmit = async (values: IFormValues, actions: FormikActions<IFormValues>) => {
-    const { title, url, tags, description, image, area } = values;
+    const { tags, image, area } = values;
     try {
       const imageUrl = await uploadToCloudinary(image, 'material-image');
       const materialValues = {
         data: {
-          title,
-          url,
-          description,
+          ...values,
           image: imageUrl,
-          user: {
-            connect: {
-              id: props.me.id,
-            },
-          },
           tags: {
             connect: tags.map(tag => ({ id: tag })),
           },
@@ -77,8 +70,8 @@ const AddMaterial = (props: Props) => {
     <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={addPostSchema}>
       {({ isSubmitting }) => (
         <Form>
-          <Field type="text" name="title" label="Tytuł" size="large" component={Input} />
-          <Field type="text" name="url" label="Link" size="large" component={Input} />
+          <Field name="title" label="Tytuł" size="large" component={Input} />
+          <Field name="url" label="Link" size="large" component={Input} />
           <Field name="area" label="Obszar" size="large" component={Select} options={areasOptions(props.areas)} />
           <Field name="tags" label="Tagi" size="large" component={Tags} />
           <Field type="text" name="description" label="Opis" component={TextArea} />

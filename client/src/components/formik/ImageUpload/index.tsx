@@ -46,7 +46,7 @@ class ImageUpload extends PureComponent<Props, State> {
 
     const imageUrl = URL.createObjectURL(file);
     this.setState({ imageUrl, loading: false });
-    return imageUrl; // bez tego wysypuje apke
+    return imageUrl;
   };
 
   render() {
