@@ -6,6 +6,7 @@ import withMember, { IWithMember } from './store/withMember';
 import MainCard from './MainCard';
 import SkillsCard from './SkillsCard';
 import ProjectsCard from './ProjectsCard';
+import AreasCard from './AreasCard';
 import { Columns, Column } from './styles';
 
 const Member: React.FC<IProps> = ({ member, memberLoading }) => {
@@ -20,6 +21,7 @@ const Member: React.FC<IProps> = ({ member, memberLoading }) => {
             <Column>
               <SkillsCard skills={member.skills} />
               <ProjectsCard projects={member.projects} />
+              <AreasCard areas={member.areas} />
             </Column>
           </>
         )}
