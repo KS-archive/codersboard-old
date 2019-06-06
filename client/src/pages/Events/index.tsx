@@ -5,39 +5,12 @@ import 'moment/locale/pl';
 import withEvents, { IWithEvents, IEvent } from './store/withEvents';
 import DetailsModal from './DetailsModal';
 import FormModal from './FormModal';
+import { messages, parseEventToEventValues, onDatesRangeChange } from './helpers';
 import { BigCalendar } from './styles';
-import { omit } from 'utils';
 
 moment.locale('pl');
 
 const localizer = Calendar.momentLocalizer(moment);
-
-const messages = {
-  time: 'Czas',
-  date: 'Data',
-  event: 'Wydarzenie',
-  allDay: 'Cały dzień',
-  week: 'Tydzień',
-  work_week: 'Dni robocze',
-  day: 'Dzień',
-  month: 'Miesiąc',
-  previous: 'Poprzedni',
-  next: 'Następny',
-  yesterday: 'Wczoraj',
-  tomorrow: 'Jutro',
-  today: 'Obecny',
-  showMore: (count: number) => `Pokaż więcej (${count})`,
-  noEventsInRange: 'Brak wydarzeń',
-};
-
-// const changeEventDates = (resizeParams: IResizeParams) => (state: IState) => {
-//   const index = state.events.findIndex(
-//     ({ title, start }) => title === resizeParams.event.title && start === resizeParams.event.start,
-//   );
-//   state.events[index].start = resizeParams.start as Date;
-//   state.events[index].end = resizeParams.end as Date;
-//   return { events: state.events };
-// };
 
 class Events extends Component<IProps, IState> {
   state: IState = {
@@ -46,25 +19,14 @@ class Events extends Component<IProps, IState> {
     modalData: {},
   };
 
-  handleSelect = ({ start, end, action }: ISlotInfo) => {
+  handleSelect = ({ start, end, action }: ISlotInfo) =>
     this.setState({ openedModal: 'form', modalData: { start: new Date(start), end: new Date(end) } });
-  };
 
-  openEditModal = (modalData: IEvent) => this.setState({ openedModal: 'form', modalData: {
-    ...omit(modalData, ['__typename', 'project', 'area']),
-    projectId: modalData.project,
-    areaId: modalData.area,
-    start: new Date(modalData.start),
-    end: modalData.end && new Date(modalData.end),
-  } });
-
-  // onEventResize = (resizeParams: IResizeParams) => {
-  //   this.setState(changeEventDates(resizeParams));
-  // };
-
-  // onEventDrop = (resizeParams: IResizeParams) => {
-  //   this.setState(changeEventDates(resizeParams));
-  // };
+  openEditModal = (modalData: IEvent) =>
+    this.setState({
+      openedModal: 'form',
+      modalData: parseEventToEventValues(modalData),
+    });
 
   openDetailsModal = (event: Event) => {
     this.setState({
@@ -92,8 +54,8 @@ class Events extends Component<IProps, IState> {
           defaultView={Calendar.Views.WEEK}
           min={new Date(2019, 10, 0, 8, 0, 0)}
           max={new Date(2019, 10, 0, 23, 59, 59)}
-          // onEventDrop={this.onEventDrop}
-          // onEventResize={this.onEventResize}
+          onEventDrop={onDatesRangeChange}
+          onEventResize={onDatesRangeChange}
           onSelectEvent={this.openDetailsModal}
           onSelectSlot={this.handleSelect}
         />
@@ -110,7 +72,7 @@ class Events extends Component<IProps, IState> {
   }
 }
 
-interface IResizeParams {
+export interface IResizeParams {
   event: Event;
   start: stringOrDate;
   end: stringOrDate;
