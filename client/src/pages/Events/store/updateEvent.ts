@@ -33,6 +33,8 @@ export default async (variables: IEventValues) => {
     data.area = { connect: { id: variables.areaId } };
   }
 
+  data.owner = {};
+
   delete data.projectId;
   delete data.areaId;
 

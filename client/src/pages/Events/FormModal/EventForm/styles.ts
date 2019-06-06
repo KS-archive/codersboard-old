@@ -7,6 +7,18 @@ export const EventFormContainer = styled(Form)`
   flex-direction: column;
 `;
 
+export const DetailsRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: ${get('space-16')};
+`;
+
+export const DatesRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: ${get('space-16')};
+`;
+
 export const Footer = styled.div`
   display: flex;
   align-items: center;

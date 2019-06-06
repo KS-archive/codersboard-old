@@ -23,7 +23,11 @@ const ItemsSelect: React.FC<IProps> = ({ form, field: { name, onChange, onBlur, 
   const validateStatus = getStatus(form, errorMessage as string);
   const handleChange = (item: IItemsSelectOption | IItemsSelectOption[]) => {
     if (props.isMulti) {
-      form.setFieldValue(name, (item as IItemsSelectOption[]).map(({ value }) => value));
+      if (!item) {
+        form.setFieldValue(name, []);
+      } else {
+        form.setFieldValue(name, (item as IItemsSelectOption[]).map(({ value }) => value));
+      }
     } else {
       form.setFieldValue(name, (item as IItemsSelectOption).value);
     }
@@ -32,7 +36,7 @@ const ItemsSelect: React.FC<IProps> = ({ form, field: { name, onChange, onBlur, 
   if (props.isMulti) {
     value = value && value.map((id: string) => options.find(({ value }) => value === id));
   } else {
-    value = options.find((option) => value === option.value);
+    value = options.find(option => value === option.value);
   }
 
   return (
@@ -52,6 +56,7 @@ const ItemsSelect: React.FC<IProps> = ({ form, field: { name, onChange, onBlur, 
         isLoading={validateStatus === 'validating' || !options.length}
         options={options}
         styles={styles}
+        closeMenuOnSelect={props.closeMenuOnSelect || !props.isMulti}
         {...props}
       />
     </FormItem>
@@ -68,6 +73,6 @@ interface IProps extends FormItemProps, FieldProps, Props<any> {
   options: IItemsSelectOption[];
   optionImageWidth: number;
   optionImageHeight: number;
-};
+}
 
 export default ItemsSelect;

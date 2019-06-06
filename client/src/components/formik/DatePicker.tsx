@@ -29,6 +29,7 @@ const FormikInput = ({ form, field: { name, onChange, onBlur, value }, ...props 
         name={name}
         value={value ? moment(value) : undefined}
         onChange={handleChange}
+        allowClear={props.allowClear || false}
         locale={{
           lang: {
             ok: 'Zapisz',

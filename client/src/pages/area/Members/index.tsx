@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { List, Typography, Modal, message } from 'antd';
 
-import { hasPermissions } from 'utils';
+import useHasMainPermission from 'hooks/useHasMainPermission';
+import useHasAreaPermission from 'hooks/useHasAreaPermission';
 
 import withMembers, { IWithMembers, IMember } from './store/withMembers';
 import deleteMember from './store/deleteMember';
@@ -27,23 +28,17 @@ const handleMemberDelete = (member: IMember) => {
 };
 
 const Members: React.FC<IProps> = ({ members, membersLoading }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const isAdmin = useHasMainPermission(['OWNER', 'ADMIN']);
+  const isAreaAdmin = useHasAreaPermission(['OWNER', 'ADMIN']);
 
   const closeModal = () => setModalData(null);
-
-  useEffect(() => {
-    (async () => {
-      const isAdmin = await hasPermissions(['OWNER', 'ADMIN']);
-      setIsAdmin(isAdmin);
-    })();
-  }, []);
 
   return (
     <MembersContainer>
       <Header>
         <Title level={2}>Członkowie obszaru</Title>
-        {isAdmin && (
+        {(isAdmin || isAreaAdmin) && (
           <AddButton type="primary" onClick={() => setModalData({})}>
             Dodaj członka
           </AddButton>

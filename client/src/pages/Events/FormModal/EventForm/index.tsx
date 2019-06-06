@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from 'antd';
 import { Field, FormikProps } from 'formik';
 import { Input, TextArea, Select, DatePicker, ItemsSelect } from 'components/formik';
-import { EventFormContainer, Footer } from './styles';
-import { IEventValues } from 'pages/Events/store/createEvent';
-import AreasQuery from 'pages/Events/store/AreasQuery';
-import ProjectsQuery from 'pages/Events/store/ProjectsQuery';
-import UsersQuery from 'pages/Events/store/UsersQuery';
+import { IEventValues } from '../../store/createEvent';
+import AreasQuery from '../../store/AreasQuery';
+import ProjectsQuery from '../../store/ProjectsQuery';
+import UsersQuery from '../../store/UsersQuery';
+import { EventFormContainer, DetailsRow, DatesRow, Footer } from './styles';
 
 const typeOptions = [
   {
@@ -24,25 +24,31 @@ const EventForm: React.FC<IProps> = ({ status, values }) => {
 
   return (
     <EventFormContainer>
-      <Field name="title" component={Input} label="Nazwa wydarzenia" />
+      <Field name="title" component={Input} label="Nazwa wydarzenia" required />
       <Field name="description" component={TextArea} label="Opis" />
-      <Field name="location" component={Input} label="Lokalizacja" />
-      <Field name="url" component={Input} label="Adres url wydarzenia" />
-      <Field
-        name="start"
-        component={DatePicker}
-        label="Data rozpoczęcia"
-        placeholder={null}
-        showTime={{ minuteStep: 5, format: 'HH:mm' }}
-      />
-      <Field
-        name="end"
-        component={DatePicker}
-        label="Data zakończenia"
-        placeholder={null}
-        showTime={{ minuteStep: 5, format: 'HH:mm' }}
-      />
-      <Field name="type" component={Select} label="Typ" options={typeOptions} />
+      <DetailsRow>
+        <Field name="location" component={Input} label="Lokalizacja" />
+        <Field name="url" component={Input} label="Adres url" />
+      </DetailsRow>
+      <DatesRow>
+        <Field
+          name="start"
+          component={DatePicker}
+          label="Data rozpoczęcia"
+          placeholder={null}
+          showTime={{ minuteStep: 5, format: 'HH:mm' }}
+          required
+        />
+        <Field
+          name="end"
+          component={DatePicker}
+          label="Data zakończenia"
+          placeholder={null}
+          showTime={{ minuteStep: 5, format: 'HH:mm' }}
+          required
+        />
+        <Field name="type" component={Select} label="Typ" options={typeOptions} />
+      </DatesRow>
       <UsersQuery>
         {({ data: { users }, loading }) => (
           <Field

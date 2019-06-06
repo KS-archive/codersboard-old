@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Typography, Spin, Modal, message } from 'antd';
 
-import { hasPermissions } from 'utils';
+import useHasMainPermission from 'hooks/useHasMainPermission';
 
 import withSuccesses, { IWithSuccesses, ISuccess } from './store/withSuccesses';
 import deleteSuccess from './store/deleteSuccess';
@@ -27,17 +27,10 @@ const handleSuccessDelete = (success: ISuccess) => {
 };
 
 const Successes: React.FC<IProps> = ({ successes = [], successesLoading }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const isAdmin = useHasMainPermission(['OWNER', 'ADMIN']);
 
   const closeModal = () => setModalData(null);
-
-  useEffect(() => {
-    (async () => {
-      const isAdmin = await hasPermissions(['OWNER', 'ADMIN']);
-      setIsAdmin(isAdmin);
-    })();
-  }, []);
 
   return (
     <SuccessesContainer>

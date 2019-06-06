@@ -4,35 +4,20 @@ import { Modal, message } from 'antd';
 import EventForm from './EventForm';
 import createEvent, { IEventValues } from '../store/createEvent';
 import updateEvent from '../store/updateEvent';
-import { IEvent } from '../store/withEvents';
+import { IEvent, EventType } from '../store/withEvents';
+import { parseEventToEventValues } from '../helpers';
 
-const newEventInitialValues: IEventValues = {
+const newEventInitialValues = {
   title: '',
   description: '',
-  start: new Date(),
-  end: undefined,
-  attendees: [],
+  attendees: [] as any[],
   location: '',
   url: '',
   projectId: '',
   areaId: '',
-  type: 'OPEN',
-  owner: {},
+  type: 'OPEN' as EventType,
+  owner: {} as any,
 };
-
-const parseEventToValues = (event: IEvent): IEventValues => ({
-  ...event,
-  attendees: event.attendees.map(({ user: { id } }) => id),
-  projectId: event.project && event.project.id,
-  areaId: event.area && event.area.id,
-  owner: event.owner.id,
-});
-
-const parseNewEventToValues = (event: IEvent): IEventValues => ({
-  ...newEventInitialValues,
-  start: event.start,
-  end: event.end,
-});
 
 let closeModal: () => void;
 
@@ -56,7 +41,13 @@ const handleSubmit = async (values: IEventValues, actions: FormikActions<IEventV
 const FormModal: React.FC<IProps> = ({ data, handleClose }) => {
   const [visible, setVisible] = useState(true);
   const title = data.id ? 'Edytuj wydarzenie' : 'Dodaj nowe wydarzenie';
-  const initialValues: IEventValues = data.id ? parseEventToValues(data) : parseNewEventToValues(data);
+  const initialValues = data.id
+    ? data
+    : parseEventToEventValues({
+        ...newEventInitialValues,
+        start: data.start,
+        end: data.end,
+      });
 
   closeModal = () => {
     setVisible(false);
@@ -66,7 +57,7 @@ const FormModal: React.FC<IProps> = ({ data, handleClose }) => {
   };
 
   return (
-    <Modal title={title} onCancel={closeModal} visible={visible} footer={null}>
+    <Modal title={title} onCancel={closeModal} visible={visible} footer={null} width={640}>
       <Formik
         initialValues={initialValues}
         enableReinitialize

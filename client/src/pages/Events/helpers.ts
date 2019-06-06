@@ -4,8 +4,9 @@ import { omit } from 'utils';
 import { IEvent } from './store/withEvents';
 import updateEvent from './store/updateEvent';
 import { IResizeParams } from '.';
+import deleteEvent from './store/deleteEvent';
 
-const getLocaleDate = (date: Date | string) =>
+export const getLocaleDate = (date: Date | string) =>
   new Date(date).toLocaleString('pl-PL', {
     day: '2-digit',
     month: '2-digit',
@@ -32,14 +33,16 @@ export const messages = {
   noEventsInRange: 'Brak wydarzeń',
 };
 
-export const parseEventToEventValues = (event: IEvent): any => ({
-  ...omit(event, ['__typename', 'project', 'area']),
-  projectId: event.project,
-  areaId: event.area,
-  attendees: event.attendees.map(({ id }) => id),
-  start: new Date(event.start),
-  end: event.end && new Date(event.end),
-});
+export const parseEventToEventValues = (event: IEvent) => {
+  return ({
+    ...omit(event, ['__typename', 'project', 'area']),
+    projectId: event.project ? event.project.id : '',
+    areaId: event.area ? event.area.id : '',
+    attendees: event.attendees.map(({ user: { id } }) => id),
+    start: new Date(event.start),
+    end: event.end && new Date(event.end),
+  });
+}
 
 export const onDatesRangeChange = (resizeParams: IResizeParams) => {
   const event = parseEventToEventValues(resizeParams.event.resource);
@@ -57,11 +60,28 @@ export const onDatesRangeChange = (resizeParams: IResizeParams) => {
     cancelText: 'Nie, pozostaw',
     onOk: async () => {
       try {
-        await updateEvent({ ...event, start, end });
+        await updateEvent({ ...event, start: new Date(start), end: new Date(end) });
         message.success('Przedział czasowy wydarzenia został zmieniony');
       } catch (ex) {
         message.error('Podczas zmiany przedziału czasowego wystąpił błąd');
       }
+    },
+  });
+};
+
+export const handleEventDelete = (eventId: string, closeModal: () => void) => {
+  Modal.confirm({
+    title: 'Czy jesteś pewien, że chcesz usunąć ten wydarzenie?',
+    content: 'Tej operacji nie będziesz mógł cofnąć.',
+    okText: 'Tak, usuń wydarzenie',
+    okType: 'danger',
+    icon: null,
+    width: 480,
+    cancelText: 'Nie, pozostaw wydarzenie',
+    onOk: async () => {
+      await deleteEvent(eventId);
+      closeModal();
+      message.success('Wydarzenie zostało usunięte');
     },
   });
 };
