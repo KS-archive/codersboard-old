@@ -19,7 +19,7 @@ interface IUpdateSuccessResponse {
 
 export default async (variables: ISuccessValues) => {
   const data = {
-    ...omit(variables, ['id', '__typename']),
+    ...omit(variables, ['id', '__typename', 'creator']),
     users: {
       connect: variables.users.map(id => ({ id })),
     },
