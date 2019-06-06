@@ -22,13 +22,13 @@ export interface IEventValues {
   description?: string;
   start?: Date;
   end?: Date;
-  allDay?: boolean;
   attendees?: string[];
   location?: string;
   url?: string;
   projectId?: string;
   areaId?: string;
   type?: EventType;
+  owner?: {} | string;
 }
 
 export default async (variables: IEventValues) => {

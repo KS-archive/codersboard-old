@@ -3,9 +3,10 @@ import { Button } from 'antd';
 import { Field, FormikProps } from 'formik';
 import { Input, TextArea, Select, DatePicker, ItemsSelect } from 'components/formik';
 import { EventFormContainer, Footer } from './styles';
-import withUsers, { IWithUsers } from '../../store/withUsers';
-import withProjects, { IWithProjects } from '../../store/withProjects';
 import { IEventValues } from 'pages/Events/store/createEvent';
+import AreasQuery from 'pages/Events/store/AreasQuery';
+import ProjectsQuery from 'pages/Events/store/ProjectsQuery';
+import UsersQuery from 'pages/Events/store/UsersQuery';
 
 const typeOptions = [
   {
@@ -18,10 +19,8 @@ const typeOptions = [
   },
 ];
 
-const EventForm: React.FC<IProps> = ({ status, values, users, projects }) => {
+const EventForm: React.FC<IProps> = ({ status, values }) => {
   const confirmButtonLabel = values.id ? 'Zapisz zmiany' : 'Dodaj wydarzenie';
-  const usersOptions = users ? users.map(({ id, fullName, image }) => ({ label: fullName, value: id, image })) : [];
-  const projectsOptions = projects ? projects.map(({ id, name, image }) => ({ label: name, value: id, image })) : [];
 
   return (
     <EventFormContainer>
@@ -34,38 +33,52 @@ const EventForm: React.FC<IProps> = ({ status, values, users, projects }) => {
         component={DatePicker}
         label="Data rozpoczęcia"
         placeholder={null}
-        showTime={{
-          minuteStep: 5,
-          format: 'HH:mm',
-        }}
+        showTime={{ minuteStep: 5, format: 'HH:mm' }}
       />
       <Field
         name="end"
         component={DatePicker}
         label="Data zakończenia"
         placeholder={null}
-        showTime={{
-          minuteStep: 5,
-          format: 'HH:mm',
-        }}
+        showTime={{ minuteStep: 5, format: 'HH:mm' }}
       />
       <Field name="type" component={Select} label="Typ" options={typeOptions} />
-      <Field
-        name="attendees"
-        component={ItemsSelect}
-        label="Zaproszone osoby"
-        options={usersOptions}
-        isMulti
-        placeholder="Wybierz osoby"
-      />
-      <Field
-        name="projectId"
-        component={ItemsSelect}
-        label="Projekt powiązany z wydarzeniem"
-        options={projectsOptions}
-        optionImageWidth={42}
-        placeholder="Wybierz projekt"
-      />
+      <UsersQuery>
+        {({ data: { users }, loading }) => (
+          <Field
+            name="attendees"
+            component={ItemsSelect}
+            label="Zaproszone osoby"
+            options={users ? users.map(({ id, fullName, image }) => ({ label: fullName, value: id, image })) : []}
+            isMulti
+            placeholder="Wybierz osoby"
+          />
+        )}
+      </UsersQuery>
+      <ProjectsQuery>
+        {({ data: { projects }, loading }) => (
+          <Field
+            name="projectId"
+            component={ItemsSelect}
+            label="Projekt powiązany z wydarzeniem"
+            options={projects ? projects.map(({ id, name, image }) => ({ label: name, value: id, image })) : []}
+            optionImageWidth={42}
+            placeholder="Wybierz projekt"
+          />
+        )}
+      </ProjectsQuery>
+      <AreasQuery>
+        {({ data: { areas }, loading }) => (
+          <Field
+            name="areaId"
+            component={ItemsSelect}
+            label="Obszar powiązany z wydarzeniem"
+            options={areas ? areas.map(({ id, name, image }) => ({ label: name, value: id, image })) : []}
+            optionImageWidth={42}
+            placeholder="Wybierz obszar"
+          />
+        )}
+      </AreasQuery>
       <Footer>
         <Button onClick={status.closeModal}>Anuluj</Button>
         <Button htmlType="submit" type="primary">
@@ -76,6 +89,6 @@ const EventForm: React.FC<IProps> = ({ status, values, users, projects }) => {
   );
 };
 
-interface IProps extends FormikProps<IEventValues>, IWithUsers, IWithProjects {}
+interface IProps extends FormikProps<IEventValues> {}
 
-export default withProjects(withUsers(EventForm));
+export default EventForm;

@@ -10,7 +10,6 @@ export const EVENTS = gql`
       description
       start
       end
-      allDay
       attendees {
         id
         user {
@@ -36,6 +35,12 @@ export const EVENTS = gql`
         url
       }
       type
+      owner {
+        id
+        fullName
+        image
+        profileURL
+      }
     }
   }
 `;
@@ -61,7 +66,6 @@ export interface IEvent {
   description?: string;
   start?: Date;
   end?: Date;
-  allDay?: boolean;
   attendees?: IEventAttendee[];
   location?: string;
   url?: string;
@@ -78,6 +82,12 @@ export interface IEvent {
     url: string;
   };
   type?: EventType;
+  owner?: {
+    id: string;
+    fullName: string;
+    image: string;
+    profileURL: string;
+  }
 }
 
 export interface ICalendarEvent {

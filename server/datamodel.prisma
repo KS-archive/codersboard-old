@@ -204,12 +204,12 @@ type Event {
   description: String
   start: DateTime
   end: DateTime
-  allDay: Boolean
   attendees: [Attendee!]!
   location: String
   url: String
   project: Project
   area: Area
+  owner: User
   type: EventType
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

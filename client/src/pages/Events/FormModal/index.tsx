@@ -11,13 +11,13 @@ const newEventInitialValues: IEventValues = {
   description: '',
   start: new Date(),
   end: undefined,
-  allDay: false,
   attendees: [],
   location: '',
   url: '',
   projectId: '',
   areaId: '',
   type: 'OPEN',
+  owner: {},
 };
 
 const parseEventToValues = (event: IEvent): IEventValues => ({
@@ -25,6 +25,7 @@ const parseEventToValues = (event: IEvent): IEventValues => ({
   attendees: event.attendees.map(({ user: { id } }) => id),
   projectId: event.project && event.project.id,
   areaId: event.area && event.area.id,
+  owner: event.owner.id,
 });
 
 const parseNewEventToValues = (event: IEvent): IEventValues => ({
@@ -38,11 +39,9 @@ let closeModal: () => void;
 const handleSubmit = async (values: IEventValues, actions: FormikActions<IEventValues>) => {
   try {
     if (values.id) {
-      console.log(values);
       await updateEvent(values);
       message.success('Zaktualizowano wydarzenie');
     } else {
-      console.log(values);
       await createEvent(values);
       message.success('Dodano nowe wydarzenie');
     }

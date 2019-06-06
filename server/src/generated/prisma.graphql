@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Tue Jun 04 2019 18:36:36 GMT+0200 (Central European Summer Time)
+# timestamp: Thu Jun 06 2019 13:51:09 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -1983,12 +1983,12 @@ type Event implements Node {
   description: String
   start: DateTime
   end: DateTime
-  allDay: Boolean
   attendees(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee!]
   location: String
   url: String
   project: Project
   area: Area
+  owner: User
   type: EventType
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -2010,13 +2010,13 @@ input EventCreateInput {
   description: String
   start: DateTime
   end: DateTime
-  allDay: Boolean
   location: String
   url: String
   type: EventType
   attendees: AttendeeCreateManyWithoutEventInput
   project: ProjectCreateOneInput
   area: AreaCreateOneInput
+  owner: UserCreateOneInput
 }
 
 input EventCreateOneWithoutAttendeesInput {
@@ -2030,12 +2030,12 @@ input EventCreateWithoutAttendeesInput {
   description: String
   start: DateTime
   end: DateTime
-  allDay: Boolean
   location: String
   url: String
   type: EventType
   project: ProjectCreateOneInput
   area: AreaCreateOneInput
+  owner: UserCreateOneInput
 }
 
 """An edge in a connection."""
@@ -2058,8 +2058,6 @@ enum EventOrderByInput {
   start_DESC
   end_ASC
   end_DESC
-  allDay_ASC
-  allDay_DESC
   location_ASC
   location_DESC
   url_ASC
@@ -2078,7 +2076,6 @@ type EventPreviousValues {
   description: String
   start: DateTime
   end: DateTime
-  allDay: Boolean
   location: String
   url: String
   type: EventType
@@ -2133,13 +2130,13 @@ input EventUpdateInput {
   description: String
   start: DateTime
   end: DateTime
-  allDay: Boolean
   location: String
   url: String
   type: EventType
   attendees: AttendeeUpdateManyWithoutEventInput
   project: ProjectUpdateOneInput
   area: AreaUpdateOneInput
+  owner: UserUpdateOneInput
 }
 
 input EventUpdateManyMutationInput {
@@ -2147,7 +2144,6 @@ input EventUpdateManyMutationInput {
   description: String
   start: DateTime
   end: DateTime
-  allDay: Boolean
   location: String
   url: String
   type: EventType
@@ -2165,12 +2161,12 @@ input EventUpdateWithoutAttendeesDataInput {
   description: String
   start: DateTime
   end: DateTime
-  allDay: Boolean
   location: String
   url: String
   type: EventType
   project: ProjectUpdateOneInput
   area: AreaUpdateOneInput
+  owner: UserUpdateOneInput
 }
 
 input EventUpsertWithoutAttendeesInput {
@@ -2351,10 +2347,6 @@ input EventWhereInput {
 
   """All values greater than or equal the given value."""
   end_gte: DateTime
-  allDay: Boolean
-
-  """All values that are not equal to given value."""
-  allDay_not: Boolean
   location: String
 
   """All values that are not equal to given value."""
@@ -2494,6 +2486,7 @@ input EventWhereInput {
   attendees_none: AttendeeWhereInput
   project: ProjectWhereInput
   area: AreaWhereInput
+  owner: UserWhereInput
 }
 
 input EventWhereUniqueInput {

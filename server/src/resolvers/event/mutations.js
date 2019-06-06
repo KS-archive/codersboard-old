@@ -2,7 +2,7 @@ const validate = require('utils/validate');
 
 const createEvent = async (parent, args, ctx, info) => {
   await validate(ctx).userHasPermission(['OWNER', 'ADMIN', 'MEMBER']);
-  console.log(args);
+  args.data.owner = { connect: { id: ctx.request.userId } };
 
   const userIds = args.data.attendees.connect.map(({ id }) => id);
   args.data.attendees = [];
