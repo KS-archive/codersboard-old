@@ -25,6 +25,10 @@ export const BasicData = styled.div`
   font-size: ${get('font-size-14')};
   color: ${get('color-text-regular')};
 
+  strong {
+    color: ${get('color-text-primary')};
+  }
+
   > div:nth-child(1) {
     grid-area: 1/1/2/2;
   }
@@ -45,7 +49,7 @@ export const Description = styled.p`
 `;
 
 export const Attendees = styled.div`
-  > div + div {
+  > div {
     margin-top: ${get('space-12')};
   }
 

@@ -22,11 +22,24 @@ export const SUCCESSES = gql`
         url
         image
       }
+      creator {
+        id
+        fullName
+        profileURL
+        image
+      }
     }
   }
 `;
 
 export type SuccessType = 'EPIC' | 'SMALL' | 'NEWS'
+
+export interface IUser {
+  id: string;
+  fullName: string;
+  profileURL: string;
+  image: string;
+}
 
 export interface ISuccess {
   id?: string;
@@ -34,18 +47,14 @@ export interface ISuccess {
   description: string;
   date: Date;
   type: SuccessType;
-  users: {
-    id: string;
-    fullName: string;
-    profileURL: string;
-    image: string;
-  }[];
+  users: IUser[];
   project: {
     id: string;
     name: string;
     url: string;
     image: string;
   };
+  creator: IUser;
 }
 
 interface IData {

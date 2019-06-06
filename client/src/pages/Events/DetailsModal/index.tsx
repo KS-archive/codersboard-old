@@ -30,7 +30,7 @@ const groupAttendeesByStatus = (attendees: IEventAttendee[]) => {
   }
 
   return result;
-}
+};
 
 const DetailsModal: React.FC<IProps> = ({ data, handleClose, ...props }) => {
   const [visible, setVisible] = useState(true);
@@ -63,12 +63,14 @@ const DetailsModal: React.FC<IProps> = ({ data, handleClose, ...props }) => {
               <strong>Koniec: </strong>
               <span>{getLocaleDate(data.end)}</span>
             </div>
-            <div>
-              <strong>Miejsce: </strong>
-              <span>{data.location}</span>
-            </div>
+            {data.location && (
+              <div>
+                <strong>Miejsce: </strong>
+                <span>{data.location}</span>
+              </div>
+            )}
           </BasicData>
-          <Description>{data.description}</Description>
+          {data.description && <Description>{data.description}</Description>}
           <Attendees>
             {!!attendees.yes.length && (
               <div>
