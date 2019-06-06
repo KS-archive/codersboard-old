@@ -6,6 +6,7 @@ import withEvents, { IWithEvents, IEvent } from './store/withEvents';
 import DetailsModal from './DetailsModal';
 import FormModal from './FormModal';
 import { BigCalendar } from './styles';
+import { omit } from 'utils';
 
 moment.locale('pl');
 
@@ -49,9 +50,13 @@ class Events extends Component<IProps, IState> {
     this.setState({ openedModal: 'form', modalData: { start: new Date(start), end: new Date(end) } });
   };
 
-  openEditModal = (modalData: IEvent) => {
-    this.setState({ openedModal: 'form', modalData });
-  };
+  openEditModal = (modalData: IEvent) => this.setState({ openedModal: 'form', modalData: {
+    ...omit(modalData, ['__typename', 'project', 'area']),
+    projectId: modalData.project,
+    areaId: modalData.area,
+    start: new Date(modalData.start),
+    end: modalData.end && new Date(modalData.end),
+  } });
 
   // onEventResize = (resizeParams: IResizeParams) => {
   //   this.setState(changeEventDates(resizeParams));

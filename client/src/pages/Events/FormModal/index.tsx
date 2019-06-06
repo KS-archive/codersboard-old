@@ -3,6 +3,7 @@ import { Formik, FormikActions } from 'formik';
 import { Modal, message } from 'antd';
 import EventForm from './EventForm';
 import createEvent, { IEventValues } from '../store/createEvent';
+import updateEvent from '../store/updateEvent';
 import { IEvent } from '../store/withEvents';
 
 const newEventInitialValues: IEventValues = {
@@ -37,8 +38,11 @@ let closeModal: () => void;
 const handleSubmit = async (values: IEventValues, actions: FormikActions<IEventValues>) => {
   try {
     if (values.id) {
+      console.log(values);
+      await updateEvent(values);
       message.success('Zaktualizowano wydarzenie');
     } else {
+      console.log(values);
       await createEvent(values);
       message.success('Dodano nowe wydarzenie');
     }
