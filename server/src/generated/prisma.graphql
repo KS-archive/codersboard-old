@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/coders-board/codersboard-server-dev/dev
-# timestamp: Fri May 31 2019 17:17:15 GMT+0200 (Central European Summer Time)
+# timestamp: Thu Jun 06 2019 13:51:09 GMT+0200 (Central European Summer Time)
 
 type AggregateArea {
   count: Int!
@@ -58,10 +58,6 @@ type AggregateSlackChannel {
 }
 
 type AggregateSuccess {
-  count: Int!
-}
-
-type AggregateTimeZoneDate {
   count: Int!
 }
 
@@ -1134,8 +1130,9 @@ input AreaWhereUniqueInput {
 
 type Attendee implements Node {
   id: ID!
-  email: String
-  responseStatus: String
+  user: User!
+  event: Event!
+  status: AttendeeStatus
 }
 
 """A connection to a list of items."""
@@ -1150,13 +1147,31 @@ type AttendeeConnection {
 
 input AttendeeCreateInput {
   id: ID
-  email: String
-  responseStatus: String
+  status: AttendeeStatus
+  user: UserCreateOneWithoutEventsInput!
+  event: EventCreateOneWithoutAttendeesInput!
 }
 
-input AttendeeCreateManyInput {
-  create: [AttendeeCreateInput!]
+input AttendeeCreateManyWithoutEventInput {
+  create: [AttendeeCreateWithoutEventInput!]
   connect: [AttendeeWhereUniqueInput!]
+}
+
+input AttendeeCreateManyWithoutUserInput {
+  create: [AttendeeCreateWithoutUserInput!]
+  connect: [AttendeeWhereUniqueInput!]
+}
+
+input AttendeeCreateWithoutEventInput {
+  id: ID
+  status: AttendeeStatus
+  user: UserCreateOneWithoutEventsInput!
+}
+
+input AttendeeCreateWithoutUserInput {
+  id: ID
+  status: AttendeeStatus
+  event: EventCreateOneWithoutAttendeesInput!
 }
 
 """An edge in a connection."""
@@ -1171,16 +1186,13 @@ type AttendeeEdge {
 enum AttendeeOrderByInput {
   id_ASC
   id_DESC
-  email_ASC
-  email_DESC
-  responseStatus_ASC
-  responseStatus_DESC
+  status_ASC
+  status_DESC
 }
 
 type AttendeePreviousValues {
   id: ID!
-  email: String
-  responseStatus: String
+  status: AttendeeStatus
 }
 
 input AttendeeScalarWhereInput {
@@ -1232,86 +1244,21 @@ input AttendeeScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  email: String
+  status: AttendeeStatus
 
   """All values that are not equal to given value."""
-  email_not: String
+  status_not: AttendeeStatus
 
   """All values that are contained in given list."""
-  email_in: [String!]
+  status_in: [AttendeeStatus!]
 
   """All values that are not contained in given list."""
-  email_not_in: [String!]
+  status_not_in: [AttendeeStatus!]
+}
 
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  responseStatus: String
-
-  """All values that are not equal to given value."""
-  responseStatus_not: String
-
-  """All values that are contained in given list."""
-  responseStatus_in: [String!]
-
-  """All values that are not contained in given list."""
-  responseStatus_not_in: [String!]
-
-  """All values less than the given value."""
-  responseStatus_lt: String
-
-  """All values less than or equal the given value."""
-  responseStatus_lte: String
-
-  """All values greater than the given value."""
-  responseStatus_gt: String
-
-  """All values greater than or equal the given value."""
-  responseStatus_gte: String
-
-  """All values containing the given string."""
-  responseStatus_contains: String
-
-  """All values not containing the given string."""
-  responseStatus_not_contains: String
-
-  """All values starting with the given string."""
-  responseStatus_starts_with: String
-
-  """All values not starting with the given string."""
-  responseStatus_not_starts_with: String
-
-  """All values ending with the given string."""
-  responseStatus_ends_with: String
-
-  """All values not ending with the given string."""
-  responseStatus_not_ends_with: String
+enum AttendeeStatus {
+  YES
+  NO
 }
 
 type AttendeeSubscriptionPayload {
@@ -1351,36 +1298,42 @@ input AttendeeSubscriptionWhereInput {
   node: AttendeeWhereInput
 }
 
-input AttendeeUpdateDataInput {
-  email: String
-  responseStatus: String
-}
-
 input AttendeeUpdateInput {
-  email: String
-  responseStatus: String
+  status: AttendeeStatus
+  user: UserUpdateOneRequiredWithoutEventsInput
+  event: EventUpdateOneRequiredWithoutAttendeesInput
 }
 
 input AttendeeUpdateManyDataInput {
-  email: String
-  responseStatus: String
+  status: AttendeeStatus
 }
 
-input AttendeeUpdateManyInput {
-  create: [AttendeeCreateInput!]
+input AttendeeUpdateManyMutationInput {
+  status: AttendeeStatus
+}
+
+input AttendeeUpdateManyWithoutEventInput {
+  create: [AttendeeCreateWithoutEventInput!]
   connect: [AttendeeWhereUniqueInput!]
   set: [AttendeeWhereUniqueInput!]
   disconnect: [AttendeeWhereUniqueInput!]
   delete: [AttendeeWhereUniqueInput!]
-  update: [AttendeeUpdateWithWhereUniqueNestedInput!]
+  update: [AttendeeUpdateWithWhereUniqueWithoutEventInput!]
   updateMany: [AttendeeUpdateManyWithWhereNestedInput!]
   deleteMany: [AttendeeScalarWhereInput!]
-  upsert: [AttendeeUpsertWithWhereUniqueNestedInput!]
+  upsert: [AttendeeUpsertWithWhereUniqueWithoutEventInput!]
 }
 
-input AttendeeUpdateManyMutationInput {
-  email: String
-  responseStatus: String
+input AttendeeUpdateManyWithoutUserInput {
+  create: [AttendeeCreateWithoutUserInput!]
+  connect: [AttendeeWhereUniqueInput!]
+  set: [AttendeeWhereUniqueInput!]
+  disconnect: [AttendeeWhereUniqueInput!]
+  delete: [AttendeeWhereUniqueInput!]
+  update: [AttendeeUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [AttendeeUpdateManyWithWhereNestedInput!]
+  deleteMany: [AttendeeScalarWhereInput!]
+  upsert: [AttendeeUpsertWithWhereUniqueWithoutUserInput!]
 }
 
 input AttendeeUpdateManyWithWhereNestedInput {
@@ -1388,15 +1341,36 @@ input AttendeeUpdateManyWithWhereNestedInput {
   data: AttendeeUpdateManyDataInput!
 }
 
-input AttendeeUpdateWithWhereUniqueNestedInput {
-  where: AttendeeWhereUniqueInput!
-  data: AttendeeUpdateDataInput!
+input AttendeeUpdateWithoutEventDataInput {
+  status: AttendeeStatus
+  user: UserUpdateOneRequiredWithoutEventsInput
 }
 
-input AttendeeUpsertWithWhereUniqueNestedInput {
+input AttendeeUpdateWithoutUserDataInput {
+  status: AttendeeStatus
+  event: EventUpdateOneRequiredWithoutAttendeesInput
+}
+
+input AttendeeUpdateWithWhereUniqueWithoutEventInput {
   where: AttendeeWhereUniqueInput!
-  update: AttendeeUpdateDataInput!
-  create: AttendeeCreateInput!
+  data: AttendeeUpdateWithoutEventDataInput!
+}
+
+input AttendeeUpdateWithWhereUniqueWithoutUserInput {
+  where: AttendeeWhereUniqueInput!
+  data: AttendeeUpdateWithoutUserDataInput!
+}
+
+input AttendeeUpsertWithWhereUniqueWithoutEventInput {
+  where: AttendeeWhereUniqueInput!
+  update: AttendeeUpdateWithoutEventDataInput!
+  create: AttendeeCreateWithoutEventInput!
+}
+
+input AttendeeUpsertWithWhereUniqueWithoutUserInput {
+  where: AttendeeWhereUniqueInput!
+  update: AttendeeUpdateWithoutUserDataInput!
+  create: AttendeeCreateWithoutUserInput!
 }
 
 input AttendeeWhereInput {
@@ -1448,86 +1422,18 @@ input AttendeeWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  email: String
+  status: AttendeeStatus
 
   """All values that are not equal to given value."""
-  email_not: String
+  status_not: AttendeeStatus
 
   """All values that are contained in given list."""
-  email_in: [String!]
+  status_in: [AttendeeStatus!]
 
   """All values that are not contained in given list."""
-  email_not_in: [String!]
-
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  responseStatus: String
-
-  """All values that are not equal to given value."""
-  responseStatus_not: String
-
-  """All values that are contained in given list."""
-  responseStatus_in: [String!]
-
-  """All values that are not contained in given list."""
-  responseStatus_not_in: [String!]
-
-  """All values less than the given value."""
-  responseStatus_lt: String
-
-  """All values less than or equal the given value."""
-  responseStatus_lte: String
-
-  """All values greater than the given value."""
-  responseStatus_gt: String
-
-  """All values greater than or equal the given value."""
-  responseStatus_gte: String
-
-  """All values containing the given string."""
-  responseStatus_contains: String
-
-  """All values not containing the given string."""
-  responseStatus_not_contains: String
-
-  """All values starting with the given string."""
-  responseStatus_starts_with: String
-
-  """All values not starting with the given string."""
-  responseStatus_not_starts_with: String
-
-  """All values ending with the given string."""
-  responseStatus_ends_with: String
-
-  """All values not ending with the given string."""
-  responseStatus_not_ends_with: String
+  status_not_in: [AttendeeStatus!]
+  user: UserWhereInput
+  event: EventWhereInput
 }
 
 input AttendeeWhereUniqueInput {
@@ -2073,17 +1979,19 @@ scalar DateTime
 
 type Event implements Node {
   id: ID!
-  summary: String!
+  title: String!
   description: String
-  start: TimeZoneDate
-  end: TimeZoneDate
-  image: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  start: DateTime
+  end: DateTime
   attendees(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee!]
   location: String
-  htmlLink: String
-  calendarEventId: String
+  url: String
+  project: Project
+  area: Area
+  owner: User
+  type: EventType
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -2098,15 +2006,36 @@ type EventConnection {
 
 input EventCreateInput {
   id: ID
-  summary: String!
+  title: String!
   description: String
-  image: String
+  start: DateTime
+  end: DateTime
   location: String
-  htmlLink: String
-  calendarEventId: String
-  start: TimeZoneDateCreateOneInput
-  end: TimeZoneDateCreateOneInput
-  attendees: AttendeeCreateManyInput
+  url: String
+  type: EventType
+  attendees: AttendeeCreateManyWithoutEventInput
+  project: ProjectCreateOneInput
+  area: AreaCreateOneInput
+  owner: UserCreateOneInput
+}
+
+input EventCreateOneWithoutAttendeesInput {
+  create: EventCreateWithoutAttendeesInput
+  connect: EventWhereUniqueInput
+}
+
+input EventCreateWithoutAttendeesInput {
+  id: ID
+  title: String!
+  description: String
+  start: DateTime
+  end: DateTime
+  location: String
+  url: String
+  type: EventType
+  project: ProjectCreateOneInput
+  area: AreaCreateOneInput
+  owner: UserCreateOneInput
 }
 
 """An edge in a connection."""
@@ -2121,34 +2050,37 @@ type EventEdge {
 enum EventOrderByInput {
   id_ASC
   id_DESC
-  summary_ASC
-  summary_DESC
+  title_ASC
+  title_DESC
   description_ASC
   description_DESC
-  image_ASC
-  image_DESC
+  start_ASC
+  start_DESC
+  end_ASC
+  end_DESC
+  location_ASC
+  location_DESC
+  url_ASC
+  url_DESC
+  type_ASC
+  type_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  location_ASC
-  location_DESC
-  htmlLink_ASC
-  htmlLink_DESC
-  calendarEventId_ASC
-  calendarEventId_DESC
 }
 
 type EventPreviousValues {
   id: ID!
-  summary: String!
+  title: String!
   description: String
-  image: String
+  start: DateTime
+  end: DateTime
+  location: String
+  url: String
+  type: EventType
   createdAt: DateTime!
   updatedAt: DateTime!
-  location: String
-  htmlLink: String
-  calendarEventId: String
 }
 
 type EventSubscriptionPayload {
@@ -2188,25 +2120,58 @@ input EventSubscriptionWhereInput {
   node: EventWhereInput
 }
 
+enum EventType {
+  OPEN
+  PRIVATE
+}
+
 input EventUpdateInput {
-  summary: String
+  title: String
   description: String
-  image: String
+  start: DateTime
+  end: DateTime
   location: String
-  htmlLink: String
-  calendarEventId: String
-  start: TimeZoneDateUpdateOneInput
-  end: TimeZoneDateUpdateOneInput
-  attendees: AttendeeUpdateManyInput
+  url: String
+  type: EventType
+  attendees: AttendeeUpdateManyWithoutEventInput
+  project: ProjectUpdateOneInput
+  area: AreaUpdateOneInput
+  owner: UserUpdateOneInput
 }
 
 input EventUpdateManyMutationInput {
-  summary: String
+  title: String
   description: String
-  image: String
+  start: DateTime
+  end: DateTime
   location: String
-  htmlLink: String
-  calendarEventId: String
+  url: String
+  type: EventType
+}
+
+input EventUpdateOneRequiredWithoutAttendeesInput {
+  create: EventCreateWithoutAttendeesInput
+  connect: EventWhereUniqueInput
+  update: EventUpdateWithoutAttendeesDataInput
+  upsert: EventUpsertWithoutAttendeesInput
+}
+
+input EventUpdateWithoutAttendeesDataInput {
+  title: String
+  description: String
+  start: DateTime
+  end: DateTime
+  location: String
+  url: String
+  type: EventType
+  project: ProjectUpdateOneInput
+  area: AreaUpdateOneInput
+  owner: UserUpdateOneInput
+}
+
+input EventUpsertWithoutAttendeesInput {
+  update: EventUpdateWithoutAttendeesDataInput!
+  create: EventCreateWithoutAttendeesInput!
 }
 
 input EventWhereInput {
@@ -2258,46 +2223,46 @@ input EventWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  summary: String
+  title: String
 
   """All values that are not equal to given value."""
-  summary_not: String
+  title_not: String
 
   """All values that are contained in given list."""
-  summary_in: [String!]
+  title_in: [String!]
 
   """All values that are not contained in given list."""
-  summary_not_in: [String!]
+  title_not_in: [String!]
 
   """All values less than the given value."""
-  summary_lt: String
+  title_lt: String
 
   """All values less than or equal the given value."""
-  summary_lte: String
+  title_lte: String
 
   """All values greater than the given value."""
-  summary_gt: String
+  title_gt: String
 
   """All values greater than or equal the given value."""
-  summary_gte: String
+  title_gte: String
 
   """All values containing the given string."""
-  summary_contains: String
+  title_contains: String
 
   """All values not containing the given string."""
-  summary_not_contains: String
+  title_not_contains: String
 
   """All values starting with the given string."""
-  summary_starts_with: String
+  title_starts_with: String
 
   """All values not starting with the given string."""
-  summary_not_starts_with: String
+  title_not_starts_with: String
 
   """All values ending with the given string."""
-  summary_ends_with: String
+  title_ends_with: String
 
   """All values not ending with the given string."""
-  summary_not_ends_with: String
+  title_not_ends_with: String
   description: String
 
   """All values that are not equal to given value."""
@@ -2338,46 +2303,140 @@ input EventWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
-  image: String
+  start: DateTime
 
   """All values that are not equal to given value."""
-  image_not: String
+  start_not: DateTime
 
   """All values that are contained in given list."""
-  image_in: [String!]
+  start_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  image_not_in: [String!]
+  start_not_in: [DateTime!]
 
   """All values less than the given value."""
-  image_lt: String
+  start_lt: DateTime
 
   """All values less than or equal the given value."""
-  image_lte: String
+  start_lte: DateTime
 
   """All values greater than the given value."""
-  image_gt: String
+  start_gt: DateTime
 
   """All values greater than or equal the given value."""
-  image_gte: String
+  start_gte: DateTime
+  end: DateTime
+
+  """All values that are not equal to given value."""
+  end_not: DateTime
+
+  """All values that are contained in given list."""
+  end_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  end_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  end_lt: DateTime
+
+  """All values less than or equal the given value."""
+  end_lte: DateTime
+
+  """All values greater than the given value."""
+  end_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  end_gte: DateTime
+  location: String
+
+  """All values that are not equal to given value."""
+  location_not: String
+
+  """All values that are contained in given list."""
+  location_in: [String!]
+
+  """All values that are not contained in given list."""
+  location_not_in: [String!]
+
+  """All values less than the given value."""
+  location_lt: String
+
+  """All values less than or equal the given value."""
+  location_lte: String
+
+  """All values greater than the given value."""
+  location_gt: String
+
+  """All values greater than or equal the given value."""
+  location_gte: String
 
   """All values containing the given string."""
-  image_contains: String
+  location_contains: String
 
   """All values not containing the given string."""
-  image_not_contains: String
+  location_not_contains: String
 
   """All values starting with the given string."""
-  image_starts_with: String
+  location_starts_with: String
 
   """All values not starting with the given string."""
-  image_not_starts_with: String
+  location_not_starts_with: String
 
   """All values ending with the given string."""
-  image_ends_with: String
+  location_ends_with: String
 
   """All values not ending with the given string."""
-  image_not_ends_with: String
+  location_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  type: EventType
+
+  """All values that are not equal to given value."""
+  type_not: EventType
+
+  """All values that are contained in given list."""
+  type_in: [EventType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [EventType!]
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -2422,131 +2481,12 @@ input EventWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  location: String
-
-  """All values that are not equal to given value."""
-  location_not: String
-
-  """All values that are contained in given list."""
-  location_in: [String!]
-
-  """All values that are not contained in given list."""
-  location_not_in: [String!]
-
-  """All values less than the given value."""
-  location_lt: String
-
-  """All values less than or equal the given value."""
-  location_lte: String
-
-  """All values greater than the given value."""
-  location_gt: String
-
-  """All values greater than or equal the given value."""
-  location_gte: String
-
-  """All values containing the given string."""
-  location_contains: String
-
-  """All values not containing the given string."""
-  location_not_contains: String
-
-  """All values starting with the given string."""
-  location_starts_with: String
-
-  """All values not starting with the given string."""
-  location_not_starts_with: String
-
-  """All values ending with the given string."""
-  location_ends_with: String
-
-  """All values not ending with the given string."""
-  location_not_ends_with: String
-  htmlLink: String
-
-  """All values that are not equal to given value."""
-  htmlLink_not: String
-
-  """All values that are contained in given list."""
-  htmlLink_in: [String!]
-
-  """All values that are not contained in given list."""
-  htmlLink_not_in: [String!]
-
-  """All values less than the given value."""
-  htmlLink_lt: String
-
-  """All values less than or equal the given value."""
-  htmlLink_lte: String
-
-  """All values greater than the given value."""
-  htmlLink_gt: String
-
-  """All values greater than or equal the given value."""
-  htmlLink_gte: String
-
-  """All values containing the given string."""
-  htmlLink_contains: String
-
-  """All values not containing the given string."""
-  htmlLink_not_contains: String
-
-  """All values starting with the given string."""
-  htmlLink_starts_with: String
-
-  """All values not starting with the given string."""
-  htmlLink_not_starts_with: String
-
-  """All values ending with the given string."""
-  htmlLink_ends_with: String
-
-  """All values not ending with the given string."""
-  htmlLink_not_ends_with: String
-  calendarEventId: String
-
-  """All values that are not equal to given value."""
-  calendarEventId_not: String
-
-  """All values that are contained in given list."""
-  calendarEventId_in: [String!]
-
-  """All values that are not contained in given list."""
-  calendarEventId_not_in: [String!]
-
-  """All values less than the given value."""
-  calendarEventId_lt: String
-
-  """All values less than or equal the given value."""
-  calendarEventId_lte: String
-
-  """All values greater than the given value."""
-  calendarEventId_gt: String
-
-  """All values greater than or equal the given value."""
-  calendarEventId_gte: String
-
-  """All values containing the given string."""
-  calendarEventId_contains: String
-
-  """All values not containing the given string."""
-  calendarEventId_not_contains: String
-
-  """All values starting with the given string."""
-  calendarEventId_starts_with: String
-
-  """All values not starting with the given string."""
-  calendarEventId_not_starts_with: String
-
-  """All values ending with the given string."""
-  calendarEventId_ends_with: String
-
-  """All values not ending with the given string."""
-  calendarEventId_not_ends_with: String
-  start: TimeZoneDateWhereInput
-  end: TimeZoneDateWhereInput
   attendees_every: AttendeeWhereInput
   attendees_some: AttendeeWhereInput
   attendees_none: AttendeeWhereInput
+  project: ProjectWhereInput
+  area: AreaWhereInput
+  owner: UserWhereInput
 }
 
 input EventWhereUniqueInput {
@@ -3731,12 +3671,11 @@ type Mutation {
   createProjectMember(data: ProjectMemberCreateInput!): ProjectMember!
   createAreaMember(data: AreaMemberCreateInput!): AreaMember!
   createEvent(data: EventCreateInput!): Event!
+  createAttendee(data: AttendeeCreateInput!): Attendee!
   createPost(data: PostCreateInput!): Post!
   createMaterial(data: MaterialCreateInput!): Material!
   createPostTag(data: PostTagCreateInput!): PostTag!
   createProject(data: ProjectCreateInput!): Project!
-  createTimeZoneDate(data: TimeZoneDateCreateInput!): TimeZoneDate!
-  createAttendee(data: AttendeeCreateInput!): Attendee!
   createCredential(data: CredentialCreateInput!): Credential!
   createArea(data: AreaCreateInput!): Area!
   createMaterialTag(data: MaterialTagCreateInput!): MaterialTag!
@@ -3750,12 +3689,11 @@ type Mutation {
   updateProjectMember(data: ProjectMemberUpdateInput!, where: ProjectMemberWhereUniqueInput!): ProjectMember
   updateAreaMember(data: AreaMemberUpdateInput!, where: AreaMemberWhereUniqueInput!): AreaMember
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
+  updateAttendee(data: AttendeeUpdateInput!, where: AttendeeWhereUniqueInput!): Attendee
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateMaterial(data: MaterialUpdateInput!, where: MaterialWhereUniqueInput!): Material
   updatePostTag(data: PostTagUpdateInput!, where: PostTagWhereUniqueInput!): PostTag
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
-  updateTimeZoneDate(data: TimeZoneDateUpdateInput!, where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
-  updateAttendee(data: AttendeeUpdateInput!, where: AttendeeWhereUniqueInput!): Attendee
   updateCredential(data: CredentialUpdateInput!, where: CredentialWhereUniqueInput!): Credential
   updateArea(data: AreaUpdateInput!, where: AreaWhereUniqueInput!): Area
   updateMaterialTag(data: MaterialTagUpdateInput!, where: MaterialTagWhereUniqueInput!): MaterialTag
@@ -3769,12 +3707,11 @@ type Mutation {
   deleteProjectMember(where: ProjectMemberWhereUniqueInput!): ProjectMember
   deleteAreaMember(where: AreaMemberWhereUniqueInput!): AreaMember
   deleteEvent(where: EventWhereUniqueInput!): Event
+  deleteAttendee(where: AttendeeWhereUniqueInput!): Attendee
   deletePost(where: PostWhereUniqueInput!): Post
   deleteMaterial(where: MaterialWhereUniqueInput!): Material
   deletePostTag(where: PostTagWhereUniqueInput!): PostTag
   deleteProject(where: ProjectWhereUniqueInput!): Project
-  deleteTimeZoneDate(where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
-  deleteAttendee(where: AttendeeWhereUniqueInput!): Attendee
   deleteCredential(where: CredentialWhereUniqueInput!): Credential
   deleteArea(where: AreaWhereUniqueInput!): Area
   deleteMaterialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
@@ -3788,12 +3725,11 @@ type Mutation {
   upsertProjectMember(where: ProjectMemberWhereUniqueInput!, create: ProjectMemberCreateInput!, update: ProjectMemberUpdateInput!): ProjectMember!
   upsertAreaMember(where: AreaMemberWhereUniqueInput!, create: AreaMemberCreateInput!, update: AreaMemberUpdateInput!): AreaMember!
   upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
+  upsertAttendee(where: AttendeeWhereUniqueInput!, create: AttendeeCreateInput!, update: AttendeeUpdateInput!): Attendee!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertMaterial(where: MaterialWhereUniqueInput!, create: MaterialCreateInput!, update: MaterialUpdateInput!): Material!
   upsertPostTag(where: PostTagWhereUniqueInput!, create: PostTagCreateInput!, update: PostTagUpdateInput!): PostTag!
   upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
-  upsertTimeZoneDate(where: TimeZoneDateWhereUniqueInput!, create: TimeZoneDateCreateInput!, update: TimeZoneDateUpdateInput!): TimeZoneDate!
-  upsertAttendee(where: AttendeeWhereUniqueInput!, create: AttendeeCreateInput!, update: AttendeeUpdateInput!): Attendee!
   upsertCredential(where: CredentialWhereUniqueInput!, create: CredentialCreateInput!, update: CredentialUpdateInput!): Credential!
   upsertArea(where: AreaWhereUniqueInput!, create: AreaCreateInput!, update: AreaUpdateInput!): Area!
   upsertMaterialTag(where: MaterialTagWhereUniqueInput!, create: MaterialTagCreateInput!, update: MaterialTagUpdateInput!): MaterialTag!
@@ -3807,12 +3743,11 @@ type Mutation {
   updateManyProjectMembers(data: ProjectMemberUpdateManyMutationInput!, where: ProjectMemberWhereInput): BatchPayload!
   updateManyAreaMembers(data: AreaMemberUpdateManyMutationInput!, where: AreaMemberWhereInput): BatchPayload!
   updateManyEvents(data: EventUpdateManyMutationInput!, where: EventWhereInput): BatchPayload!
+  updateManyAttendees(data: AttendeeUpdateManyMutationInput!, where: AttendeeWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
   updateManyMaterials(data: MaterialUpdateManyMutationInput!, where: MaterialWhereInput): BatchPayload!
   updateManyPostTags(data: PostTagUpdateManyMutationInput!, where: PostTagWhereInput): BatchPayload!
   updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
-  updateManyTimeZoneDates(data: TimeZoneDateUpdateManyMutationInput!, where: TimeZoneDateWhereInput): BatchPayload!
-  updateManyAttendees(data: AttendeeUpdateManyMutationInput!, where: AttendeeWhereInput): BatchPayload!
   updateManyCredentials(data: CredentialUpdateManyMutationInput!, where: CredentialWhereInput): BatchPayload!
   updateManyAreas(data: AreaUpdateManyMutationInput!, where: AreaWhereInput): BatchPayload!
   updateManyMaterialTags(data: MaterialTagUpdateManyMutationInput!, where: MaterialTagWhereInput): BatchPayload!
@@ -3826,12 +3761,11 @@ type Mutation {
   deleteManyProjectMembers(where: ProjectMemberWhereInput): BatchPayload!
   deleteManyAreaMembers(where: AreaMemberWhereInput): BatchPayload!
   deleteManyEvents(where: EventWhereInput): BatchPayload!
+  deleteManyAttendees(where: AttendeeWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyMaterials(where: MaterialWhereInput): BatchPayload!
   deleteManyPostTags(where: PostTagWhereInput): BatchPayload!
   deleteManyProjects(where: ProjectWhereInput): BatchPayload!
-  deleteManyTimeZoneDates(where: TimeZoneDateWhereInput): BatchPayload!
-  deleteManyAttendees(where: AttendeeWhereInput): BatchPayload!
   deleteManyCredentials(where: CredentialWhereInput): BatchPayload!
   deleteManyAreas(where: AreaWhereInput): BatchPayload!
   deleteManyMaterialTags(where: MaterialTagWhereInput): BatchPayload!
@@ -5651,12 +5585,11 @@ type Query {
   projectMembers(where: ProjectMemberWhereInput, orderBy: ProjectMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProjectMember]!
   areaMembers(where: AreaMemberWhereInput, orderBy: AreaMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AreaMember]!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+  attendees(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   materials(where: MaterialWhereInput, orderBy: MaterialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Material]!
   postTags(where: PostTagWhereInput, orderBy: PostTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PostTag]!
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
-  timeZoneDates(where: TimeZoneDateWhereInput, orderBy: TimeZoneDateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeZoneDate]!
-  attendees(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee]!
   credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential]!
   areas(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Area]!
   materialTags(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MaterialTag]!
@@ -5670,12 +5603,11 @@ type Query {
   projectMember(where: ProjectMemberWhereUniqueInput!): ProjectMember
   areaMember(where: AreaMemberWhereUniqueInput!): AreaMember
   event(where: EventWhereUniqueInput!): Event
+  attendee(where: AttendeeWhereUniqueInput!): Attendee
   post(where: PostWhereUniqueInput!): Post
   material(where: MaterialWhereUniqueInput!): Material
   postTag(where: PostTagWhereUniqueInput!): PostTag
   project(where: ProjectWhereUniqueInput!): Project
-  timeZoneDate(where: TimeZoneDateWhereUniqueInput!): TimeZoneDate
-  attendee(where: AttendeeWhereUniqueInput!): Attendee
   credential(where: CredentialWhereUniqueInput!): Credential
   area(where: AreaWhereUniqueInput!): Area
   materialTag(where: MaterialTagWhereUniqueInput!): MaterialTag
@@ -5689,12 +5621,11 @@ type Query {
   projectMembersConnection(where: ProjectMemberWhereInput, orderBy: ProjectMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectMemberConnection!
   areaMembersConnection(where: AreaMemberWhereInput, orderBy: AreaMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AreaMemberConnection!
   eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
+  attendeesConnection(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendeeConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   materialsConnection(where: MaterialWhereInput, orderBy: MaterialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MaterialConnection!
   postTagsConnection(where: PostTagWhereInput, orderBy: PostTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostTagConnection!
   projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
-  timeZoneDatesConnection(where: TimeZoneDateWhereInput, orderBy: TimeZoneDateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeZoneDateConnection!
-  attendeesConnection(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendeeConnection!
   credentialsConnection(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CredentialConnection!
   areasConnection(where: AreaWhereInput, orderBy: AreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AreaConnection!
   materialTagsConnection(where: MaterialTagWhereInput, orderBy: MaterialTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MaterialTagConnection!
@@ -6356,12 +6287,11 @@ type Subscription {
   projectMember(where: ProjectMemberSubscriptionWhereInput): ProjectMemberSubscriptionPayload
   areaMember(where: AreaMemberSubscriptionWhereInput): AreaMemberSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
+  attendee(where: AttendeeSubscriptionWhereInput): AttendeeSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   material(where: MaterialSubscriptionWhereInput): MaterialSubscriptionPayload
   postTag(where: PostTagSubscriptionWhereInput): PostTagSubscriptionPayload
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
-  timeZoneDate(where: TimeZoneDateSubscriptionWhereInput): TimeZoneDateSubscriptionPayload
-  attendee(where: AttendeeSubscriptionWhereInput): AttendeeSubscriptionPayload
   credential(where: CredentialSubscriptionWhereInput): CredentialSubscriptionPayload
   area(where: AreaSubscriptionWhereInput): AreaSubscriptionPayload
   materialTag(where: MaterialTagSubscriptionWhereInput): MaterialTagSubscriptionPayload
@@ -6714,240 +6644,6 @@ input SuccessWhereUniqueInput {
   id: ID
 }
 
-type TimeZoneDate implements Node {
-  id: ID!
-  dateTime: DateTime!
-  timeZone: String
-}
-
-"""A connection to a list of items."""
-type TimeZoneDateConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [TimeZoneDateEdge]!
-  aggregate: AggregateTimeZoneDate!
-}
-
-input TimeZoneDateCreateInput {
-  id: ID
-  dateTime: DateTime!
-  timeZone: String
-}
-
-input TimeZoneDateCreateOneInput {
-  create: TimeZoneDateCreateInput
-  connect: TimeZoneDateWhereUniqueInput
-}
-
-"""An edge in a connection."""
-type TimeZoneDateEdge {
-  """The item at the end of the edge."""
-  node: TimeZoneDate!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum TimeZoneDateOrderByInput {
-  id_ASC
-  id_DESC
-  dateTime_ASC
-  dateTime_DESC
-  timeZone_ASC
-  timeZone_DESC
-}
-
-type TimeZoneDatePreviousValues {
-  id: ID!
-  dateTime: DateTime!
-  timeZone: String
-}
-
-type TimeZoneDateSubscriptionPayload {
-  mutation: MutationType!
-  node: TimeZoneDate
-  updatedFields: [String!]
-  previousValues: TimeZoneDatePreviousValues
-}
-
-input TimeZoneDateSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [TimeZoneDateSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [TimeZoneDateSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [TimeZoneDateSubscriptionWhereInput!]
-
-  """The subscription event gets dispatched when it's listed in mutation_in"""
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: TimeZoneDateWhereInput
-}
-
-input TimeZoneDateUpdateDataInput {
-  dateTime: DateTime
-  timeZone: String
-}
-
-input TimeZoneDateUpdateInput {
-  dateTime: DateTime
-  timeZone: String
-}
-
-input TimeZoneDateUpdateManyMutationInput {
-  dateTime: DateTime
-  timeZone: String
-}
-
-input TimeZoneDateUpdateOneInput {
-  create: TimeZoneDateCreateInput
-  connect: TimeZoneDateWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: TimeZoneDateUpdateDataInput
-  upsert: TimeZoneDateUpsertNestedInput
-}
-
-input TimeZoneDateUpsertNestedInput {
-  update: TimeZoneDateUpdateDataInput!
-  create: TimeZoneDateCreateInput!
-}
-
-input TimeZoneDateWhereInput {
-  """Logical AND on all given filters."""
-  AND: [TimeZoneDateWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [TimeZoneDateWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [TimeZoneDateWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  dateTime: DateTime
-
-  """All values that are not equal to given value."""
-  dateTime_not: DateTime
-
-  """All values that are contained in given list."""
-  dateTime_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  dateTime_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  dateTime_lt: DateTime
-
-  """All values less than or equal the given value."""
-  dateTime_lte: DateTime
-
-  """All values greater than the given value."""
-  dateTime_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  dateTime_gte: DateTime
-  timeZone: String
-
-  """All values that are not equal to given value."""
-  timeZone_not: String
-
-  """All values that are contained in given list."""
-  timeZone_in: [String!]
-
-  """All values that are not contained in given list."""
-  timeZone_not_in: [String!]
-
-  """All values less than the given value."""
-  timeZone_lt: String
-
-  """All values less than or equal the given value."""
-  timeZone_lte: String
-
-  """All values greater than the given value."""
-  timeZone_gt: String
-
-  """All values greater than or equal the given value."""
-  timeZone_gte: String
-
-  """All values containing the given string."""
-  timeZone_contains: String
-
-  """All values not containing the given string."""
-  timeZone_not_contains: String
-
-  """All values starting with the given string."""
-  timeZone_starts_with: String
-
-  """All values not starting with the given string."""
-  timeZone_not_starts_with: String
-
-  """All values ending with the given string."""
-  timeZone_ends_with: String
-
-  """All values not ending with the given string."""
-  timeZone_not_ends_with: String
-}
-
-input TimeZoneDateWhereUniqueInput {
-  id: ID
-}
-
 type University implements Node {
   id: ID!
   name: String!
@@ -7290,6 +6986,7 @@ type User implements Node {
   credentials(where: CredentialWhereInput, orderBy: CredentialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Credential!]
   special: [String!]!
   integrations(where: IntegrationWhereInput, orderBy: IntegrationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Integration!]
+  events(where: AttendeeWhereInput, orderBy: AttendeeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendee!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -7329,6 +7026,7 @@ input UserCreateInput {
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
   integrations: IntegrationCreateManyWithoutUserInput
+  events: AttendeeCreateManyWithoutUserInput
 }
 
 input UserCreateinstitutionInput {
@@ -7362,6 +7060,11 @@ input UserCreateOneInput {
 
 input UserCreateOneWithoutAreasInput {
   create: UserCreateWithoutAreasInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutEventsInput {
+  create: UserCreateWithoutEventsInput
   connect: UserWhereUniqueInput
 }
 
@@ -7412,6 +7115,7 @@ input UserCreateWithoutAreasInput {
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
   integrations: IntegrationCreateManyWithoutUserInput
+  events: AttendeeCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutCredentialsInput {
@@ -7437,6 +7141,34 @@ input UserCreateWithoutCredentialsInput {
   projects: ProjectMemberCreateManyWithoutUserInput
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
+  integrations: IntegrationCreateManyWithoutUserInput
+  events: AttendeeCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutEventsInput {
+  id: ID
+  fullName: String!
+  profileURL: String!
+  image: String!
+  email: String!
+  companyEmail: String
+  phone: String
+  password: String!
+  role: String
+  universityDepartment: String
+  fieldOfStudy: String
+  year: Int
+  indexNumber: Int
+  slackId: String
+  permissions: UserCreatepermissionsInput
+  institution: UserCreateinstitutionInput
+  special: UserCreatespecialInput
+  areas: AreaMemberCreateManyWithoutUserInput
+  skills: UserSkillCreateManyWithoutUserInput
+  projects: ProjectMemberCreateManyWithoutUserInput
+  university: UniversityCreateOneWithoutUsersInput
+  slackChannels: SlackChannelCreateManyWithoutUsersInput
+  credentials: CredentialCreateManyWithoutUsersInput
   integrations: IntegrationCreateManyWithoutUserInput
 }
 
@@ -7464,6 +7196,7 @@ input UserCreateWithoutIntegrationsInput {
   university: UniversityCreateOneWithoutUsersInput
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
+  events: AttendeeCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutProjectsInput {
@@ -7490,6 +7223,7 @@ input UserCreateWithoutProjectsInput {
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
   integrations: IntegrationCreateManyWithoutUserInput
+  events: AttendeeCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutSkillsInput {
@@ -7516,6 +7250,7 @@ input UserCreateWithoutSkillsInput {
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
   integrations: IntegrationCreateManyWithoutUserInput
+  events: AttendeeCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutSlackChannelsInput {
@@ -7542,6 +7277,7 @@ input UserCreateWithoutSlackChannelsInput {
   university: UniversityCreateOneWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
   integrations: IntegrationCreateManyWithoutUserInput
+  events: AttendeeCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutUniversityInput {
@@ -7568,6 +7304,7 @@ input UserCreateWithoutUniversityInput {
   slackChannels: SlackChannelCreateManyWithoutUsersInput
   credentials: CredentialCreateManyWithoutUsersInput
   integrations: IntegrationCreateManyWithoutUserInput
+  events: AttendeeCreateManyWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -8655,6 +8392,7 @@ input UserUpdateDataInput {
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
   integrations: IntegrationUpdateManyWithoutUserInput
+  events: AttendeeUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -8681,6 +8419,7 @@ input UserUpdateInput {
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
   integrations: IntegrationUpdateManyWithoutUserInput
+  events: AttendeeUpdateManyWithoutUserInput
 }
 
 input UserUpdateinstitutionInput {
@@ -8801,6 +8540,13 @@ input UserUpdateOneRequiredWithoutAreasInput {
   upsert: UserUpsertWithoutAreasInput
 }
 
+input UserUpdateOneRequiredWithoutEventsInput {
+  create: UserCreateWithoutEventsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutEventsDataInput
+  upsert: UserUpsertWithoutEventsInput
+}
+
 input UserUpdateOneRequiredWithoutIntegrationsInput {
   create: UserCreateWithoutIntegrationsInput
   connect: UserWhereUniqueInput
@@ -8853,6 +8599,7 @@ input UserUpdateWithoutAreasDataInput {
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
   integrations: IntegrationUpdateManyWithoutUserInput
+  events: AttendeeUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutCredentialsDataInput {
@@ -8877,6 +8624,33 @@ input UserUpdateWithoutCredentialsDataInput {
   projects: ProjectMemberUpdateManyWithoutUserInput
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
+  integrations: IntegrationUpdateManyWithoutUserInput
+  events: AttendeeUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutEventsDataInput {
+  fullName: String
+  profileURL: String
+  image: String
+  email: String
+  companyEmail: String
+  phone: String
+  password: String
+  role: String
+  universityDepartment: String
+  fieldOfStudy: String
+  year: Int
+  indexNumber: Int
+  slackId: String
+  permissions: UserUpdatepermissionsInput
+  institution: UserUpdateinstitutionInput
+  special: UserUpdatespecialInput
+  areas: AreaMemberUpdateManyWithoutUserInput
+  skills: UserSkillUpdateManyWithoutUserInput
+  projects: ProjectMemberUpdateManyWithoutUserInput
+  university: UniversityUpdateOneWithoutUsersInput
+  slackChannels: SlackChannelUpdateManyWithoutUsersInput
+  credentials: CredentialUpdateManyWithoutUsersInput
   integrations: IntegrationUpdateManyWithoutUserInput
 }
 
@@ -8903,6 +8677,7 @@ input UserUpdateWithoutIntegrationsDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
+  events: AttendeeUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutProjectsDataInput {
@@ -8928,6 +8703,7 @@ input UserUpdateWithoutProjectsDataInput {
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
   integrations: IntegrationUpdateManyWithoutUserInput
+  events: AttendeeUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutSkillsDataInput {
@@ -8953,6 +8729,7 @@ input UserUpdateWithoutSkillsDataInput {
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
   integrations: IntegrationUpdateManyWithoutUserInput
+  events: AttendeeUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutSlackChannelsDataInput {
@@ -8978,6 +8755,7 @@ input UserUpdateWithoutSlackChannelsDataInput {
   university: UniversityUpdateOneWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
   integrations: IntegrationUpdateManyWithoutUserInput
+  events: AttendeeUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutUniversityDataInput {
@@ -9003,6 +8781,7 @@ input UserUpdateWithoutUniversityDataInput {
   slackChannels: SlackChannelUpdateManyWithoutUsersInput
   credentials: CredentialUpdateManyWithoutUsersInput
   integrations: IntegrationUpdateManyWithoutUserInput
+  events: AttendeeUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -9033,6 +8812,11 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutAreasInput {
   update: UserUpdateWithoutAreasDataInput!
   create: UserCreateWithoutAreasInput!
+}
+
+input UserUpsertWithoutEventsInput {
+  update: UserUpdateWithoutEventsDataInput!
+  create: UserCreateWithoutEventsInput!
 }
 
 input UserUpsertWithoutIntegrationsInput {
@@ -9670,6 +9454,9 @@ input UserWhereInput {
   integrations_every: IntegrationWhereInput
   integrations_some: IntegrationWhereInput
   integrations_none: IntegrationWhereInput
+  events_every: AttendeeWhereInput
+  events_some: AttendeeWhereInput
+  events_none: AttendeeWhereInput
 }
 
 input UserWhereUniqueInput {

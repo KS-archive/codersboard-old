@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { List, Typography, Modal, message } from 'antd';
 
-import { hasPermissions } from 'utils';
+import useHasMainPermission from 'hooks/useHasMainPermission';
 
 import withMembers, { IWithMembers, IMember } from './store/withMembers';
 import deleteMember from './store/deleteMember';
 import Member from './Member';
 import MemberModal from './MemberModal';
 import { MembersContainer, Header, AddButton } from './styles';
+import useHasProjectPermission from 'hooks/useHasProjectPermission';
 
 const { Title } = Typography;
 
@@ -27,23 +28,17 @@ const handleMemberDelete = (member: IMember) => {
 };
 
 const Members: React.FC<IProps> = ({ members, membersLoading }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const isAdmin = useHasMainPermission(['OWNER', 'ADMIN']);
+  const isProjectAdmin = useHasProjectPermission(['OWNER', 'ADMIN']);
 
   const closeModal = () => setModalData(null);
-
-  useEffect(() => {
-    (async () => {
-      const isAdmin = await hasPermissions(['OWNER', 'ADMIN']);
-      setIsAdmin(isAdmin);
-    })();
-  }, []);
 
   return (
     <MembersContainer>
       <Header>
         <Title level={2}>Członkowie projektu</Title>
-        {isAdmin && (
+        {(isAdmin || isProjectAdmin) && (
           <AddButton type="primary" onClick={() => setModalData({})}>
             Dodaj członka
           </AddButton>
