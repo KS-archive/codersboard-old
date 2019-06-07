@@ -78,7 +78,7 @@ class ImageUpload extends PureComponent<Props, State> {
             className={props.className}
             listType="picture-card"
             showUploadList={false}
-            action={this.handleChange}
+            action={(file: any):any => this.handleChange(file)}
             beforeUpload={this.beforeUpload}
             customRequest={() => {}}
           >
