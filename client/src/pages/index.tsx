@@ -10,6 +10,7 @@ import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Successes from 'pages/Successes';
 import Materials from 'pages/Materials';
+import Events from 'pages/Events';
 import Settings from 'pages/Settings';
 
 import Projects from 'pages/project/Projects';
@@ -82,9 +83,8 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                         </ProjectWrapper>
                       </Route>
                       <Route exact path="/successes" component={Successes} />
-                      <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
+                      <Route exact path="/events" component={Events} />
                       <Route exact path="/materials" component={Materials} />
-                      <Route exact path="/stats" component={() => <div>Statystyki</div>} />
                       <Route path="/settings/:profileURL" component={Settings} />
                       <Route path="/admin">
                         <AdminWrapper>

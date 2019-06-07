@@ -35,4 +35,8 @@ export default css`
   .ant-card-actions {
     border-radius: 0 0 ${get('radius-4')} ${get('radius-4')};
   }
+
+  .ant-modal-confirm-content {
+    white-space: pre-line;
+  }
 `;
