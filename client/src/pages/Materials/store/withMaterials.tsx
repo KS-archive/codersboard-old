@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 
-const MATERIALS = gql`
+export const MATERIALS = gql`
   query materails($url: String) {
     materials(where: { area: { url: $url } }) {
       id
@@ -12,6 +12,7 @@ const MATERIALS = gql`
       image
       url
       tags {
+        id
         name
         color
       }
@@ -24,9 +25,10 @@ const MATERIALS = gql`
 `;
 
 interface Tag {
+  id: string;
   name: string;
   color: string;
-};
+}
 
 export interface IMaterial {
   id: string;
