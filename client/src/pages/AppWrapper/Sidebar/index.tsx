@@ -11,7 +11,6 @@ import { ReactComponent as Books } from 'static/fa/regular/books.svg';
 import { ReactComponent as Tasks } from 'static/fa/regular/tasks.svg';
 import { ReactComponent as Stars } from 'static/fa/regular/stars.svg';
 import { ReactComponent as CalendarAlt } from 'static/fa/regular/calendar-alt.svg';
-import { ReactComponent as ChartBar } from 'static/fa/regular/chart-bar.svg';
 
 import * as styles from './styles';
 
@@ -62,12 +61,6 @@ const AppWrapper = ({ collapsed, location, history }: Props) => {
           <Link to="/materials">
             <Icon icon={Books} color="color-grayscale-white" />
             <span>Materiały</span>
-          </Link>
-        </MenuItem>
-        <MenuItem key="stats">
-          <Link to="/stats">
-            <Icon icon={ChartBar} color="color-grayscale-white" />
-            <span>Statystyki</span>
           </Link>
         </MenuItem>
       </Menu>

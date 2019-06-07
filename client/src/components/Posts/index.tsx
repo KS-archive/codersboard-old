@@ -12,7 +12,7 @@ const Posts = (props: Props) => {
 
   return (
     <>
-      <PostsQuery variables={{ area: props.area }}>
+      <PostsQuery variables={{ area: props.match.params.areaURL }}>
         {({ data, loading, error }) => {
           if (loading) return <Loader />;
           if (error) return <div>{error.message}</div>;
@@ -39,7 +39,7 @@ const Posts = (props: Props) => {
         }}
       </PostsQuery>
       <Modal title="Dodaj nowy post" footer={null} visible={modal} onCancel={(): void => showModal(false)}>
-        <AddPost area={props.area} hideModal={() => showModal(false)} />
+        <AddPost area={props.match.params.areaURL} hideModal={() => showModal(false)} />
       </Modal>
     </>
   );
@@ -59,6 +59,11 @@ interface Item {
 interface Props {
   me: MeProps;
   area: string;
+  match: {
+    params: {
+      areaURL: string;
+    };
+  };
 }
 
 export default withMe(Posts);

@@ -17,8 +17,8 @@ const addPostSchema = Yup.object().shape({
 });
 
 const AddPost = (props: Props) => {
-  console.log(props.area);
   const handleSubmit = async (values: IFormValues, actions: FormikActions<IFormValues>) => {
+
     const formValues = {
       data: {
         ...values,
@@ -60,8 +60,8 @@ interface IFormValues {
 }
 
 interface Props {
-  hideModal: Function;
   area: string;
+  hideModal: () => void;
   me: MeProps;
 }
 

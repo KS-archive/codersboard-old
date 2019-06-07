@@ -4,11 +4,13 @@ import { Avatar, Tooltip, Dropdown, Menu } from 'antd';
 
 import { ReactComponent as EllipsisV } from 'static/fa/regular/ellipsis-v.svg';
 
+import useEditAccess from '../hooks/useEditAccess';
 import { ISuccess } from '../store/withSuccesses';
 import Dot from './Dot';
 import { SuccessContainer, EditIcon, Content, Name, DateString, Description, Users, Project } from './styles';
 
-const Success: React.FC<IProps> = ({ name, description, date, type, users, project, onEdit, onDelete }) => {
+const Success: React.FC<IProps> = ({ name, description, date, type, users, project, creator, onEdit, onDelete }) => {
+  const hasEditAccess = useEditAccess(creator);
   const localeDate = new Date(date).toLocaleString('pl-PL', { month: 'long', day: '2-digit', year: 'numeric' });
 
   return (
@@ -40,16 +42,18 @@ const Success: React.FC<IProps> = ({ name, description, date, type, users, proje
           </Project>
         )}
       </Content>
-      <Dropdown
-        overlay={
-          <Menu>
-            <Menu.Item onClick={onEdit}>Edytuj sukces</Menu.Item>
-            <Menu.Item onClick={onDelete}>Usuń sukces</Menu.Item>
-          </Menu>
-        }
-      >
-        <EditIcon icon={EllipsisV} color="color-grayscale-grey" size={24} />
-      </Dropdown>
+      {hasEditAccess && (
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item onClick={onEdit}>Edytuj sukces</Menu.Item>
+              <Menu.Item onClick={onDelete}>Usuń sukces</Menu.Item>
+            </Menu>
+          }
+        >
+          <EditIcon icon={EllipsisV} color="color-grayscale-grey" size={24} />
+        </Dropdown>
+      )}
     </SuccessContainer>
   );
 };

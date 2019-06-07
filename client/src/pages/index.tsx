@@ -10,6 +10,7 @@ import AppWrapper from 'pages/AppWrapper';
 import SignIn from 'pages/SignIn';
 import Successes from 'pages/Successes';
 import Materials from 'pages/Materials';
+import Events from 'pages/Events';
 import Settings from 'pages/Settings';
 
 import Projects from 'pages/project/Projects';
@@ -21,6 +22,7 @@ import Member from 'pages/member/Member';
 
 import Areas from 'pages/area/Areas';
 import AreaWrapper from 'pages/area/Wrapper';
+import Posts from 'components/Posts';
 import AreaMembers from 'pages/area/Members';
 
 import AdminWrapper from 'pages/admin/Wrapper';
@@ -65,7 +67,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                       <Route path="/areas/:areaURL">
                         <AreaWrapper>
                           <Switch>
-                            <Route exact path="/areas/:areaURL/news" component={() => <div>Aktualności</div>} />
+                            <Route exact path="/areas/:areaURL/news" component={Posts} />
                             <Route exact path="/areas/:areaURL/members" component={AreaMembers} />
                             <Route exact path="/areas/:areaURL/materials" component={Materials} />
                           </Switch>
@@ -77,14 +79,17 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                           <Switch>
                             <Route exact path="/projects/:projectURL/news" component={() => <div>Aktualności</div>} />
                             <Route exact path="/projects/:projectURL/members" component={ProjectMembers} />
-                            <Route exact path="/projects/:projectURL/materials" component={() => <div>Materiały</div>} />
+                            <Route
+                              exact
+                              path="/projects/:projectURL/materials"
+                              component={() => <div>Materiały</div>}
+                            />
                           </Switch>
                         </ProjectWrapper>
                       </Route>
                       <Route exact path="/successes" component={Successes} />
-                      <Route exact path="/events" component={() => <div>Wydarzenia</div>} />
+                      <Route exact path="/events" component={Events} />
                       <Route exact path="/materials" component={Materials} />
-                      <Route exact path="/stats" component={() => <div>Statystyki</div>} />
                       <Route path="/settings/:profileURL" component={Settings} />
                       <Route path="/admin">
                         <AdminWrapper>
