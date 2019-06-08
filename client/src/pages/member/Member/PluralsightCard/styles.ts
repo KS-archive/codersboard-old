@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import get from 'styles/getStyle';
 
-export const CodewarsList = styled.div`
+export const PluralsightList = styled.div`
   display: grid;
   grid-gap: ${get('space-24')};
   grid-template-columns: repeat(4, 1fr);

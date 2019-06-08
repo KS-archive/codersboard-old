@@ -1,5 +1,4 @@
 import React from 'react';
-import { List } from 'antd';
 import { formatCamelCase } from 'utils';
 import CardBase from '../CardBase';
 import Codewars from './Codewars';
@@ -15,7 +14,7 @@ const toArray = (object: any) => {
   return newArr;
 };
 
-const renderItems = (items: any[]) => items.map(item => <Codewars label={item.label} value={item.value} />);
+const renderItems = (items: ICodewars[]) => items.map(item => <Codewars label={item.label} value={item.value} />);
 
 const CodewarsCard: React.FC<IProps> = ({ integrations }) => {
   return (
@@ -24,6 +23,11 @@ const CodewarsCard: React.FC<IProps> = ({ integrations }) => {
     </CardBase>
   );
 };
+
+interface ICodewars {
+  value: string;
+  label: string;
+}
 
 interface IProps {
   integrations: {

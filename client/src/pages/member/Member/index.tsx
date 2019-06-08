@@ -18,7 +18,7 @@ const checkIntegrations = (integrations: any[]) => {
   if (integrations.length === 2) {
     return (
       <>
-        <PluralsightCard /> <CodewarsCard integrations={integrations[1].data} />
+        <PluralsightCard integrations={integrations[0].data} /> <CodewarsCard integrations={integrations[1].data} />
       </>
     );
   }
@@ -26,7 +26,7 @@ const checkIntegrations = (integrations: any[]) => {
     return integrations[0].key === 'codewars' ? (
       <CodewarsCard integrations={integrations[0].data} />
     ) : (
-      <PluralsightCard />
+      <PluralsightCard integrations={integrations[0].data} />
     );
   }
 };
