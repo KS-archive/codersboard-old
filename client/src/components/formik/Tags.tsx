@@ -38,7 +38,7 @@ const Tags = ({ materialTags, form, field, ...props }: Props) => {
         mode="tags"
         name={field.name}
         value={field.value}
-        onChange={value => form.setFieldValue(field.name, value)}
+        onChange={(value: any) => form.setFieldValue(field.name, value)}
         onBlur={field.onBlur}
         loading={validateStatus === 'validating'}
         {...props}

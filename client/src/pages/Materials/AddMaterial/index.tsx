@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, message } from 'antd';
 import { Formik, Field, Form, FormikActions } from 'formik';
 import * as Yup from 'yup';
-import { withMe, MeProps } from 'store/user/queries/Me';
+import withMe, { IMe } from 'components/Posts/store/withMe';
 import withAreas, { IArea } from 'pages/area/Areas/store/withAreas';
 import { uploadToCloudinary } from 'utils';
 import { Input, TextArea, Tags, ImageUpload, Select } from 'components/formik';
@@ -87,7 +87,7 @@ const AddMaterial = (props: Props) => {
 
 interface Props {
   hideModal: Function;
-  me: MeProps;
+  me: IMe;
   areas: IArea[];
 }
 

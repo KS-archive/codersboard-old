@@ -2,9 +2,9 @@ import React from 'react';
 import { Button } from 'antd';
 import { Formik, Field, Form, FormikActions } from 'formik';
 import * as Yup from 'yup';
-import { withMe, MeProps } from 'store/user/queries/Me';
+import withMe, { IMe } from '../store/withMe';
 import { Input, TextArea } from '../../formik';
-import { addPost } from 'store/post/mutations/AddPost';
+import { addPost } from '../store/mutations/AddPost';
 
 const initialValues: IFormValues = {
   title: '',
@@ -18,7 +18,6 @@ const addPostSchema = Yup.object().shape({
 
 const AddPost = (props: Props) => {
   const handleSubmit = async (values: IFormValues, actions: FormikActions<IFormValues>) => {
-
     const formValues = {
       data: {
         ...values,
@@ -62,7 +61,7 @@ interface IFormValues {
 interface Props {
   area: string;
   hideModal: () => void;
-  me: MeProps;
+  me: IMe;
 }
 
 export default withMe(AddPost);

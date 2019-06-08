@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { apollo } from 'utils';
-import { POSTS } from '../queries/Posts';
+import { POSTS } from '../withPosts';
 
 export const ADD_POST = gql`
   mutation ADD_POST($data: PostCreateInput!) {
@@ -20,7 +20,6 @@ export default (props: Props) => (
 
 export const addPost = async (variables: Variables, queryVariable: string) => {
   try {
-    console.log(variables);
     const data = await apollo.mutate({
       mutation: ADD_POST,
       variables,
