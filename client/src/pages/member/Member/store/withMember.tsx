@@ -49,6 +49,10 @@ export const MEMBER = gql`
         name
         image
       }
+      integrations {
+        key
+        data
+      }
       universityDepartment
       fieldOfStudy
       year
@@ -110,6 +114,7 @@ export interface IMember {
     image: string;
     __typename: 'University';
   };
+  integrations: any[];
   universityDepartment: string;
   fieldOfStudy: string;
   year: number;
