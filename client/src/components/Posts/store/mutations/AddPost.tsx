@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { apollo } from 'utils';
-import { POSTS } from '../withPosts';
+import { AREA_POSTS } from '../withPosts';
 
 export const ADD_POST = gql`
   mutation ADD_POST($data: PostCreateInput!) {
@@ -23,7 +23,7 @@ export const addPost = async (variables: Variables, queryVariable: string) => {
     const data = await apollo.mutate({
       mutation: ADD_POST,
       variables,
-      refetchQueries: [{ query: POSTS, variables: { area: queryVariable } }],
+      refetchQueries: [{ query: AREA_POSTS, variables: { area: queryVariable } }],
     });
     return data;
   } catch (ex) {

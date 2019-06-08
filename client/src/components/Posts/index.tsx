@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { withRouter } from 'react-router-dom';
 import withMe, { IMe } from './store/withMe';
-import withPosts, { IWithPosts } from './store/withPosts';
-import Loader from '../Loader';
+import { IWithPosts } from './store/withPosts';
 import { PostsList, AddPostBtn, PostsWrapper } from './styles';
 import SinglePost from './SinglePost';
 import AddPost from './AddPost';
@@ -11,9 +10,7 @@ import AddPost from './AddPost';
 const Posts: React.FC<IProps> = props => {
   const [modal, showModal] = useState(false);
   console.log(props);
-  return props.postsLoading ? (
-    <Loader />
-  ) : (
+  return (
     <>
       <PostsWrapper>
         <AddPostBtn type="primary" onClick={(): void => showModal(true)}>
@@ -64,4 +61,4 @@ interface IProps extends IWithPosts {
   };
 }
 
-export default withRouter(withPosts(withMe(Posts)));
+export default withRouter(withMe(Posts));
