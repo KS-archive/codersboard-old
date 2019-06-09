@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'antd';
+import { withRouter } from 'react-router';
 import { Formik, Field, Form, FormikActions } from 'formik';
 import * as Yup from 'yup';
 import withMe, { IMe } from '../store/withMe';
 import { Input, TextArea } from '../../formik';
-import { addPost } from '../store/mutations/AddPost';
+import { addPostProject, addPostArea } from '../store/AddPost';
 
 const initialValues: IFormValues = {
   title: '',
@@ -17,8 +18,9 @@ const addPostSchema = Yup.object().shape({
 });
 
 const AddPost = (props: Props) => {
+  const { areaURL, projectURL } = props.match.params;
   const handleSubmit = async (values: IFormValues, actions: FormikActions<IFormValues>) => {
-    const formValues = {
+    const formValuesArea = {
       data: {
         ...values,
         user: {
@@ -33,8 +35,24 @@ const AddPost = (props: Props) => {
         },
       },
     };
+    const formValuesProject = {
+      data: {
+        ...values,
+        user: {
+          connect: {
+            id: props.me.id,
+          },
+        },
+        project: {
+          connect: {
+            url: props.match.params.projectURL,
+          },
+        },
+      },
+    };
     actions.resetForm();
-    await addPost(formValues, props.area);
+
+    areaURL ? await addPostArea(formValuesArea, areaURL) : await addPostProject(formValuesProject, projectURL);
     props.hideModal();
   };
 
@@ -62,6 +80,12 @@ interface Props {
   area: string;
   hideModal: () => void;
   me: IMe;
+  match: {
+    params: {
+      projectURL?: string;
+      areaURL?: string;
+    };
+  };
 }
 
-export default withMe(AddPost);
+export default withRouter(withMe(AddPost));

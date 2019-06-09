@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query, QueryResult } from 'react-apollo';
+import { Query } from 'react-apollo';
 import { MainPermission, Institution } from 'types/User';
 
 export const ME = gql`

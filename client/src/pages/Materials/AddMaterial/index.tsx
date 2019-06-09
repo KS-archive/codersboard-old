@@ -34,7 +34,7 @@ const addPostSchema = Yup.object().shape({
   image: Yup.mixed().required('Miniaturka jest wymagana'),
 });
 
-const AddMaterial = (props: Props) => {
+const AddMaterial: React.FC<IProps> = props => {
   const handleSubmit = async (values: IFormValues, actions: FormikActions<IFormValues>) => {
     const { tags, image, area } = values;
     try {
@@ -85,7 +85,7 @@ const AddMaterial = (props: Props) => {
   );
 };
 
-interface Props {
+interface IProps {
   hideModal: Function;
   me: IMe;
   areas: IArea[];
