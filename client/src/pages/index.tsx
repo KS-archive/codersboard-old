@@ -16,12 +16,14 @@ import Settings from 'pages/Settings';
 import Projects from 'pages/project/Projects';
 import ProjectWrapper from 'pages/project/Wrapper';
 import ProjectMembers from 'pages/project/Members';
+import ProjectPosts from 'components/Posts/ProjectPosts';
 
 import Members from 'pages/member/Members';
 import Member from 'pages/member/Member';
 
 import Areas from 'pages/area/Areas';
 import AreaWrapper from 'pages/area/Wrapper';
+import AreaPosts from 'components/Posts/AreaPosts';
 import AreaMembers from 'pages/area/Members';
 
 import AdminWrapper from 'pages/admin/Wrapper';
@@ -66,7 +68,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                       <Route path="/areas/:areaURL">
                         <AreaWrapper>
                           <Switch>
-                            <Route exact path="/areas/:areaURL/news" component={() => <div>Aktualności</div>} />
+                            <Route exact path="/areas/:areaURL/news" component={AreaPosts} />
                             <Route exact path="/areas/:areaURL/members" component={AreaMembers} />
                             <Route exact path="/areas/:areaURL/materials" component={Materials} />
                           </Switch>
@@ -76,9 +78,13 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                       <Route path="/projects/:projectURL">
                         <ProjectWrapper>
                           <Switch>
-                            <Route exact path="/projects/:projectURL/news" component={() => <div>Aktualności</div>} />
+                            <Route exact path="/projects/:projectURL/news" component={ProjectPosts} />
                             <Route exact path="/projects/:projectURL/members" component={ProjectMembers} />
-                            <Route exact path="/projects/:projectURL/materials" component={() => <div>Materiały</div>} />
+                            <Route
+                              exact
+                              path="/projects/:projectURL/materials"
+                              component={() => <div>Materiały</div>}
+                            />
                           </Switch>
                         </ProjectWrapper>
                       </Route>

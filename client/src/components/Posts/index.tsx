@@ -1,45 +1,37 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
-import PostsQuery from 'store/post/queries/Posts';
-import { withMe, MeProps } from 'store/user/queries/Me';
-import Loader from '../Loader';
+import withMe, { IMe } from './store/withMe';
+import { IWithPosts } from './store/withPosts';
 import { PostsList, AddPostBtn, PostsWrapper } from './styles';
-import PostsListItem from './PostsListItem';
+import SinglePost from './SinglePost';
 import AddPost from './AddPost';
 
-const Posts = (props: Props) => {
+const Posts: React.FC<IProps> = props => {
   const [modal, showModal] = useState(false);
 
   return (
     <>
-      <PostsQuery variables={{ area: props.area }}>
-        {({ data, loading, error }) => {
-          if (loading) return <Loader />;
-          if (error) return <div>{error.message}</div>;
-          return (
-            <PostsWrapper>
-              <AddPostBtn type="primary" onClick={(): void => showModal(true)}>
-                Dodaj nowy post
-              </AddPostBtn>
-              <PostsList
-                dataSource={data.posts}
-                itemLayout="horizontal"
-                renderItem={(item: Item) => (
-                  <PostsListItem
-                    title={item.title}
-                    content={item.content}
-                    avatar={item.user.image}
-                    date={item.date}
-                    id={item.id}
-                  />
-                )}
-              />
-            </PostsWrapper>
-          );
-        }}
-      </PostsQuery>
+      <PostsWrapper>
+        <AddPostBtn type="primary" onClick={(): void => showModal(true)}>
+          Dodaj nowy post
+        </AddPostBtn>
+        <PostsList
+          dataSource={props.posts}
+          itemLayout="horizontal"
+          renderItem={(item: Item) => (
+            <SinglePost
+              title={item.title}
+              content={item.content}
+              avatar={item.user.image}
+              date={item.date}
+              author={{ fullName: item.user.fullName, profileURL: item.user.profileURL }}
+            />
+          )}
+        />
+      </PostsWrapper>
+
       <Modal title="Dodaj nowy post" footer={null} visible={modal} onCancel={(): void => showModal(false)}>
-        <AddPost area={props.area} hideModal={() => showModal(false)} />
+        <AddPost hideModal={() => showModal(false)} />
       </Modal>
     </>
   );
@@ -51,13 +43,15 @@ interface Item {
   user?: {
     id: string;
     image: string;
+    fullName: string;
+    profileURL: string;
   };
   date?: Date;
   id?: string;
 }
 
-interface Props {
-  me: MeProps;
+interface IProps extends IWithPosts {
+  me: IMe;
   area: string;
 }
 
