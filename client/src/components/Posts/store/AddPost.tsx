@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { apollo } from 'utils';
-import { AREA_POSTS, PROJECT_POSTS } from './withPosts';
+import { POSTS } from './withPosts';
 
 export const ADD_POST = gql`
   mutation ADD_POST($data: PostCreateInput!) {
@@ -18,25 +18,12 @@ export default (props: Props) => (
   </Mutation>
 );
 
-export const addPostArea = async (variables: Variables, queryVariable: string) => {
+export const addPost = async (variables: Variables, queryVariable: string) => {
   try {
     const data = await apollo.mutate({
       mutation: ADD_POST,
       variables,
-      refetchQueries: [{ query: AREA_POSTS, variables: { areaURL: queryVariable } }],
-    });
-    return data;
-  } catch (ex) {
-    return ex;
-  }
-};
-
-export const addPostProject = async (variables: Variables, queryVariable: string) => {
-  try {
-    const data = await apollo.mutate({
-      mutation: ADD_POST,
-      variables,
-      refetchQueries: [{ query: PROJECT_POSTS, variables: { projectURL: queryVariable } }],
+      refetchQueries: [{ query: POSTS, variables: { url: queryVariable } }],
     });
     return data;
   } catch (ex) {

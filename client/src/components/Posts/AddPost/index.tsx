@@ -5,7 +5,7 @@ import { Formik, Field, Form, FormikActions } from 'formik';
 import * as Yup from 'yup';
 import withMe, { IMe } from '../store/withMe';
 import { Input, TextArea } from '../../formik';
-import { addPostProject, addPostArea } from '../store/AddPost';
+import { addPost } from '../store/AddPost';
 
 const initialValues: IFormValues = {
   title: '',
@@ -20,7 +20,7 @@ const addPostSchema = Yup.object().shape({
 const AddPost = (props: Props) => {
   const { areaURL, projectURL } = props.match.params;
   const handleSubmit = async (values: IFormValues, actions: FormikActions<IFormValues>) => {
-    const formValuesArea = {
+    const formValues = {
       data: {
         ...values,
         user: {
@@ -28,31 +28,15 @@ const AddPost = (props: Props) => {
             id: props.me.id,
           },
         },
-        area: {
+        [areaURL ? 'area' : 'project']: {
           connect: {
-            url: props.area,
-          },
-        },
-      },
-    };
-    const formValuesProject = {
-      data: {
-        ...values,
-        user: {
-          connect: {
-            id: props.me.id,
-          },
-        },
-        project: {
-          connect: {
-            url: props.match.params.projectURL,
+            url: areaURL || projectURL,
           },
         },
       },
     };
     actions.resetForm();
-
-    areaURL ? await addPostArea(formValuesArea, areaURL) : await addPostProject(formValuesProject, projectURL);
+    await addPost(formValues, areaURL || projectURL);
     props.hideModal();
   };
 

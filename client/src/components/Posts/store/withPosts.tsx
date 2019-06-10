@@ -3,29 +3,9 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 
-export const PROJECT_POSTS = gql`
-  query POSTS($projectURL: String!) {
-    posts(orderBy: date_DESC, where: { project: { url: $projectURL } }) {
-      id
-      title
-      content
-      date
-      area {
-        name
-        url
-      }
-      user {
-        id
-        image
-        fullName
-        profileURL
-      }
-    }
-  }
-`;
-export const AREA_POSTS = gql`
-  query POSTS($areaURL: String!) {
-    posts(orderBy: date_DESC, where: { area: { url: $areaURL } }) {
+export const POSTS = gql`
+  query POSTS($url: String!) {
+    posts(orderBy: date_DESC, where: { OR: [{ area: { url: $url } }, { project: { url: $url } }] }) {
       id
       title
       content
@@ -71,18 +51,14 @@ export interface IWithPosts {
 }
 
 interface IQueryVaraibles {
-  areaURL?: string;
-  projectURL?: string;
+  url?: string;
 }
 
-export const withAreaPosts = (WrapperComponent: any) => (props: RouteComponentProps<{ areaURL: string }>) => (
-  <Query<IData, IQueryVaraibles> query={AREA_POSTS} variables={{ areaURL: props.match.params.areaURL }}>
-    {({ data, loading }) => <WrapperComponent {...props} posts={data.posts} postsLoading={loading} />}
-  </Query>
-);
-
-export const withProjectPosts = (WrapperComponent: any) => (props: RouteComponentProps<{ projectURL: string }>) => (
-  <Query<IData, IQueryVaraibles> query={PROJECT_POSTS} variables={{ projectURL: props.match.params.projectURL }}>
+export default (WrapperComponent: any) => (props: RouteComponentProps<{ areaURL: string; projectURL: string }>) => (
+  <Query<IData, IQueryVaraibles>
+    query={POSTS}
+    variables={{ url: props.match.params.areaURL || props.match.params.projectURL }}
+  >
     {({ data, loading }) => <WrapperComponent {...props} posts={data.posts} postsLoading={loading} />}
   </Query>
 );

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
+import { withRouter } from 'react-router-dom';
 import withMe, { IMe } from './store/withMe';
-import { IWithPosts } from './store/withPosts';
+import withPosts, { IWithPosts } from './store/withPosts';
 import { PostsList, AddPostBtn, PostsWrapper } from './styles';
 import SinglePost from './SinglePost';
 import AddPost from './AddPost';
@@ -55,4 +56,4 @@ interface IProps extends IWithPosts {
   area: string;
 }
 
-export default withMe(Posts);
+export default withRouter(withPosts(withMe(Posts)));
