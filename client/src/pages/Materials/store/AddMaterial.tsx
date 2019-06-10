@@ -1,4 +1,3 @@
-import React from 'react';
 import gql from 'graphql-tag';
 import { apollo } from 'utils';
 import { MATERIALS } from './withMaterials';

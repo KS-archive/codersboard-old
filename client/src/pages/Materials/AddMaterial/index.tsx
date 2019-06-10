@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, message } from 'antd';
 import { Formik, Field, Form, FormikActions } from 'formik';
 import * as Yup from 'yup';
-import { withMe, MeProps } from 'store/user/queries/Me';
+import withMe, { IMe } from 'components/Posts/store/withMe';
 import withAreas, { IArea } from 'pages/area/Areas/store/withAreas';
 import { uploadToCloudinary } from 'utils';
 import { Input, TextArea, Tags, ImageUpload, Select } from 'components/formik';
@@ -34,7 +34,7 @@ const addPostSchema = Yup.object().shape({
   image: Yup.mixed().required('Miniaturka jest wymagana'),
 });
 
-const AddMaterial = (props: Props) => {
+const AddMaterial: React.FC<IProps> = props => {
   const handleSubmit = async (values: IFormValues, actions: FormikActions<IFormValues>) => {
     const { tags, image, area } = values;
     try {
@@ -85,9 +85,9 @@ const AddMaterial = (props: Props) => {
   );
 };
 
-interface Props {
+interface IProps {
   hideModal: Function;
-  me: MeProps;
+  me: IMe;
   areas: IArea[];
 }
 
