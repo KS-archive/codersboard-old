@@ -80,11 +80,7 @@ const App: React.FC<RouteComponentProps> = ({ location: { pathname }, history: {
                           <Switch>
                             <Route exact path="/projects/:projectURL/news" component={ProjectPosts} />
                             <Route exact path="/projects/:projectURL/members" component={ProjectMembers} />
-                            <Route
-                              exact
-                              path="/projects/:projectURL/materials"
-                              component={() => <div>Materiały</div>}
-                            />
+                            <Route exact path="/projects/:projectURL/materials" component={Materials} />
                           </Switch>
                         </ProjectWrapper>
                       </Route>

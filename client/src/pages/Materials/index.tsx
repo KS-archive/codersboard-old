@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { Typography, Spin, Modal, Empty } from 'antd';
+import { Typography, Spin, Modal, Empty, Tabs } from 'antd';
+import { withRouter } from 'react-router-dom';
 import withMaterials, { IMaterial } from './store/withMaterials';
 import MaterialCard from './MaterialCard';
 import AddMaterial from './AddMaterial';
+import AddMaterialProjects from './AddMaterialProjects';
 import SearchBar from './SearchBar';
 import Filters from './Filters';
 import Loader from 'components/Loader';
 import { MaterialsContainer, Header, AddButton, Grid, Wrapper } from './styles';
 
 const { Title } = Typography;
+const { TabPane } = Tabs;
 
 const intersection = (a: any[], b: any[]) => {
-
   const s = new Set(b);
 
   return a.filter((x: string) => s.has(x));
-
 };
 
 class Materials extends Component<IProps, IState> {
@@ -98,7 +99,18 @@ class Materials extends Component<IProps, IState> {
           visible={this.state.modal}
           onCancel={(): void => this.setState({ modal: false })}
         >
-          <AddMaterial hideModal={(): void => this.setState({ modal: false })} />
+          {this.props.match.params.projectURL ? (
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Dodaj istniejący" key="1">
+                <AddMaterialProjects />
+              </TabPane>
+              <TabPane tab="Dodaj nowy" key="2">
+                <AddMaterial hideModal={(): void => this.setState({ modal: false })} />
+              </TabPane>
+            </Tabs>
+          ) : (
+            <AddMaterial hideModal={(): void => this.setState({ modal: false })} />
+          )}
         </Modal>
       </MaterialsContainer>
     );
@@ -110,6 +122,9 @@ interface IProps {
   materialsLoading: boolean;
   match: {
     url: string;
+    params: {
+      projectURL: string;
+    };
   };
 }
 
@@ -120,4 +135,4 @@ interface IState {
   displayedMaterials: IMaterial[];
 }
 
-export default withMaterials(Materials);
+export default withRouter(withMaterials(Materials));

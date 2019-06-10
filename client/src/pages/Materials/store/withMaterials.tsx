@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router';
 
 export const MATERIALS = gql`
   query materails($url: String) {
-    materials(where: { area: { url: $url } }) {
+    materials(where: { OR: [{ area: { url: $url } }, { project: { url: $url } }] }) {
       id
       title
       description
@@ -55,8 +55,11 @@ interface IQueryVaraibles {
   url?: string;
 }
 
-export default (WrapperComponent: any) => (props: RouteComponentProps<{ areaURL: string }>) => (
-  <Query<IData, IQueryVaraibles> query={MATERIALS} variables={{ url: props.match.params.areaURL }}>
+export default (WrapperComponent: any) => (props: RouteComponentProps<{ areaURL?: string; projectURL: string }>) => (
+  <Query<IData, IQueryVaraibles>
+    query={MATERIALS}
+    variables={{ url: props.match.params.areaURL || props.match.params.projectURL }}
+  >
     {({ data, loading }) => <WrapperComponent {...props} materials={data.materials} materialsLoading={loading} />}
   </Query>
 );
