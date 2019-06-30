@@ -27,10 +27,8 @@ const FullName = styled.h4`
 const FullNameRenderer: React.FC<IColumn> = ({ data, value }) => {
   return (
     <MemberLink href={`/members/${data.profileURL}`}>
-      {/* <a href={`/members/${data.profileURL}`}> */}
       <Image style={{ backgroundImage: `url('${data.image}')` }} />
       <FullName>{value}</FullName>
-      {/* </a> */}
     </MemberLink>
   );
 };
