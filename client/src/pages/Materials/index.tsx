@@ -15,7 +15,6 @@ const { TabPane } = Tabs;
 
 const intersection = (a: any[], b: any[]) => {
   const s = new Set(b);
-
   return a.filter((x: string) => s.has(x));
 };
 
@@ -65,7 +64,7 @@ class Materials extends Component<IProps, IState> {
     this.setState({ filteredMaterials: newMaterials });
   };
 
-  renderMaterials() {
+  renderMaterials = () => {
     const { displayedMaterials: displayed } = this.state;
     if (displayed.length === 0 && !this.props.materialsLoading) {
       return <Empty description="Brak wyników wyszukiwania" />;
@@ -75,6 +74,10 @@ class Materials extends Component<IProps, IState> {
     }
     const materials = displayed.map((material: IMaterial) => <MaterialCard key={material.id} {...material} />);
     return <Grid>{materials}</Grid>;
+  }
+
+  setDisplayedMaterials = (projectMaterials: IMaterial[]) => {
+    this.setState({ displayedMaterials: projectMaterials })
   }
 
   render() {
@@ -102,15 +105,15 @@ class Materials extends Component<IProps, IState> {
           {this.props.match.params.projectURL ? (
             <Tabs defaultActiveKey="1">
               <TabPane tab="Dodaj istniejący" key="1">
-                <AddMaterialProjects />
+                <AddMaterialProjects projectMaterials={this.props.materials} render={this.setDisplayedMaterials} />
               </TabPane>
               <TabPane tab="Dodaj nowy" key="2">
                 <AddMaterial hideModal={(): void => this.setState({ modal: false })} />
               </TabPane>
             </Tabs>
           ) : (
-            <AddMaterial hideModal={(): void => this.setState({ modal: false })} />
-          )}
+              <AddMaterial hideModal={(): void => this.setState({ modal: false })} />
+            )}
         </Modal>
       </MaterialsContainer>
     );
