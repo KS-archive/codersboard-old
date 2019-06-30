@@ -259,7 +259,7 @@ type Material {
   credential: Credential
   user: User
   area: Area
-  project: Project
+  project: [Project!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
