@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import get from 'styles/getStyle';
 import { IColumn } from '..';
 
-const FullNameRendererCell = styled.div`
+const MemberLink = styled.a`
   display: flex;
   align-items: center;
 `;
@@ -26,10 +26,10 @@ const FullName = styled.h4`
 
 const FullNameRenderer: React.FC<IColumn> = ({ data, value }) => {
   return (
-    <FullNameRendererCell>
+    <MemberLink href={`/members/${data.profileURL}`}>
       <Image style={{ backgroundImage: `url('${data.image}')` }} />
       <FullName>{value}</FullName>
-    </FullNameRendererCell>
+    </MemberLink>
   );
 };
 
